@@ -16,8 +16,11 @@ namespace Ex01.FacebookApp
 {
     public partial class Form1 : Form
     {
+        private readonly string k_EnterTitleMsg = "Enter Title";
         LoginResult m_loginResult;
         Action logout;
+        string m_photoPath = string.Empty;
+
         FacebookWrapper.ObjectModel.User m_currentUser;
 
         public Form1()
@@ -32,8 +35,7 @@ namespace Ex01.FacebookApp
 
         private void login()
         {
-            m_loginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info");
-            textBox1.Text = m_loginResult.AccessToken.ToString();
+            m_loginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
             m_currentUser = m_loginResult.LoggedInUser;
             pictureBox1.Image = m_currentUser.ImageNormal;
         }
@@ -46,13 +48,14 @@ namespace Ex01.FacebookApp
         //somethings wrong here
         public void on_logOut()
         {
-            logout = on_logOut;
-            FacebookService.Logout(logout);
-            textBox1.Text = "";
-            pictureBox1.Image = null;
+            FacebookService.Logout(ShowByeMsg);
         }
 
-
+        private void ShowByeMsg()
+        {
+            pictureBox1.Image = null;
+            MessageBox.Show("Logged Out!");
+        }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -86,7 +89,7 @@ namespace Ex01.FacebookApp
                 listBox1.Items.Add(g.Name.ToString());
             }
 
-            if(listBox1.Items.Count == 0)
+            if (listBox1.Items.Count == 0)
             {
                 listBox1.Items.Add("no items to show");
             }
@@ -95,12 +98,57 @@ namespace Ex01.FacebookApp
 
         private void button5_Click(object sender, EventArgs e)
         {
-
-            if(openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            string title = string.Empty;
+            if(textBoxTitle.Text != k_EnterTitleMsg)
             {
-                MessageBox.Show(openFileDialog1.FileName);
+                title = textBoxTitle.Text;
             }
-            m_currentUser.PostPhoto()
+            try
+            {
+                m_currentUser.PostPhoto(m_photoPath, title);
+                MessageBox.Show("Success uploadin photo!" + Environment.NewLine + Path.GetExtension(m_photoPath));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Must Choose A legal File" + Environment.NewLine + ex.Message);
+
+            }
+
+            resetPictureButtons();
+           
+        }
+
+        private void resetPictureButtons()
+        {
+            pictureBox2.Image = null;
+            textBoxTitle.Text = k_EnterTitleMsg;
+            button5.Enabled = false;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                m_photoPath = openFileDialog1.FileName;
+            }
+            if (!string.IsNullOrEmpty(m_photoPath))
+            {
+                pictureBox2.LoadAsync(m_photoPath);
+                button5.Enabled = true;
+            }
+
+        }
+
+        private void textBoxTitle_Click(object sender, EventArgs e)
+        {
+            textBoxTitle.Text = string.Empty;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+            m_currentUser.PostLink(webBrowser1.Url.ToString());
+            m_currentUser.
         }
     }
 }
