@@ -252,18 +252,13 @@
             // comboBoxWebBrowser
             // 
             this.comboBoxWebBrowser.FormattingEnabled = true;
-            this.comboBoxWebBrowser.Items.AddRange(new object[] {
-            "http://www.google.com/",
-            "http://www.facebook.com/",
-            "http://www.youtube.com/",
-            "http://www.github.com/",
-            "http://www.stackoverflow.com/"});
             this.comboBoxWebBrowser.Location = new System.Drawing.Point(28, 242);
             this.comboBoxWebBrowser.Name = "comboBoxWebBrowser";
             this.comboBoxWebBrowser.Size = new System.Drawing.Size(1161, 33);
             this.comboBoxWebBrowser.TabIndex = 19;
             this.comboBoxWebBrowser.Text = "choose from list or enter your own";
             this.comboBoxWebBrowser.SelectedIndexChanged += new System.EventHandler(this.comboBoxWebBrowser_SelectedIndexChanged);
+            this.comboBoxWebBrowser.Click += new System.EventHandler(this.comboBoxWebBrowser_Click);
             // 
             // buttonSubmitUrl
             // 
