@@ -18,7 +18,6 @@ namespace Ex01.FacebookApp
     {
         private readonly string k_EnterTitleMsg = "Enter Title";
         LoginResult m_loginResult;
-        Action logout;
         string m_photoPath = string.Empty;
 
         FacebookWrapper.ObjectModel.User m_currentUser;
@@ -59,7 +58,10 @@ namespace Ex01.FacebookApp
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ListBox l = sender as ListBox;
+            Group g = l.SelectedItem as Group;
 
+            textBoxDescriptionOfGroup.Text = g.Description;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -80,26 +82,37 @@ namespace Ex01.FacebookApp
 
         private void button4_Click(object sender, EventArgs e)
         {
-
-            m_currentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
-            FacebookObjectCollection<Group> groupCollection = m_currentUser.Groups;
-
-            foreach (Group g in groupCollection)
+            if (m_currentUser != null)
             {
-                listBox1.Items.Add(g.Name.ToString());
+
+                m_currentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
+
+
+                FacebookObjectCollection<Group> groupCollection = m_currentUser.Groups;
+
+                foreach (Group g in groupCollection)
+                {
+                    listBoxGroups.Items.Add(g);
+                }
+
+                if (listBoxGroups.Items.Count == 0)
+                {
+                    listBoxGroups.Items.Add("no items to show");
+                }
+            }
+            else
+            {
+                MessageBox.Show("not logged in");
             }
 
-            if (listBox1.Items.Count == 0)
-            {
-                listBox1.Items.Add("no items to show");
-            }
+
 
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             string title = string.Empty;
-            if(textBoxTitle.Text != k_EnterTitleMsg)
+            if (textBoxTitle.Text != k_EnterTitleMsg)
             {
                 title = textBoxTitle.Text;
             }
@@ -115,14 +128,14 @@ namespace Ex01.FacebookApp
             }
 
             resetPictureButtons();
-           
+
         }
 
         private void resetPictureButtons()
         {
-            pictureBox2.Image = null;
+            pictureBoxPostPhotoPreviewImage.Image = null;
             textBoxTitle.Text = k_EnterTitleMsg;
-            button5.Enabled = false;
+            buttonPostPhoto.Enabled = false;
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -133,10 +146,9 @@ namespace Ex01.FacebookApp
             }
             if (!string.IsNullOrEmpty(m_photoPath))
             {
-                pictureBox2.LoadAsync(m_photoPath);
-                button5.Enabled = true;
+                pictureBoxPostPhotoPreviewImage.LoadAsync(m_photoPath);
+                buttonPostPhoto.Enabled = true;
             }
-
         }
 
         private void textBoxTitle_Click(object sender, EventArgs e)
@@ -147,8 +159,47 @@ namespace Ex01.FacebookApp
         private void button7_Click(object sender, EventArgs e)
         {
 
-            m_currentUser.PostLink(webBrowser1.Url.ToString());
-            m_currentUser.
+            m_currentUser.PostLink(webBrowser.Url.ToString());
+
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxWebBrowser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            string urlToShow = comboBox.SelectedItem as string;
+
+            if(!string.IsNullOrEmpty(urlToShow))
+            {
+                webBrowser.Url = new System.Uri(urlToShow);
+            }
+        }
+
+
+
+        private void buttonSubmitUrl_onClick(object sender, EventArgs e)
+        {
+            string urlToShow = comboBoxWebBrowser.Text;
+
+            Uri uriResult;
+            bool result = Uri.TryCreate(urlToShow, UriKind.Absolute, out uriResult)
+                && uriResult.Scheme == Uri.UriSchemeHttp;
+
+            if (result)
+            {
+                 webBrowser.Url = uriResult;
+            }
+            else
+            {
+                MessageBox.Show(
+@"insert a valid http format url.
+example:http://www.google.com");
+            }
         }
     }
 }
