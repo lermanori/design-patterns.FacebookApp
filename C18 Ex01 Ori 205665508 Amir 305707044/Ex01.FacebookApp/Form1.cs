@@ -10,19 +10,45 @@ using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 using System.Net;
 using System.IO;
-using System.Net;
+using Newtonsoft.Json;
 
 namespace Ex01.FacebookApp
 {
     public partial class Form1 : Form
     {
+        private readonly string k_EnterTitleMsg = "Enter Title";
         LoginResult m_loginResult;
-        Action logout;
-        FacebookWrapper.ObjectModel.User m_currentUser;
+
+        FacebookSettings m_LastSettings = null;
+
+        string m_photoPath = string.Empty;
+        User m_currentUser;
 
         public Form1()
         {
+            m_LastSettings = FacebookSettings.LoadFromFile();
             InitializeComponent();
+            this.checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
+            this.Size = m_LastSettings.LastWindowSize;
+
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            if (m_LastSettings.RememberUser && !string.IsNullOrEmpty(m_LastSettings.LastAccessToken))
+            {
+                m_loginResult = FacebookService.Connect(m_LastSettings.LastAccessToken);
+                fetchLoggedInUser();
+            }
+            base.OnShown(e);
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            m_LastSettings.LastWindowSize = this.Size;
+            m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
+            m_LastSettings.LastAccessToken = m_loginResult.AccessToken;
+            m_LastSettings.saveToFile();
+            base.OnFormClosing(e);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -32,8 +58,12 @@ namespace Ex01.FacebookApp
 
         private void login()
         {
-            m_loginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info");
-            textBox1.Text = m_loginResult.AccessToken.ToString();
+            m_loginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
+            fetchLoggedInUser();
+        }
+
+        private void fetchLoggedInUser()
+        {
             m_currentUser = m_loginResult.LoggedInUser;
             pictureBox1.Image = m_currentUser.ImageNormal;
         }
@@ -46,17 +76,21 @@ namespace Ex01.FacebookApp
         //somethings wrong here
         public void on_logOut()
         {
-            logout = on_logOut;
-            FacebookService.Logout(logout);
-            textBox1.Text = "";
-            pictureBox1.Image = null;
+            FacebookService.Logout(ShowByeMsg);
         }
 
-
+        private void ShowByeMsg()
+        {
+            pictureBox1.Image = null;
+            MessageBox.Show("Logged Out!");
+        }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ListBox l = sender as ListBox;
+            Group g = l.SelectedItem as Group;
 
+            textBoxDescriptionOfGroup.Text = g.Description;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -77,30 +111,125 @@ namespace Ex01.FacebookApp
 
         private void button4_Click(object sender, EventArgs e)
         {
-
-            m_currentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
-            FacebookObjectCollection<Group> groupCollection = m_currentUser.Groups;
-
-            foreach (Group g in groupCollection)
+            if (m_currentUser != null)
             {
-                listBox1.Items.Add(g.Name.ToString());
+
+                m_currentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
+
+
+                FacebookObjectCollection<Group> groupCollection = m_currentUser.Groups;
+
+                foreach (Group g in groupCollection)
+                {
+                    listBoxGroups.Items.Add(g);
+                }
+
+                if (listBoxGroups.Items.Count == 0)
+                {
+                    listBoxGroups.Items.Add("no items to show");
+                }
+            }
+            else
+            {
+                MessageBox.Show("not logged in");
             }
 
-            if(listBox1.Items.Count == 0)
-            {
-                listBox1.Items.Add("no items to show");
-            }
+
 
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-
-            if(openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            string title = string.Empty;
+            if (textBoxTitle.Text != k_EnterTitleMsg)
             {
-                MessageBox.Show(openFileDialog1.FileName);
+                title = textBoxTitle.Text;
             }
-            m_currentUser.PostPhoto()
+            try
+            {
+                m_currentUser.PostPhoto(m_photoPath, title);
+                MessageBox.Show("Success uploadin photo!" + Environment.NewLine + Path.GetExtension(m_photoPath));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Must Choose A legal File" + Environment.NewLine + ex.Message);
+
+            }
+
+            resetPictureButtons();
+
+        }
+
+        private void resetPictureButtons()
+        {
+            pictureBoxPostPhotoPreviewImage.Image = null;
+            textBoxTitle.Text = k_EnterTitleMsg;
+            buttonPostPhoto.Enabled = false;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                m_photoPath = openFileDialog1.FileName;
+            }
+            if (!string.IsNullOrEmpty(m_photoPath))
+            {
+                pictureBoxPostPhotoPreviewImage.LoadAsync(m_photoPath);
+                buttonPostPhoto.Enabled = true;
+            }
+        }
+
+        private void textBoxTitle_Click(object sender, EventArgs e)
+        {
+            textBoxTitle.Text = string.Empty;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+            m_currentUser.PostLink(webBrowser.Url.ToString());
+
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxWebBrowser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+
+            string urlToShow = comboBox.SelectedItem as string;
+
+            if(!string.IsNullOrEmpty(urlToShow))
+            {
+                webBrowser.Url = new System.Uri(urlToShow);
+            }
+        }
+
+
+
+        private void buttonSubmitUrl_onClick(object sender, EventArgs e)
+        {
+            string urlToShow = comboBoxWebBrowser.Text;
+
+            Uri uriResult;
+            bool result = Uri.TryCreate(urlToShow, UriKind.Absolute, out uriResult)
+                && uriResult.Scheme == Uri.UriSchemeHttp;
+
+            if (result)
+            {
+                 webBrowser.Url = uriResult;
+            }
+            else
+            {
+                MessageBox.Show(
+@"insert a valid http format url.
+example:http://www.google.com");
+            }
+
         }
     }
 }

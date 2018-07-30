@@ -17,9 +17,7 @@ namespace Ex01.FacebookApp
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-
-
-       
+   
         }
 
     }
