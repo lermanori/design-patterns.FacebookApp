@@ -42,12 +42,14 @@
             this.pictureBoxPostPhotoPreviewImage = new System.Windows.Forms.PictureBox();
             this.labelPostPhotoPreview = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
+
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.textBoxDescriptionOfGroup = new System.Windows.Forms.TextBox();
             this.labelDescriptionOfGroups = new System.Windows.Forms.Label();
             this.labelGroups = new System.Windows.Forms.Label();
             this.comboBoxWebBrowser = new System.Windows.Forms.ComboBox();
             this.buttonSubmitUrl = new System.Windows.Forms.Button();
+
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).BeginInit();
             this.SuspendLayout();
@@ -264,10 +266,21 @@
             this.buttonSubmitUrl.UseVisualStyleBackColor = true;
             this.buttonSubmitUrl.Click += new System.EventHandler(this.buttonSubmitUrl_onClick);
             // 
+            // checkBoxRememberUser
+            // 
+            this.checkBoxRememberUser.AutoSize = true;
+            this.checkBoxRememberUser.Location = new System.Drawing.Point(1248, 133);
+            this.checkBoxRememberUser.Name = "checkBoxRememberUser";
+            this.checkBoxRememberUser.Size = new System.Drawing.Size(122, 21);
+            this.checkBoxRememberUser.TabIndex = 16;
+            this.checkBoxRememberUser.Text = "Remember Me";
+            this.checkBoxRememberUser.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+
             this.ClientSize = new System.Drawing.Size(2037, 1092);
             this.Controls.Add(this.buttonSubmitUrl);
             this.Controls.Add(this.comboBoxWebBrowser);
@@ -275,6 +288,11 @@
             this.Controls.Add(this.labelDescriptionOfGroups);
             this.Controls.Add(this.textBoxDescriptionOfGroup);
             this.Controls.Add(this.webBrowser);
+
+            this.ClientSize = new System.Drawing.Size(1435, 699);
+            this.Controls.Add(this.checkBoxRememberUser);
+            this.Controls.Add(this.webBrowser1);
+
             this.Controls.Add(this.button7);
             this.Controls.Add(this.labelPostPhotoPreview);
             this.Controls.Add(this.pictureBoxPostPhotoPreviewImage);
@@ -314,12 +332,16 @@
         private System.Windows.Forms.PictureBox pictureBoxPostPhotoPreviewImage;
         private System.Windows.Forms.Label labelPostPhotoPreview;
         private System.Windows.Forms.Button button7;
+
         private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.TextBox textBoxDescriptionOfGroup;
         private System.Windows.Forms.Label labelDescriptionOfGroups;
         private System.Windows.Forms.Label labelGroups;
         private System.Windows.Forms.ComboBox comboBoxWebBrowser;
         private System.Windows.Forms.Button buttonSubmitUrl;
+
+        private System.Windows.Forms.CheckBox checkBoxRememberUser;
+
     }
 }
 
