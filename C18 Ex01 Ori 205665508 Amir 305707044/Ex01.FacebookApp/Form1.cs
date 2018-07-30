@@ -17,6 +17,7 @@ namespace Ex01.FacebookApp
     public partial class Form1 : Form
     {
         private readonly string k_EnterTitleMsg = "Enter Title";
+        private readonly string k_httpOpening = @"http://www.";
         LoginResult m_loginResult;
 
         FacebookSettings m_LastSettings = null;
@@ -40,6 +41,13 @@ namespace Ex01.FacebookApp
                 m_loginResult = FacebookService.Connect(m_LastSettings.LastAccessToken);
                 fetchLoggedInUser();
             }
+            if(m_LastSettings.ComboBoxWebBrowserItems.Count != 0)
+            {
+                foreach(string s in m_LastSettings.ComboBoxWebBrowserItems )
+                {
+                    comboBoxWebBrowser.Items.Add(s);
+                }
+            }
             base.OnShown(e);
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -47,6 +55,13 @@ namespace Ex01.FacebookApp
             m_LastSettings.LastWindowSize = this.Size;
             m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
             m_LastSettings.LastAccessToken = m_loginResult.AccessToken;
+            foreach(string s in comboBoxWebBrowser.Items)
+            {
+                if(!m_LastSettings.ComboBoxWebBrowserItems.Contains(s))
+                {
+                m_LastSettings.ComboBoxWebBrowserItems.Add(s);
+                }
+            }
             m_LastSettings.saveToFile();
             base.OnFormClosing(e);
         }
@@ -222,14 +237,22 @@ namespace Ex01.FacebookApp
             if (result)
             {
                  webBrowser.Url = uriResult;
+                comboBoxWebBrowser.Text = uriResult.ToString();
+                comboBoxWebBrowser.Items.Add(comboBoxWebBrowser.Text);
             }
             else
             {
                 MessageBox.Show(
 @"insert a valid http format url.
 example:http://www.google.com");
+                comboBoxWebBrowser.Text = k_httpOpening;
             }
 
+        }
+
+        private void comboBoxWebBrowser_Click(object sender, EventArgs e)
+        {
+            comboBoxWebBrowser.Text = k_httpOpening;
         }
     }
 }
