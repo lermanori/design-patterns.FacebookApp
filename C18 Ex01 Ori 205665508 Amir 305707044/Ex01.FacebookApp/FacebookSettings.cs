@@ -11,7 +11,7 @@ namespace Ex01.FacebookApp
     {
         public bool RememberUser { get; set; }
         public string LastAccessToken { get; set; }
-
+        public Size LastWindowSize { get; set; }
 
         private FacebookSettings()
         {
