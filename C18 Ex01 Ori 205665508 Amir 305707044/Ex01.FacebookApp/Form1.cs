@@ -10,7 +10,7 @@ using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
 using System.Net;
 using System.IO;
-using System.Net;
+using Newtonsoft.Json;
 
 namespace Ex01.FacebookApp
 {
@@ -18,14 +18,35 @@ namespace Ex01.FacebookApp
     {
         private readonly string k_EnterTitleMsg = "Enter Title";
         LoginResult m_loginResult;
-        Action logout;
+        FacebookSettings m_LastSettings = null;
         string m_photoPath = string.Empty;
-
-        FacebookWrapper.ObjectModel.User m_currentUser;
+        User m_currentUser;
 
         public Form1()
         {
+            m_LastSettings = FacebookSettings.LoadFromFile();
             InitializeComponent();
+            this.checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
+            this.Size = m_LastSettings.LastWindowSize;
+
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            if (m_LastSettings.RememberUser && !string.IsNullOrEmpty(m_LastSettings.LastAccessToken))
+            {
+                m_loginResult = FacebookService.Connect(m_LastSettings.LastAccessToken);
+                fetchLoggedInUser();
+            }
+            base.OnShown(e);
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            m_LastSettings.LastWindowSize = this.Size;
+            m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
+            m_LastSettings.LastAccessToken = m_loginResult.AccessToken;
+            m_LastSettings.saveToFile();
+            base.OnFormClosing(e);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,6 +57,11 @@ namespace Ex01.FacebookApp
         private void login()
         {
             m_loginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
+            fetchLoggedInUser();
+        }
+
+        private void fetchLoggedInUser()
+        {
             m_currentUser = m_loginResult.LoggedInUser;
             pictureBox1.Image = m_currentUser.ImageNormal;
         }
@@ -99,7 +125,7 @@ namespace Ex01.FacebookApp
         private void button5_Click(object sender, EventArgs e)
         {
             string title = string.Empty;
-            if(textBoxTitle.Text != k_EnterTitleMsg)
+            if (textBoxTitle.Text != k_EnterTitleMsg)
             {
                 title = textBoxTitle.Text;
             }
@@ -115,7 +141,7 @@ namespace Ex01.FacebookApp
             }
 
             resetPictureButtons();
-           
+
         }
 
         private void resetPictureButtons()
@@ -148,7 +174,6 @@ namespace Ex01.FacebookApp
         {
 
             m_currentUser.PostLink(webBrowser1.Url.ToString());
-            m_currentUser.
         }
     }
 }

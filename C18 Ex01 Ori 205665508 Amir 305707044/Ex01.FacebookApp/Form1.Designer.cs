@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.checkBoxRememberUser = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -190,11 +191,22 @@
             this.webBrowser1.TabIndex = 15;
             this.webBrowser1.Url = new System.Uri("http://youtube.com", System.UriKind.Absolute);
             // 
+            // checkBoxRememberUser
+            // 
+            this.checkBoxRememberUser.AutoSize = true;
+            this.checkBoxRememberUser.Location = new System.Drawing.Point(1248, 133);
+            this.checkBoxRememberUser.Name = "checkBoxRememberUser";
+            this.checkBoxRememberUser.Size = new System.Drawing.Size(122, 21);
+            this.checkBoxRememberUser.TabIndex = 16;
+            this.checkBoxRememberUser.Text = "Remember Me";
+            this.checkBoxRememberUser.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1435, 699);
+            this.Controls.Add(this.checkBoxRememberUser);
             this.Controls.Add(this.webBrowser1);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.label1);
@@ -235,6 +247,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.CheckBox checkBoxRememberUser;
     }
 }
 
