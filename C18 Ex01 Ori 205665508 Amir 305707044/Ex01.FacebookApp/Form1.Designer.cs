@@ -30,18 +30,18 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.listBoxGroups = new System.Windows.Forms.ListBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonLogOut = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.buttonPostStatus = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button4 = new System.Windows.Forms.Button();
+            this.buttonFetchGroups = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.textBoxTitle = new System.Windows.Forms.TextBox();
             this.buttonPostPhoto = new System.Windows.Forms.Button();
             this.buttonChoosePhoto = new System.Windows.Forms.Button();
             this.pictureBoxPostPhotoPreviewImage = new System.Windows.Forms.PictureBox();
             this.labelPostPhotoPreview = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
+            this.buttonPostLink = new System.Windows.Forms.Button();
             this.checkBoxRememberUser = new System.Windows.Forms.CheckBox();
             this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.textBoxDescriptionOfGroup = new System.Windows.Forms.TextBox();
@@ -62,7 +62,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "login";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.buttonLoginClick);
             // 
             // listBoxGroups
             // 
@@ -76,16 +76,17 @@
             this.listBoxGroups.TabIndex = 2;
             this.listBoxGroups.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
-            // button2
+            // buttonLogOut
             // 
-            this.button2.Location = new System.Drawing.Point(1872, 141);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(112, 58);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "log out";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonLogOut.Enabled = false;
+            this.buttonLogOut.Location = new System.Drawing.Point(1872, 141);
+            this.buttonLogOut.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonLogOut.Name = "buttonLogOut";
+            this.buttonLogOut.Size = new System.Drawing.Size(112, 58);
+            this.buttonLogOut.TabIndex = 3;
+            this.buttonLogOut.Text = "log out";
+            this.buttonLogOut.UseVisualStyleBackColor = true;
+            this.buttonLogOut.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
             // pictureBox1
             // 
@@ -98,16 +99,17 @@
             this.pictureBox1.TabIndex = 4;
             this.pictureBox1.TabStop = false;
             // 
-            // button3
+            // buttonPostStatus
             // 
-            this.button3.Location = new System.Drawing.Point(1220, 72);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(328, 59);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "post status";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.buttonPostStatus.Enabled = false;
+            this.buttonPostStatus.Location = new System.Drawing.Point(1220, 72);
+            this.buttonPostStatus.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonPostStatus.Name = "buttonPostStatus";
+            this.buttonPostStatus.Size = new System.Drawing.Size(328, 59);
+            this.buttonPostStatus.TabIndex = 5;
+            this.buttonPostStatus.Text = "post status";
+            this.buttonPostStatus.UseVisualStyleBackColor = true;
+            this.buttonPostStatus.Click += new System.EventHandler(this.buttonPostStatus_click);
             // 
             // textBox2
             // 
@@ -120,16 +122,17 @@
             this.textBox2.TabIndex = 6;
             this.textBox2.Text = "enter post here";
             // 
-            // button4
+            // buttonFetchGroups
             // 
-            this.button4.Location = new System.Drawing.Point(608, 41);
-            this.button4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(170, 55);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Fetch Groups";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.buttonFetchGroups.Enabled = false;
+            this.buttonFetchGroups.Location = new System.Drawing.Point(608, 41);
+            this.buttonFetchGroups.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonFetchGroups.Name = "buttonFetchGroups";
+            this.buttonFetchGroups.Size = new System.Drawing.Size(170, 55);
+            this.buttonFetchGroups.TabIndex = 7;
+            this.buttonFetchGroups.Text = "Fetch Groups";
+            this.buttonFetchGroups.UseVisualStyleBackColor = true;
+            this.buttonFetchGroups.Click += new System.EventHandler(this.buttonFetchGroups_Click);
             // 
             // openFileDialog1
             // 
@@ -155,10 +158,11 @@
             this.buttonPostPhoto.TabIndex = 8;
             this.buttonPostPhoto.Text = "Post Photo";
             this.buttonPostPhoto.UseVisualStyleBackColor = true;
-            this.buttonPostPhoto.Click += new System.EventHandler(this.button5_Click);
+            this.buttonPostPhoto.Click += new System.EventHandler(this.buttonPostPhoto_Click);
             // 
             // buttonChoosePhoto
             // 
+            this.buttonChoosePhoto.Enabled = false;
             this.buttonChoosePhoto.Location = new System.Drawing.Point(1658, 427);
             this.buttonChoosePhoto.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonChoosePhoto.Name = "buttonChoosePhoto";
@@ -190,26 +194,28 @@
             this.labelPostPhotoPreview.TabIndex = 13;
             this.labelPostPhotoPreview.Text = "Preview";
             // 
-            // button7
+            // buttonPostLink
             // 
-            this.button7.Location = new System.Drawing.Point(902, 716);
-            this.button7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(170, 66);
-            this.button7.TabIndex = 14;
-            this.button7.Text = "Post Link";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.buttonPostLink.Location = new System.Drawing.Point(902, 716);
+            this.buttonPostLink.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonPostLink.Name = "buttonPostLink";
+            this.buttonPostLink.Size = new System.Drawing.Size(170, 66);
+            this.buttonPostLink.TabIndex = 14;
+            this.buttonPostLink.Text = "Post Link";
+            this.buttonPostLink.UseVisualStyleBackColor = true;
+            this.buttonPostLink.Click += new System.EventHandler(this.button7_Click);
             // 
             // checkBoxRememberUser
             // 
             this.checkBoxRememberUser.AutoSize = true;
+            this.checkBoxRememberUser.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.checkBoxRememberUser.Enabled = false;
             this.checkBoxRememberUser.Location = new System.Drawing.Point(1248, 133);
             this.checkBoxRememberUser.Name = "checkBoxRememberUser";
             this.checkBoxRememberUser.Size = new System.Drawing.Size(184, 29);
             this.checkBoxRememberUser.TabIndex = 16;
             this.checkBoxRememberUser.Text = "Remember Me";
-            this.checkBoxRememberUser.UseVisualStyleBackColor = true;
+            this.checkBoxRememberUser.UseVisualStyleBackColor = false;
             // 
             // webBrowser
             // 
@@ -252,6 +258,12 @@
             // comboBoxWebBrowser
             // 
             this.comboBoxWebBrowser.FormattingEnabled = true;
+            this.comboBoxWebBrowser.Items.AddRange(new object[] {
+            "http://www.google.com/",
+            "http://www.facebook.com/",
+            "http://www.youtube.com/",
+            "http://www.giphy.com/",
+            "http://www.soundcloud.com/"});
             this.comboBoxWebBrowser.Location = new System.Drawing.Point(28, 242);
             this.comboBoxWebBrowser.Name = "comboBoxWebBrowser";
             this.comboBoxWebBrowser.Size = new System.Drawing.Size(1161, 33);
@@ -282,17 +294,17 @@
             this.Controls.Add(this.textBoxDescriptionOfGroup);
             this.Controls.Add(this.webBrowser);
             this.Controls.Add(this.checkBoxRememberUser);
-            this.Controls.Add(this.button7);
+            this.Controls.Add(this.buttonPostLink);
             this.Controls.Add(this.labelPostPhotoPreview);
             this.Controls.Add(this.pictureBoxPostPhotoPreviewImage);
             this.Controls.Add(this.buttonChoosePhoto);
             this.Controls.Add(this.textBoxTitle);
             this.Controls.Add(this.buttonPostPhoto);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.buttonFetchGroups);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.buttonPostStatus);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonLogOut);
             this.Controls.Add(this.listBoxGroups);
             this.Controls.Add(this.button1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -309,18 +321,18 @@
 
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListBox listBoxGroups;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonLogOut;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonPostStatus;
         private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button buttonFetchGroups;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TextBox textBoxTitle;
         private System.Windows.Forms.Button buttonPostPhoto;
         private System.Windows.Forms.Button buttonChoosePhoto;
         private System.Windows.Forms.PictureBox pictureBoxPostPhotoPreviewImage;
         private System.Windows.Forms.Label labelPostPhotoPreview;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button buttonPostLink;
 
         private System.Windows.Forms.WebBrowser webBrowser;
         private System.Windows.Forms.TextBox textBoxDescriptionOfGroup;

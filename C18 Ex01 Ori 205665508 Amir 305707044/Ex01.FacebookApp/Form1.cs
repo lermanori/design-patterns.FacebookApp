@@ -45,7 +45,10 @@ namespace Ex01.FacebookApp
             {
                 foreach(string s in m_LastSettings.ComboBoxWebBrowserItems )
                 {
+                    if(!comboBoxWebBrowser.Items.Contains(s))
+                    {
                     comboBoxWebBrowser.Items.Add(s);
+                    }
                 }
             }
             base.OnShown(e);
@@ -66,8 +69,8 @@ namespace Ex01.FacebookApp
             base.OnFormClosing(e);
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
+        private void buttonLoginClick(object sender, EventArgs e)
+        { 
             login();
         }
 
@@ -75,6 +78,29 @@ namespace Ex01.FacebookApp
         {
             m_loginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
             fetchLoggedInUser();
+            if(m_loginResult.LoggedInUser != null)
+            {
+                enableLoggedInFeatures();
+            }
+        }
+
+        private void enableLoggedInFeatures()
+        {
+            buttonChoosePhoto.Enabled = true;
+            buttonPostStatus.Enabled = true;
+            checkBoxRememberUser.Enabled = true;
+            buttonPostLink.Enabled = true;
+            buttonLogOut.Enabled = true;
+            buttonFetchGroups.Enabled = true;
+        }
+        private void disableLoggedInFeatures()
+        {
+            buttonChoosePhoto.Enabled = false;
+            buttonPostStatus.Enabled = false;
+            checkBoxRememberUser.Enabled = false;
+            buttonPostLink.Enabled = false;
+            buttonLogOut.Enabled = false;
+            buttonFetchGroups.Enabled = false;
         }
 
         private void fetchLoggedInUser()
@@ -92,6 +118,7 @@ namespace Ex01.FacebookApp
         public void on_logOut()
         {
             FacebookService.Logout(ShowByeMsg);
+            disableLoggedInFeatures();
         }
 
         private void ShowByeMsg()
@@ -108,12 +135,12 @@ namespace Ex01.FacebookApp
             textBoxDescriptionOfGroup.Text = g.Description;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonLogout_Click(object sender, EventArgs e)
         {
             on_logOut();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void buttonPostStatus_click(object sender, EventArgs e)
         {
             postStatus(textBox2.Text);
             textBox2.Text = "enter post here";
@@ -124,14 +151,9 @@ namespace Ex01.FacebookApp
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void buttonFetchGroups_Click(object sender, EventArgs e)
         {
-            if (m_currentUser != null)
-            {
-
                 m_currentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
-
-
                 FacebookObjectCollection<Group> groupCollection = m_currentUser.Groups;
 
                 foreach (Group g in groupCollection)
@@ -143,17 +165,10 @@ namespace Ex01.FacebookApp
                 {
                     listBoxGroups.Items.Add("no items to show");
                 }
-            }
-            else
-            {
-                MessageBox.Show("not logged in");
-            }
-
-
 
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private void buttonPostPhoto_Click(object sender, EventArgs e)
         {
             string title = string.Empty;
             if (textBoxTitle.Text != k_EnterTitleMsg)
