@@ -171,7 +171,7 @@
             this.buttonChoosePhoto.TabIndex = 11;
             this.buttonChoosePhoto.Text = "Choose Photo";
             this.buttonChoosePhoto.UseVisualStyleBackColor = true;
-            this.buttonChoosePhoto.Click += new System.EventHandler(this.button6_Click);
+            this.buttonChoosePhoto.Click += new System.EventHandler(this.buttonUploadPhoto_Click);
             // 
             // pictureBoxPostPhotoPreviewImage
             // 
@@ -204,7 +204,7 @@
             this.buttonPostLink.TabIndex = 14;
             this.buttonPostLink.Text = "Post Link";
             this.buttonPostLink.UseVisualStyleBackColor = true;
-            this.buttonPostLink.Click += new System.EventHandler(this.button7_Click);
+            this.buttonPostLink.Click += new System.EventHandler(this.buttonPostLink_Click);
             // 
             // checkBoxRememberUser
             // 

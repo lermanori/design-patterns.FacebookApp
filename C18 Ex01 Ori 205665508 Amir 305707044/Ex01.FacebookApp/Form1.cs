@@ -24,7 +24,7 @@ namespace Ex01.FacebookApp
 
         string m_photoPath = string.Empty;
         User m_currentUser;
-
+        //ui
         public Form1()
         {
             m_LastSettings = FacebookSettings.LoadFromFile();
@@ -33,7 +33,7 @@ namespace Ex01.FacebookApp
             this.Size = m_LastSettings.LastWindowSize;
 
         }
-
+        //ui
         protected override void OnShown(EventArgs e)
         {
             if (m_LastSettings.RememberUser && !string.IsNullOrEmpty(m_LastSettings.LastAccessToken))
@@ -54,11 +54,11 @@ namespace Ex01.FacebookApp
             }
             base.OnShown(e);
         }
+        //ui
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             if(m_currentUser!= null)
             {
-
             m_LastSettings.LastWindowSize = this.Size;
             m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
             m_LastSettings.LastAccessToken = m_loginResult.AccessToken;
@@ -73,22 +73,22 @@ namespace Ex01.FacebookApp
             }
             base.OnFormClosing(e);
         }
-
+        //ui
         private void buttonLoginClick(object sender, EventArgs e)
         { 
             login();
-        }
-
-        private void login()
-        {
-            m_loginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
-            fetchLoggedInUser();
             if(m_loginResult.LoggedInUser != null)
             {
                 enableLoggedInFeatures();
             }
         }
-
+        //logic
+        private void login()
+        {
+            m_loginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
+            fetchLoggedInUser();
+        }
+        //ui
         private void enableLoggedInFeatures()
         {
             buttonChoosePhoto.Enabled = true;
@@ -98,6 +98,7 @@ namespace Ex01.FacebookApp
             buttonLogOut.Enabled = true;
             buttonFetchGroups.Enabled = true;
         }
+        //ui
         private void disableLoggedInFeatures()
         {
             buttonChoosePhoto.Enabled = false;
@@ -107,31 +108,33 @@ namespace Ex01.FacebookApp
             buttonLogOut.Enabled = false;
             buttonFetchGroups.Enabled = false;
         }
-
+        //ui
         private void fetchLoggedInUser()
         {
             m_currentUser = m_loginResult.LoggedInUser;
             pictureBox1.Image = m_currentUser.ImageNormal;
         }
-
-        private void postStatus(string post)
+        //logic
+        public void postStatus(string post)
         {
             m_currentUser.PostStatus(post);
         }
 
+        //ui
         //somethings wrong here
         public void on_logOut()
         {
             FacebookService.Logout(ShowByeMsg);
             disableLoggedInFeatures();
         }
-
+        //ui
         private void ShowByeMsg()
         {
             pictureBox1.Image = null;
             MessageBox.Show("Logged Out!");
         }
 
+        //ui
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             ListBox l = sender as ListBox;
@@ -139,23 +142,19 @@ namespace Ex01.FacebookApp
 
             textBoxDescriptionOfGroup.Text = g.Description;
         }
-
+        //ui
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             on_logOut();
         }
-
+        //ui
         private void buttonPostStatus_click(object sender, EventArgs e)
         {
             postStatus(textBox2.Text);
             textBox2.Text = "enter post here";
         }
-
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-
-        }
-
+        //ui
+        //need to break into logic and ui
         private void buttonFetchGroups_Click(object sender, EventArgs e)
         {
                 m_currentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
@@ -172,7 +171,7 @@ namespace Ex01.FacebookApp
                 }
 
         }
-
+        //ui
         private void buttonPostPhoto_Click(object sender, EventArgs e)
         {
             string title = string.Empty;
@@ -194,7 +193,7 @@ namespace Ex01.FacebookApp
             resetPictureButtons();
 
         }
-
+        //ui
         private void resetPictureButtons()
         {
             pictureBoxPostPhotoPreviewImage.Image = null;
@@ -202,7 +201,8 @@ namespace Ex01.FacebookApp
             buttonPostPhoto.Enabled = false;
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        //ui
+        private void buttonUploadPhoto_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -214,13 +214,13 @@ namespace Ex01.FacebookApp
                 buttonPostPhoto.Enabled = true;
             }
         }
-
+        //ui
         private void textBoxTitle_Click(object sender, EventArgs e)
         {
             textBoxTitle.Text = string.Empty;
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void buttonPostLink_Click(object sender, EventArgs e)
         {
 
             m_currentUser.PostLink(webBrowser.Url.ToString());
