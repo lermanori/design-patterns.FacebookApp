@@ -1,6 +1,6 @@
-﻿namespace Ex01.FacebookApp
+﻿namespace Ex01.FacebookAppWinformsUI
 {
-    partial class Form1
+    partial class FormFacebookApp
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@
             this.buttonLogOut = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonPostStatus = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBoxUploadPost = new System.Windows.Forms.TextBox();
             this.buttonFetchGroups = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.textBoxTitle = new System.Windows.Forms.TextBox();
@@ -74,7 +74,7 @@
             this.listBoxGroups.Name = "listBoxGroups";
             this.listBoxGroups.Size = new System.Drawing.Size(250, 179);
             this.listBoxGroups.TabIndex = 2;
-            this.listBoxGroups.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.listBoxGroups.SelectedIndexChanged += new System.EventHandler(this.listBoxGroups_SelectedIndexChanged);
             // 
             // buttonLogOut
             // 
@@ -113,15 +113,15 @@
             // 
             // textBox2
             // 
-            this.textBox2.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.textBox2.Location = new System.Drawing.Point(1220, 169);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(326, 90);
-            this.textBox2.TabIndex = 6;
-            this.textBox2.Text = "enter post here";
-            this.textBox2.Click += new System.EventHandler(this.textBox2_Click);
+            this.textBoxUploadPost.ForeColor = System.Drawing.SystemColors.MenuText;
+            this.textBoxUploadPost.Location = new System.Drawing.Point(1220, 169);
+            this.textBoxUploadPost.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.textBoxUploadPost.Multiline = true;
+            this.textBoxUploadPost.Name = "textBox2";
+            this.textBoxUploadPost.Size = new System.Drawing.Size(326, 90);
+            this.textBoxUploadPost.TabIndex = 6;
+            this.textBoxUploadPost.Text = "enter post here";
+            this.textBoxUploadPost.Click += new System.EventHandler(this.textBoxUploadPost_Click);
             // 
             // buttonFetchGroups
             // 
@@ -171,7 +171,7 @@
             this.buttonChoosePhoto.TabIndex = 11;
             this.buttonChoosePhoto.Text = "Choose Photo";
             this.buttonChoosePhoto.UseVisualStyleBackColor = true;
-            this.buttonChoosePhoto.Click += new System.EventHandler(this.buttonUploadPhoto_Click);
+            this.buttonChoosePhoto.Click += new System.EventHandler(this.buttonChoosePhoto_Click);
             // 
             // pictureBoxPostPhotoPreviewImage
             // 
@@ -302,7 +302,7 @@
             this.Controls.Add(this.textBoxTitle);
             this.Controls.Add(this.buttonPostPhoto);
             this.Controls.Add(this.buttonFetchGroups);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBoxUploadPost);
             this.Controls.Add(this.buttonPostStatus);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.buttonLogOut);
@@ -325,7 +325,7 @@
         private System.Windows.Forms.Button buttonLogOut;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button buttonPostStatus;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBoxUploadPost;
         private System.Windows.Forms.Button buttonFetchGroups;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.TextBox textBoxTitle;

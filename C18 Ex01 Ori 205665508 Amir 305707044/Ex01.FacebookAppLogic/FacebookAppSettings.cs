@@ -5,16 +5,17 @@ using System.Text;
 using System.Drawing;
 using Newtonsoft.Json;
 using System.IO;
-namespace Ex01.FacebookApp
+
+namespace Ex01.FacebookAppLogic
 {
-    public class FacebookSettings
+    public class FacebookAppSettings 
     {
         public bool RememberUser { get; set; }
         public string LastAccessToken { get; set; }
         public Size LastWindowSize { get; set; }
         public List<string> ComboBoxWebBrowserItems { get; set; }
 
-        private FacebookSettings()
+        private FacebookAppSettings()
         {
             RememberUser = false;
             LastAccessToken = null;
@@ -54,20 +55,20 @@ namespace Ex01.FacebookApp
             }
         }
 
-        public static FacebookSettings LoadFromFile()
+        public static FacebookAppSettings LoadFromFile()
         {
-            FacebookSettings settings = null;
+            FacebookAppSettings settings = null;
             StreamReader fileToLoad = null;
             try
             {
                 fileToLoad = File.OpenText(@"FacebookSettings.json");
                 JsonSerializer serializer = new JsonSerializer();
-                settings = (FacebookSettings)serializer.Deserialize(fileToLoad, typeof(FacebookSettings));
+                settings = (FacebookAppSettings)serializer.Deserialize(fileToLoad, typeof(FacebookAppSettings));
 
             }
             catch
             {
-                settings = new FacebookSettings();
+                settings = new FacebookAppSettings();
             }
             return settings; 
         }
