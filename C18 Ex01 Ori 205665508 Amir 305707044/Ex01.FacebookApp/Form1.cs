@@ -40,6 +40,7 @@ namespace Ex01.FacebookApp
             {
                 m_loginResult = FacebookService.Connect(m_LastSettings.LastAccessToken);
                 fetchLoggedInUser();
+                enableLoggedInFeatures();
             }
             if(m_LastSettings.ComboBoxWebBrowserItems.Count != 0)
             {
@@ -55,6 +56,9 @@ namespace Ex01.FacebookApp
         }
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            if(m_currentUser!= null)
+            {
+
             m_LastSettings.LastWindowSize = this.Size;
             m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
             m_LastSettings.LastAccessToken = m_loginResult.AccessToken;
@@ -66,6 +70,7 @@ namespace Ex01.FacebookApp
                 }
             }
             m_LastSettings.saveToFile();
+            }
             base.OnFormClosing(e);
         }
 
@@ -268,6 +273,11 @@ example:http://www.google.com");
         private void comboBoxWebBrowser_Click(object sender, EventArgs e)
         {
             comboBoxWebBrowser.Text = k_httpOpening;
+        }
+
+        private void textBox2_Click(object sender, EventArgs e)
+        {
+            textBox2.Text = string.Empty;
         }
     }
 }

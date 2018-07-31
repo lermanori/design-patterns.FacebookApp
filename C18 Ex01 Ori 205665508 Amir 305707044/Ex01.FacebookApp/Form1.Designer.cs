@@ -121,6 +121,7 @@
             this.textBox2.Size = new System.Drawing.Size(326, 90);
             this.textBox2.TabIndex = 6;
             this.textBox2.Text = "enter post here";
+            this.textBox2.Click += new System.EventHandler(this.textBox2_Click);
             // 
             // buttonFetchGroups
             // 
