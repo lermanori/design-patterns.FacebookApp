@@ -12,14 +12,12 @@ namespace Ex01.FacebookAppLogic
     {
         public bool RememberUser { get; set; }
         public string LastAccessToken { get; set; }
-        public Size LastWindowSize { get; set; }
         public List<string> ComboBoxWebBrowserItems { get; set; }
 
         private FacebookAppSettings()
         {
             RememberUser = false;
             LastAccessToken = null;
-            LastWindowSize = new Size(1395, 564);
             ComboBoxWebBrowserItems = new List<string>();
         }
 

@@ -33,7 +33,7 @@ namespace Ex01.FacebookAppWinformsUI
 
         string m_photoPath = string.Empty;
         User m_currentUser;
-          
+
 
 
         //ui
@@ -42,7 +42,6 @@ namespace Ex01.FacebookAppWinformsUI
             m_LastSettings = FacebookAppSettings.LoadFromFile();
             InitializeComponent();
             this.checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
-            this.Size = m_LastSettings.LastWindowSize;
         }
 
         //ui
@@ -77,7 +76,6 @@ namespace Ex01.FacebookAppWinformsUI
         {
             if (m_currentUser != null)
             {
-                m_LastSettings.LastWindowSize = this.Size;
                 m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
                 m_LastSettings.LastAccessToken = m_LoginResult.AccessToken;
                 foreach (string s in comboBoxWebBrowser.Items)
@@ -93,6 +91,11 @@ namespace Ex01.FacebookAppWinformsUI
 
         //ui
         private void buttonLoginClick(object sender, EventArgs e)
+        {
+            handleLogin();
+        }
+
+        private void handleLogin()
         {
             m_LoginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
             fetchLoggedInUser();
@@ -159,14 +162,6 @@ namespace Ex01.FacebookAppWinformsUI
 
         }
 
-        //ui --> need to give meaningful names
-        private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ListBox l = sender as ListBox;
-            Group g = l.SelectedItem as Group;
-            textBoxDescriptionOfGroup.Text = g.Description;
-        }
-
         //ui
         private void buttonPostStatus_click(object sender, EventArgs e)
         {
@@ -206,6 +201,14 @@ namespace Ex01.FacebookAppWinformsUI
             }
 
         }
+        //ui --> need to give meaningful names
+        private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ListBox l = sender as ListBox;
+            Group g = l.SelectedItem as Group;
+            textBoxDescriptionOfGroup.Text = g.Description;
+        }
+
 
         //ui
         private void buttonPostPhoto_Click(object sender, EventArgs e)
@@ -314,6 +317,60 @@ namespace Ex01.FacebookAppWinformsUI
         private void textBoxUploadPost_Click(object sender, EventArgs e)
         {
             textBoxUploadPost.Text = string.Empty;
+        }
+
+
+
+        private void buttonFetchFriends_Click(object sender, EventArgs e)
+        {
+            fetchUserFriends(); 
+        }
+
+        private void fetchUserFriends()
+        {
+            m_currentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            listBoxFriends.Items.Clear();
+            listBoxFriends.DisplayMember = "Name";
+
+            FacebookObjectCollection<User> friendsCollection = m_currentUser.Friends;
+
+            foreach (User friend in friendsCollection)
+            {
+                listBoxFriends.Items.Add(friend);
+                friend.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
+            }
+
+            if (listBoxFriends.Items.Count == 0)
+            {
+                listBoxFriends.Items.Add(k_EmptyListMessage);
+            }
+
+        }
+
+        private void listBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            User friend = new User();
+            StringBuilder bio = new StringBuilder();
+
+            if(listBoxFriends.SelectedItems.Count == 1)
+            {
+                friend = listBoxFriends.SelectedItem as User;
+                getBio(friend);
+            }
+            
+            textBoxFriendBio.Text = bio.ToString() ;
+        }
+
+        private StringBuilder getBio(User i_Friend)
+        {
+            StringBuilder bio = new StringBuilder();
+            bio.AppendLine(i_Friend.Name);
+           // bio.AppendLine(i_Friend.Location.ToString());
+            bio.AppendLine(i_Friend.Email);
+          //  bio.AppendLine(i_Friend.Hometown.ToString());
+
+            return bio;
         }
     }
 }
