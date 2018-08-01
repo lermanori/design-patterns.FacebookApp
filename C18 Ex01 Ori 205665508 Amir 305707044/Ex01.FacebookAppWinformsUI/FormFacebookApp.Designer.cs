@@ -52,10 +52,10 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textBoxFriendBio = new System.Windows.Forms.TextBox();
             this.buttonFetchFriends = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.listBoxFriends = new System.Windows.Forms.ListBox();
-            this.textBoxFriendBio = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -195,6 +195,7 @@
             // 
             // buttonPostLink
             // 
+            this.buttonPostLink.Enabled = false;
             this.buttonPostLink.Location = new System.Drawing.Point(644, 231);
             this.buttonPostLink.Name = "buttonPostLink";
             this.buttonPostLink.Size = new System.Drawing.Size(124, 28);
@@ -341,6 +342,15 @@
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // textBoxFriendBio
+            // 
+            this.textBoxFriendBio.Location = new System.Drawing.Point(920, 313);
+            this.textBoxFriendBio.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxFriendBio.Multiline = true;
+            this.textBoxFriendBio.Name = "textBoxFriendBio";
+            this.textBoxFriendBio.Size = new System.Drawing.Size(204, 164);
+            this.textBoxFriendBio.TabIndex = 17;
+            // 
             // buttonFetchFriends
             // 
             this.buttonFetchFriends.Location = new System.Drawing.Point(784, 44);
@@ -369,15 +379,6 @@
             this.listBoxFriends.Size = new System.Drawing.Size(212, 244);
             this.listBoxFriends.TabIndex = 0;
             this.listBoxFriends.SelectedIndexChanged += new System.EventHandler(this.listBoxFriends_SelectedIndexChanged);
-            // 
-            // textBoxFriendBio
-            // 
-            this.textBoxFriendBio.Location = new System.Drawing.Point(920, 313);
-            this.textBoxFriendBio.Margin = new System.Windows.Forms.Padding(2);
-            this.textBoxFriendBio.Multiline = true;
-            this.textBoxFriendBio.Name = "textBoxFriendBio";
-            this.textBoxFriendBio.Size = new System.Drawing.Size(204, 164);
-            this.textBoxFriendBio.TabIndex = 17;
             // 
             // FormFacebookApp
             // 

@@ -114,6 +114,7 @@ namespace Ex01.FacebookAppWinformsUI
             buttonPostLink.Enabled = true;
             buttonLogOut.Enabled = true;
             buttonFetchGroups.Enabled = true;
+            buttonPostLink.Enabled = true;
         }
         //ui
         private void disableLoggedInFeatures()
@@ -124,6 +125,7 @@ namespace Ex01.FacebookAppWinformsUI
             buttonPostLink.Enabled = false;
             buttonLogOut.Enabled = false;
             buttonFetchGroups.Enabled = false;
+            buttonPostLink.Enabled = false;
         }
         //ui
         private void fetchLoggedInUser()
