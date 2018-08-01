@@ -350,13 +350,13 @@ namespace Ex01.FacebookAppWinformsUI
         private void listBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            User friend = new User();
+            User friend;
             StringBuilder bio = new StringBuilder();
 
             if(listBoxFriends.SelectedItems.Count == 1)
             {
                 friend = listBoxFriends.SelectedItem as User;
-                getBio(friend);
+                bio = getBio(friend);
             }
             
             textBoxFriendBio.Text = bio.ToString() ;
@@ -368,7 +368,13 @@ namespace Ex01.FacebookAppWinformsUI
             bio.AppendLine(i_Friend.Name);
            // bio.AppendLine(i_Friend.Location.ToString());
             bio.AppendLine(i_Friend.Email);
-          //  bio.AppendLine(i_Friend.Hometown.ToString());
+            //  bio.AppendLine(i_Friend.Hometown.ToString());
+            bio.AppendLine("(Friends with: ");
+            foreach (User fof in i_Friend.Friends)
+            {
+                bio.AppendFormat("{0}, ", fof.FirstName);
+            }
+            bio.AppendLine(")");
 
             return bio;
         }
