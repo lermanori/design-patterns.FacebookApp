@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace Ex01.FacebookApp
 {
-    public partial class Form1 : Form
+    public partial class FormFacebookApp : Form
     {
         private readonly string k_EnterTitleMsg = "Enter Title";
         private readonly string k_httpOpening = @"http://www.";
@@ -25,7 +25,7 @@ namespace Ex01.FacebookApp
         string m_photoPath = string.Empty;
         User m_currentUser;
         //ui
-        public Form1()
+        public FormFacebookApp()
         {
             m_LastSettings = FacebookSettings.LoadFromFile();
             InitializeComponent();

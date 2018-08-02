@@ -5,20 +5,21 @@ using System.Text;
 using System.Drawing;
 using Newtonsoft.Json;
 using System.IO;
-namespace Ex01.FacebookApp
+
+namespace Ex01.FacebookAppLogic
 {
-    public class FacebookSettings
+    public class FacebookAppSettings 
     {
+        private static readonly string k_SettingsFilePath = @"FacebookSettings.json";
+
         public bool RememberUser { get; set; }
         public string LastAccessToken { get; set; }
-        public Size LastWindowSize { get; set; }
         public List<string> ComboBoxWebBrowserItems { get; set; }
 
-        private FacebookSettings()
+        private FacebookAppSettings()
         {
             RememberUser = false;
             LastAccessToken = null;
-            LastWindowSize = new Size(1395, 564);
             ComboBoxWebBrowserItems = new List<string>();
         }
 
@@ -45,7 +46,7 @@ namespace Ex01.FacebookApp
             //    writer.Dispose();
             //}
 
-            using (FileStream fileToSave = File.Open(@"FacebookSettings.json", FileMode.Create, FileAccess.Write))
+            using (FileStream fileToSave = File.Open(k_SettingsFilePath, FileMode.Create, FileAccess.Write))
             using (StreamWriter writer = new StreamWriter(fileToSave))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -54,22 +55,28 @@ namespace Ex01.FacebookApp
             }
         }
 
-        public static FacebookSettings LoadFromFile()
+        public static FacebookAppSettings LoadFromFile()
         {
-            FacebookSettings settings = null;
+            FacebookAppSettings settings = null;
             StreamReader fileToLoad = null;
             try
             {
-                fileToLoad = File.OpenText(@"FacebookSettings.json");
+                fileToLoad = File.OpenText(k_SettingsFilePath);
                 JsonSerializer serializer = new JsonSerializer();
-                settings = (FacebookSettings)serializer.Deserialize(fileToLoad, typeof(FacebookSettings));
+                settings = (FacebookAppSettings)serializer.Deserialize(fileToLoad, typeof(FacebookAppSettings));
 
             }
             catch
             {
-                settings = new FacebookSettings();
+                settings = new FacebookAppSettings();
             }
             return settings; 
         }
+
+        public static void DeleteFile()
+        {
+            File.Delete(k_SettingsFilePath);
+        }
+
     }
 }
