@@ -54,13 +54,16 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.textBoxFriendBio = new System.Windows.Forms.TextBox();
             this.buttonFetchFriends = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.listBoxFriends = new System.Windows.Forms.ListBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.labelFriendBio = new System.Windows.Forms.Label();
+            this.gMapUserFriends = new GMap.NET.WindowsForms.GMapControl();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -330,10 +333,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.textBoxFriendBio);
-            this.tabPage2.Controls.Add(this.buttonFetchFriends);
-            this.tabPage2.Controls.Add(this.button2);
-            this.tabPage2.Controls.Add(this.listBoxFriends);
+            this.tabPage2.Controls.Add(this.panel1);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -344,16 +344,16 @@
             // 
             // textBoxFriendBio
             // 
-            this.textBoxFriendBio.Location = new System.Drawing.Point(920, 313);
+            this.textBoxFriendBio.Location = new System.Drawing.Point(19, 248);
             this.textBoxFriendBio.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxFriendBio.Multiline = true;
             this.textBoxFriendBio.Name = "textBoxFriendBio";
-            this.textBoxFriendBio.Size = new System.Drawing.Size(204, 164);
+            this.textBoxFriendBio.Size = new System.Drawing.Size(212, 164);
             this.textBoxFriendBio.TabIndex = 17;
             // 
             // buttonFetchFriends
             // 
-            this.buttonFetchFriends.Location = new System.Drawing.Point(784, 44);
+            this.buttonFetchFriends.Location = new System.Drawing.Point(237, 16);
             this.buttonFetchFriends.Name = "buttonFetchFriends";
             this.buttonFetchFriends.Size = new System.Drawing.Size(114, 45);
             this.buttonFetchFriends.TabIndex = 2;
@@ -361,24 +361,64 @@
             this.buttonFetchFriends.UseVisualStyleBackColor = true;
             this.buttonFetchFriends.Click += new System.EventHandler(this.buttonFetchFriends_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(0, 0);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // listBoxFriends
             // 
             this.listBoxFriends.FormattingEnabled = true;
             this.listBoxFriends.ItemHeight = 16;
-            this.listBoxFriends.Location = new System.Drawing.Point(920, 44);
+            this.listBoxFriends.Location = new System.Drawing.Point(19, 16);
             this.listBoxFriends.Name = "listBoxFriends";
-            this.listBoxFriends.Size = new System.Drawing.Size(212, 244);
+            this.listBoxFriends.Size = new System.Drawing.Size(212, 164);
             this.listBoxFriends.TabIndex = 0;
             this.listBoxFriends.SelectedIndexChanged += new System.EventHandler(this.listBoxFriends_SelectedIndexChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.gMapUserFriends);
+            this.panel1.Controls.Add(this.labelFriendBio);
+            this.panel1.Controls.Add(this.textBoxFriendBio);
+            this.panel1.Controls.Add(this.listBoxFriends);
+            this.panel1.Controls.Add(this.buttonFetchFriends);
+            this.panel1.Location = new System.Drawing.Point(7, 6);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1160, 557);
+            this.panel1.TabIndex = 18;
+            // 
+            // labelFriendBio
+            // 
+            this.labelFriendBio.AutoSize = true;
+            this.labelFriendBio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelFriendBio.Location = new System.Drawing.Point(16, 228);
+            this.labelFriendBio.Name = "labelFriendBio";
+            this.labelFriendBio.Size = new System.Drawing.Size(155, 18);
+            this.labelFriendBio.TabIndex = 20;
+            this.labelFriendBio.Text = "Selected Friend Bio";
+            // 
+            // gMapUserFriends
+            // 
+            this.gMapUserFriends.Bearing = 0F;
+            this.gMapUserFriends.CanDragMap = true;
+            this.gMapUserFriends.EmptyTileColor = System.Drawing.Color.Navy;
+            this.gMapUserFriends.GrayScaleMode = false;
+            this.gMapUserFriends.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.gMapUserFriends.LevelsKeepInMemmory = 5;
+            this.gMapUserFriends.Location = new System.Drawing.Point(508, 98);
+            this.gMapUserFriends.MarkersEnabled = true;
+            this.gMapUserFriends.MaxZoom = 18;
+            this.gMapUserFriends.MinZoom = 2;
+            this.gMapUserFriends.MouseWheelZoomEnabled = true;
+            this.gMapUserFriends.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.gMapUserFriends.Name = "gMapUserFriends";
+            this.gMapUserFriends.NegativeMode = false;
+            this.gMapUserFriends.PolygonsEnabled = true;
+            this.gMapUserFriends.RetryLoadTile = 0;
+            this.gMapUserFriends.RoutesEnabled = true;
+            this.gMapUserFriends.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.gMapUserFriends.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.gMapUserFriends.ShowTileGridLines = true;
+            this.gMapUserFriends.Size = new System.Drawing.Size(308, 271);
+            this.gMapUserFriends.TabIndex = 21;
+            this.gMapUserFriends.Zoom = 5D;
             // 
             // FormFacebookApp
             // 
@@ -397,7 +437,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -431,9 +472,11 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button buttonFetchFriends;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ListBox listBoxFriends;
         private System.Windows.Forms.TextBox textBoxFriendBio;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label labelFriendBio;
+        private GMap.NET.WindowsForms.GMapControl gMapUserFriends;
     }
 }
 

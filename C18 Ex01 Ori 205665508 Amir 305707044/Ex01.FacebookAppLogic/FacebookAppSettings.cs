@@ -10,6 +10,8 @@ namespace Ex01.FacebookAppLogic
 {
     public class FacebookAppSettings 
     {
+        private static readonly string k_SettingsFilePath = @"FacebookSettings.json";
+
         public bool RememberUser { get; set; }
         public string LastAccessToken { get; set; }
         public List<string> ComboBoxWebBrowserItems { get; set; }
@@ -44,7 +46,7 @@ namespace Ex01.FacebookAppLogic
             //    writer.Dispose();
             //}
 
-            using (FileStream fileToSave = File.Open(@"FacebookSettings.json", FileMode.Create, FileAccess.Write))
+            using (FileStream fileToSave = File.Open(k_SettingsFilePath, FileMode.Create, FileAccess.Write))
             using (StreamWriter writer = new StreamWriter(fileToSave))
             {
                 JsonSerializer serializer = new JsonSerializer();
@@ -59,7 +61,7 @@ namespace Ex01.FacebookAppLogic
             StreamReader fileToLoad = null;
             try
             {
-                fileToLoad = File.OpenText(@"FacebookSettings.json");
+                fileToLoad = File.OpenText(k_SettingsFilePath);
                 JsonSerializer serializer = new JsonSerializer();
                 settings = (FacebookAppSettings)serializer.Deserialize(fileToLoad, typeof(FacebookAppSettings));
 
@@ -70,5 +72,11 @@ namespace Ex01.FacebookAppLogic
             }
             return settings; 
         }
+
+        public static void DeleteFile()
+        {
+            File.Delete(k_SettingsFilePath);
+        }
+
     }
 }

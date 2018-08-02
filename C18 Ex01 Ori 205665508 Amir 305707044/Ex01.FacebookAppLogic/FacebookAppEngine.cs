@@ -11,12 +11,18 @@ namespace Ex01.FacebookAppLogic
 {
     public class FacebookAppEngine
     {
+        
         private LoginResult m_LoginResult = null;
         private User m_CurrentUser = null;
+        private readonly string k_AppID = "273882356720887";
+        private readonly string k_PermissionsNeeded = @"email, user_birthday, user_hometown, user_location, user_likes, user_events, user_photos, user_videos, 
+                                                        user_friends, user_tagged_places, user_posts, user_gender, user_link, publish_video, 
+                                                        groups_access_member_info, public_profile ";
 
         public void Login()
         {
-            m_LoginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
+            m_LoginResult = FacebookService.Login(k_AppID, k_PermissionsNeeded);
+          //  m_LoginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
             m_CurrentUser = m_LoginResult.LoggedInUser;
         }
         public void Connect(string i_AccessToken)
@@ -58,9 +64,9 @@ namespace Ex01.FacebookAppLogic
         private User findUserByName(string i_FriendName)
         {
             User userToFind = null;
-            foreach(User user in m_CurrentUser.Friends)
+            foreach (User user in m_CurrentUser.Friends)
             {
-                if(user.Name == i_FriendName)
+                if (user.Name == i_FriendName)
                 {
                     userToFind = user;
                     break;
@@ -97,7 +103,7 @@ namespace Ex01.FacebookAppLogic
 
         public void refetchUser()
         {
-            m_CurrentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
+            m_CurrentUser.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
         }
 
         public List<string> GetUserGroups()
@@ -126,7 +132,7 @@ namespace Ex01.FacebookAppLogic
             Group groupToFind = null;
             foreach (Group group in m_CurrentUser.Groups)
             {
-                if(group.Name == i_SelectedGroupName)
+                if (group.Name == i_SelectedGroupName)
                 {
                     groupToFind = group;
                     break;
@@ -158,7 +164,7 @@ namespace Ex01.FacebookAppLogic
         {
             List<string> listOfUserFriends = new List<string>();
             refetchUser();
-            foreach(User friend in m_CurrentUser.Friends)
+            foreach (User friend in m_CurrentUser.Friends)
             {
                 listOfUserFriends.Add(friend.Name.ToString());
                 friend.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);

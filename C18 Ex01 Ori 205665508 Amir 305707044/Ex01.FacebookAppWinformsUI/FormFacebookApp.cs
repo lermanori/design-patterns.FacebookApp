@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using Ex01.FacebookAppLogic;
+using GMap.NET.MapProviders;
 
 
 namespace Ex01.FacebookAppWinformsUI
@@ -23,6 +24,7 @@ namespace Ex01.FacebookAppWinformsUI
         private readonly string k_IllegalFileMessage = "Must Choose A legal File!";
         private readonly string k_EnterValidURLMessage = "Insert a valid http format url." + Environment.NewLine + @"example:http://www.google.com";
         private readonly string k_httpOpening = @"http://www.";
+        private readonly string k_FailedAutoConnectMessage = "Auto Login Failed, Please Login Again. {0}Reason: {1}";
 
         // LoginResult m_LoginResult;
         // User m_currentUser;
@@ -34,8 +36,17 @@ namespace Ex01.FacebookAppWinformsUI
         //ui
         public FormFacebookApp()
         {
+            loadSettingsAndCreateForm();
+
+        }
+
+        private void loadSettingsAndCreateForm()
+        {
             m_LastSettings = FacebookAppSettings.LoadFromFile();
             InitializeComponent();
+            gMapUserFriends.MapProvider = GMapProviders.GoogleMap;
+            gMapUserFriends.SetPositionByKeywords("Tel Aviv, Israel");
+            //gMapUserFriends.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
             this.checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
         }
 
@@ -50,9 +61,17 @@ namespace Ex01.FacebookAppWinformsUI
         {
             if (m_LastSettings.RememberUser && !string.IsNullOrEmpty(m_LastSettings.LastAccessToken))
             {
-                m_FacebookApp.Connect(m_LastSettings.LastAccessToken);
+                try
+                {
+                    m_FacebookApp.Connect(m_LastSettings.LastAccessToken);
+                    populateUIWithUserInfo();
+                }
+                catch (Exception ex)
+                {
+                    FacebookAppSettings.DeleteFile();
+                    MessageBox.Show(string.Format(k_FailedAutoConnectMessage, Environment.NewLine, ex.Message));
+                }
                 //  m_LoginResult = FacebookService.Connect(m_LastSettings.LastAccessToken);
-                populateUIWithUserInfo();
             }
         }
         private void populateUIWithUserInfo()
