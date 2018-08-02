@@ -11,30 +11,33 @@ namespace Ex01.FacebookAppLogic
 {
     public class FacebookAppEngine
     {
-        
-        private LoginResult m_LoginResult = null;
-        private User m_CurrentUser = null;
         private readonly string k_AppID = "273882356720887";
         private readonly string k_PermissionsNeeded = @"email, user_birthday, user_hometown, user_location, user_likes, user_events, user_photos, user_videos, 
                                                         user_friends, user_tagged_places, user_posts, user_gender, user_link, publish_video, 
                                                         groups_access_member_info, public_profile ";
 
+
+        private LoginResult m_LoginResult = null;
+        public User CurrentUser { get; private set; }
+        //private User m_CurrentUser = null;
+        public string UserProfilePictureURL { get; private set; }
+
+
         public void Login()
         {
             m_LoginResult = FacebookService.Login(k_AppID, k_PermissionsNeeded);
-          //  m_LoginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
-            m_CurrentUser = m_LoginResult.LoggedInUser;
+            initializeMembersAfterSuccessfulConnection();
         }
         public void Connect(string i_AccessToken)
         {
             m_LoginResult = FacebookService.Connect(i_AccessToken);
-            m_CurrentUser = m_LoginResult.LoggedInUser;
+            initializeMembersAfterSuccessfulConnection();
         }
 
-        public User CurrentUser
+        private void initializeMembersAfterSuccessfulConnection()
         {
-            get { return m_CurrentUser; }
-            private set { m_CurrentUser = value; }
+            CurrentUser = m_LoginResult.LoggedInUser;
+            UserProfilePictureURL = CurrentUser.PictureNormalURL;
         }
 
         public string GetAccessToken()
@@ -42,58 +45,41 @@ namespace Ex01.FacebookAppLogic
             return m_LoginResult.AccessToken;
         }
 
-        public StringBuilder GetUserBio(string o_FriendName)
-        {
-            StringBuilder bio = new StringBuilder();
-            User friendToGet = findUserByName(o_FriendName);
+        //public StringBuilder GetUserBio(string o_FriendName)
+        //{
+        //    StringBuilder bio = new StringBuilder();
+        //    User friendToGet = findUserByName(o_FriendName);
 
-            bio.AppendLine(friendToGet.Name);
-            // bio.AppendLine(i_Friend.Location.ToString());
-            bio.AppendLine(friendToGet.Email);
-            //  bio.AppendLine(i_Friend.Hometown.ToString());
-            bio.AppendLine("(Friends with: ");
-            foreach (User fof in friendToGet.Friends)
-            {
-                bio.AppendFormat("{0}, ", fof.FirstName);
-            }
-            bio.AppendLine(")");
+        //    bio.AppendLine(friendToGet.Name);
+        //    // bio.AppendLine(i_Friend.Location.ToString());
+        //    bio.AppendLine(friendToGet.Email);
+        //    //  bio.AppendLine(i_Friend.Hometown.ToString());
+        //    bio.AppendLine("(Friends with: ");
+        //    foreach (User fof in friendToGet.Friends)
+        //    {
+        //        bio.AppendFormat("{0}, ", fof.FirstName);
+        //    }
+        //    bio.AppendLine(")");
 
-            return bio;
-        }
+        //    return bio;
+        //}
 
-        private User findUserByName(string i_FriendName)
-        {
-            User userToFind = null;
-            foreach (User user in m_CurrentUser.Friends)
-            {
-                if (user.Name == i_FriendName)
-                {
-                    userToFind = user;
-                    break;
-                }
-            }
-            return userToFind;
-        }
 
         public void Logout()
         {
-            FacebookService.Logout(ResetDataAfterLogout);
+            FacebookService.Logout(resetDataAfterLogout);
         }
 
-        private void ResetDataAfterLogout()
+        private void resetDataAfterLogout()
         {
-            m_CurrentUser = null;
+            CurrentUser = null;
             m_LoginResult = null;
+            UserProfilePictureURL = null;
         }
 
         public void PostStatus(string i_StatusToPost)
         {
-            m_CurrentUser.PostStatus(i_StatusToPost);
-        }
-
-        public Image GetUserNormalImage()
-        {
-            return m_CurrentUser.ImageNormal;
+            CurrentUser.PostStatus(i_StatusToPost);
         }
 
         public bool IsLoggedIn()
@@ -103,52 +89,47 @@ namespace Ex01.FacebookAppLogic
 
         public void refetchUser()
         {
-            m_CurrentUser.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
+            CurrentUser.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
         }
 
-        public List<string> GetUserGroups()
+        public FacebookObjectCollection<Group> FetchUserGroups()
         {
-            List<string> listOfUserGroups = new List<string>();
+            return CurrentUser.Groups;
+        }
+
+        public FacebookObjectCollection<Checkin> FetchUserCheckins()
+        {
+            return CurrentUser.Checkins;
+        }
+
+        public FacebookObjectCollection<Photo> FetchUserPhotos()
+        {
+            FacebookObjectCollection<Photo> collectionOfUserPhotos = new FacebookObjectCollection<Photo>();
             refetchUser();
 
-            foreach (Group group in m_CurrentUser.Groups)
+            foreach (Album album in CurrentUser.Albums)
             {
-                listOfUserGroups.Add(group.Name);
-            }
-
-            return listOfUserGroups;
-
-        }
-
-        public string GetUserGroupBio(string o_SelectedGroupName)
-        {
-            //Group currentGroup = i_SelectedItem as Group;
-            Group currentGroup = findGroupByName(o_SelectedGroupName);
-            return currentGroup.Description;
-        }
-
-        private Group findGroupByName(string i_SelectedGroupName)
-        {
-            Group groupToFind = null;
-            foreach (Group group in m_CurrentUser.Groups)
-            {
-                if (group.Name == i_SelectedGroupName)
+                foreach (Photo photo in album.Photos)
                 {
-                    groupToFind = group;
-                    break;
+                    collectionOfUserPhotos.Add(photo);
                 }
             }
-            return groupToFind;
+            return collectionOfUserPhotos;
+        }
+
+        public FacebookObjectCollection<User> FetchUserFriends()
+        {
+            return CurrentUser.Friends;
         }
 
         public void PostChosenPhoto(string i_PhotoPath, string i_PhotoTitle)
         {
-            m_CurrentUser.PostPhoto(i_PhotoPath, i_PhotoTitle);
+            CurrentUser.PostPhoto(i_PhotoPath, i_PhotoTitle);
         }
 
         public void PostChosenLink(string i_LinkToPost)
         {
-            m_CurrentUser.PostLink(i_LinkToPost);
+            CurrentUser.PostLink(i_LinkToPost);
         }
 
         public bool CreateURL(string i_UrlToShow, out Uri i_UriResult)
@@ -160,16 +141,5 @@ namespace Ex01.FacebookAppLogic
 
         }
 
-        public List<string> GetUserFriends()
-        {
-            List<string> listOfUserFriends = new List<string>();
-            refetchUser();
-            foreach (User friend in m_CurrentUser.Friends)
-            {
-                listOfUserFriends.Add(friend.Name.ToString());
-                friend.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
-            }
-            return listOfUserFriends;
-        }
     }
 }

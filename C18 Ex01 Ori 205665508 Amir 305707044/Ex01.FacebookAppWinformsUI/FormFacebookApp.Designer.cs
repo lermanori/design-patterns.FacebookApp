@@ -49,7 +49,7 @@
             this.labelGroups = new System.Windows.Forms.Label();
             this.comboBoxWebBrowser = new System.Windows.Forms.ComboBox();
             this.buttonSubmitUrl = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControlGeo = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -58,17 +58,27 @@
             this.textBoxFriendBio = new System.Windows.Forms.TextBox();
             this.listBoxFriends = new System.Windows.Forms.ListBox();
             this.buttonFetchFriends = new System.Windows.Forms.Button();
+
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.listBoxActions = new System.Windows.Forms.ListBox();
             this.buttonAddNewAction = new System.Windows.Forms.Button();
             this.listBoxTasks = new System.Windows.Forms.ListBox();
+
+            this.buttonFetchGeo = new System.Windows.Forms.Button();
+            this.textBoxCheckins = new System.Windows.Forms.TextBox();
+            this.textBoxPictures = new System.Windows.Forms.TextBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).BeginInit();
-            this.tabControl1.SuspendLayout();
+            this.tabControlGeo.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+
             this.SuspendLayout();
             // 
             // button1
@@ -304,17 +314,18 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.tabControl1.Location = new System.Drawing.Point(2, 5);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(2008, 972);
-            this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.tabControl1.TabIndex = 21;
+
+            this.tabControlGeo.Controls.Add(this.tabPage1);
+            this.tabControlGeo.Controls.Add(this.tabPage2);
+            this.tabControlGeo.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tabControlGeo.Location = new System.Drawing.Point(1, 3);
+            this.tabControlGeo.Name = "tabControl1";
+            this.tabControlGeo.SelectedIndex = 0;
+            this.tabControlGeo.Size = new System.Drawing.Size(1339, 622);
+            this.tabControlGeo.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.tabControlGeo.TabIndex = 21;
+            this.tabControlGeo.Enter += new System.EventHandler(this.tabControl1_Enter);
+
             // 
             // tabPage1
             // 
@@ -356,12 +367,17 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabPage2.Size = new System.Drawing.Size(1992, 925);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Geo";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.checkBox1);
+            this.panel1.Controls.Add(this.pictureBox2);
+            this.panel1.Controls.Add(this.textBoxPictures);
+            this.panel1.Controls.Add(this.textBoxCheckins);
+            this.panel1.Controls.Add(this.buttonFetchGeo);
             this.panel1.Controls.Add(this.gMapUserFriends);
             this.panel1.Controls.Add(this.labelFriendBio);
             this.panel1.Controls.Add(this.textBoxFriendBio);
@@ -381,8 +397,9 @@
             this.gMapUserFriends.GrayScaleMode = false;
             this.gMapUserFriends.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             this.gMapUserFriends.LevelsKeepInMemmory = 5;
-            this.gMapUserFriends.Location = new System.Drawing.Point(762, 153);
-            this.gMapUserFriends.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+
+            this.gMapUserFriends.Location = new System.Drawing.Point(801, 45);
+
             this.gMapUserFriends.MarkersEnabled = true;
             this.gMapUserFriends.MaxZoom = 18;
             this.gMapUserFriends.MinZoom = 2;
@@ -404,43 +421,50 @@
             // 
             this.labelFriendBio.AutoSize = true;
             this.labelFriendBio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.labelFriendBio.Location = new System.Drawing.Point(24, 356);
-            this.labelFriendBio.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+
+            this.labelFriendBio.Location = new System.Drawing.Point(16, 183);
             this.labelFriendBio.Name = "labelFriendBio";
-            this.labelFriendBio.Size = new System.Drawing.Size(246, 29);
+            this.labelFriendBio.Size = new System.Drawing.Size(155, 18);
+
             this.labelFriendBio.TabIndex = 20;
             this.labelFriendBio.Text = "Selected Friend Bio";
             // 
             // textBoxFriendBio
             // 
-            this.textBoxFriendBio.Location = new System.Drawing.Point(28, 388);
+
+            this.textBoxFriendBio.Location = new System.Drawing.Point(19, 205);
+            this.textBoxFriendBio.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxFriendBio.Multiline = true;
             this.textBoxFriendBio.Name = "textBoxFriendBio";
-            this.textBoxFriendBio.Size = new System.Drawing.Size(316, 254);
+            this.textBoxFriendBio.Size = new System.Drawing.Size(212, 164);
+
             this.textBoxFriendBio.TabIndex = 17;
             // 
             // listBoxFriends
             // 
             this.listBoxFriends.FormattingEnabled = true;
-            this.listBoxFriends.ItemHeight = 25;
-            this.listBoxFriends.Location = new System.Drawing.Point(28, 25);
-            this.listBoxFriends.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+
+            this.listBoxFriends.ItemHeight = 16;
+            this.listBoxFriends.Location = new System.Drawing.Point(19, 16);
             this.listBoxFriends.Name = "listBoxFriends";
-            this.listBoxFriends.Size = new System.Drawing.Size(316, 254);
+            this.listBoxFriends.Size = new System.Drawing.Size(212, 164);
+
             this.listBoxFriends.TabIndex = 0;
             this.listBoxFriends.SelectedIndexChanged += new System.EventHandler(this.listBoxFriends_SelectedIndexChanged);
             // 
             // buttonFetchFriends
             // 
-            this.buttonFetchFriends.Location = new System.Drawing.Point(356, 25);
-            this.buttonFetchFriends.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+
+            this.buttonFetchFriends.Location = new System.Drawing.Point(19, 481);
             this.buttonFetchFriends.Name = "buttonFetchFriends";
-            this.buttonFetchFriends.Size = new System.Drawing.Size(171, 70);
+            this.buttonFetchFriends.Size = new System.Drawing.Size(114, 33);
+
             this.buttonFetchFriends.TabIndex = 2;
             this.buttonFetchFriends.Text = "Fetch Friends";
             this.buttonFetchFriends.UseVisualStyleBackColor = true;
             this.buttonFetchFriends.Click += new System.EventHandler(this.buttonFetchFriends_Click);
             // 
+
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.listBoxTasks);
@@ -482,14 +506,61 @@
             this.listBoxTasks.Name = "listBoxTasks";
             this.listBoxTasks.Size = new System.Drawing.Size(816, 829);
             this.listBoxTasks.TabIndex = 4;
+
+            // buttonFetchGeo
+            // 
+            this.buttonFetchGeo.Location = new System.Drawing.Point(617, 25);
+            this.buttonFetchGeo.Name = "buttonFetchGeo";
+            this.buttonFetchGeo.Size = new System.Drawing.Size(90, 27);
+            this.buttonFetchGeo.TabIndex = 24;
+            this.buttonFetchGeo.Text = "iSpy";
+            this.buttonFetchGeo.UseVisualStyleBackColor = true;
+            // 
+            // textBoxCheckins
+            // 
+            this.textBoxCheckins.Location = new System.Drawing.Point(392, 76);
+            this.textBoxCheckins.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxCheckins.Multiline = true;
+            this.textBoxCheckins.Name = "textBoxCheckins";
+            this.textBoxCheckins.Size = new System.Drawing.Size(227, 104);
+            this.textBoxCheckins.TabIndex = 25;
+            // 
+            // textBoxPictures
+            // 
+            this.textBoxPictures.Location = new System.Drawing.Point(392, 205);
+            this.textBoxPictures.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxPictures.Multiline = true;
+            this.textBoxPictures.Name = "textBoxPictures";
+            this.textBoxPictures.Size = new System.Drawing.Size(227, 104);
+            this.textBoxPictures.TabIndex = 26;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(237, 16);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(132, 164);
+            this.pictureBox2.TabIndex = 27;
+            this.pictureBox2.TabStop = false;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(392, 25);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(98, 21);
+            this.checkBox1.TabIndex = 28;
+            this.checkBox1.Text = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+
             // 
             // FormFacebookApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(2012, 977);
-            this.Controls.Add(this.tabControl1);
+
+            this.ClientSize = new System.Drawing.Size(1341, 625);
+            this.Controls.Add(this.tabControlGeo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "FormFacebookApp";
@@ -498,13 +569,16 @@
             this.Load += new System.EventHandler(this.tabPage3_Enter);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).EndInit();
-            this.tabControl1.ResumeLayout(false);
+            this.tabControlGeo.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+
             this.tabPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+
             this.ResumeLayout(false);
 
         }
@@ -534,7 +608,7 @@
         private System.Windows.Forms.Button buttonSubmitUrl;
 
         private System.Windows.Forms.CheckBox checkBoxRememberUser;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControlGeo;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button buttonFetchFriends;
@@ -543,10 +617,18 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label labelFriendBio;
         private GMap.NET.WindowsForms.GMapControl gMapUserFriends;
+
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button buttonAddNewAction;
         private System.Windows.Forms.ListBox listBoxActions;
         private System.Windows.Forms.ListBox listBoxTasks;
+
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TextBox textBoxPictures;
+        private System.Windows.Forms.TextBox textBoxCheckins;
+        private System.Windows.Forms.Button buttonFetchGeo;
+        private System.Windows.Forms.CheckBox checkBox1;
+
     }
 }
 
