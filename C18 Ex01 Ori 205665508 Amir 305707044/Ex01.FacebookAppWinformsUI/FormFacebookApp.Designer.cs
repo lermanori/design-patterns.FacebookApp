@@ -1,6 +1,6 @@
 ﻿namespace Ex01.FacebookAppWinformsUI
 {
-    partial class FormFacebookApp
+    partial class Alm
     {
         /// <summary>
         /// Required designer variable.
@@ -544,7 +544,7 @@
             this.Name = "FormFacebookApp";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.tabPage3_Enter);
+            this.Load += new System.EventHandler(this.tabPage3_load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).EndInit();
             this.tabControlGeo.ResumeLayout(false);
