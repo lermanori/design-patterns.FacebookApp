@@ -33,6 +33,8 @@ namespace Ex01.FacebookAppWinformsUI
         FacebookAppSettings m_LastSettings = null;
         string m_PhotoPath = string.Empty;
 
+         
+
         //ui
         public FormFacebookApp()
         {
@@ -425,6 +427,73 @@ namespace Ex01.FacebookAppWinformsUI
 
             textBoxFriendBio.Text = bio.ToString();
         }
+        private void tabPage3_Enter(object sender, EventArgs e)
+        {//think about how to implement lazy creation
+            listBoxActions.Items.Add(new FormPostStatus());
+        }
 
+
+
+        private void buttonAddNewCommand_Click(object sender, EventArgs e)
+        { 
+            if (listBoxActions.SelectedItem != null)
+            {
+            Form CommandForm = listBoxActions.SelectedItem as Form;
+            CommandForm.FormClosing += on_closed;
+            DialogResult dialogResult = CommandForm.ShowDialog();
+            }
+        }
+
+        private void on_closed(object sender, FormClosingEventArgs e)
+        {
+            if (!e.Cancel && e.CloseReason == CloseReason.UserClosing)
+            {
+                collectData(sender);
+            }
+        }
+
+        private void collectData(object sender)
+        {
+            if (sender is FormPostStatus)
+            {
+                FormPostStatus postForm = sender as FormPostStatus;
+
+                string statusBody = postForm.statusBody;
+                DateTime timeToExecute = postForm.timeToExecute;
+
+                FbEventArgs args = new FbEventArgs();
+                TimedComponent t = new TimedComponent();
+
+                args.postBody = statusBody;
+                t.ActionObject = FbActionPost.Create(m_FacebookApp);
+                t.ActionObject.loadAction(args);
+
+                t.Timer = new System.Timers.Timer();
+                t.DateAndHour = timeToExecute;
+                t.Timer.Interval = (timeToExecute - DateTime.Now).Milliseconds > 0 ?  (timeToExecute - DateTime.Now).Milliseconds : 1;
+
+                facebookTimerAdapter adapter = new facebookTimerAdapter(t);
+
+                t.Timer.Elapsed += adapter.on_elapsed;
+
+                listBoxTasks.Items.Add(t);
+              
+            }
+        }
+
+    }
+    public class facebookTimerAdapter
+    {
+        public facebookTimerAdapter(TimedComponent i_timedComponent)
+        {
+            Timed = i_timedComponent;
+        }
+        public TimedComponent Timed { get; set; }
+        public FbEventArgs Args { get; set; }
+       
+        public void on_elapsed(Object source, System.Timers.ElapsedEventArgs e)
+        {
+            Timed.ActionObject.raiseEvent(Args);
+        }
     }
 }
