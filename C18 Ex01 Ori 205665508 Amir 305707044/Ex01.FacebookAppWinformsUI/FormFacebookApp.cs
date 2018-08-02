@@ -34,7 +34,7 @@ namespace Ex01.FacebookAppWinformsUI
         GeoFeature m_GeoFeature = new GeoFeature();
         string m_PhotoPath = string.Empty;
 
-         
+
 
         //ui
         public FormFacebookApp()
@@ -387,8 +387,8 @@ namespace Ex01.FacebookAppWinformsUI
 
             textBoxFriendBio.Text = bio.ToString();
         }
-        
-            private void tabControl1_Enter(object sender, EventArgs e)
+
+        private void tabControl1_Enter(object sender, EventArgs e)
         {
             gMapUserFriends.MapProvider = GMapProviders.GoogleMap;
             gMapUserFriends.SetPositionByKeywords("Tel Aviv, Israel");
@@ -396,7 +396,7 @@ namespace Ex01.FacebookAppWinformsUI
             populateListboxFriends();
 
         }
-        
+
         private void tabPage3_Enter(object sender, EventArgs e)
         {//think about how to implement lazy creation
             listBoxActions.Items.Add(new FormPostStatus());
@@ -405,12 +405,12 @@ namespace Ex01.FacebookAppWinformsUI
 
 
         private void buttonAddNewCommand_Click(object sender, EventArgs e)
-        { 
+        {
             if (listBoxActions.SelectedItem != null)
             {
-            Form CommandForm = listBoxActions.SelectedItem as Form;
-            CommandForm.FormClosing += on_closed;
-            DialogResult dialogResult = CommandForm.ShowDialog();
+                Form CommandForm = listBoxActions.SelectedItem as Form;
+                CommandForm.FormClosing += on_closed;
+                DialogResult dialogResult = CommandForm.ShowDialog();
             }
         }
 
@@ -441,19 +441,19 @@ namespace Ex01.FacebookAppWinformsUI
 
                 t.Timer = new System.Timers.Timer();
                 t.DateAndHour = timeToExecute;
-                t.Timer.Interval = (timeToExecute - DateTime.Now).Milliseconds > 0 ?  (timeToExecute - DateTime.Now).Milliseconds : 1;
+                t.Timer.Interval = (timeToExecute - DateTime.Now).Milliseconds > 0 ? (timeToExecute - DateTime.Now).Milliseconds : 1;
 
                 facebookTimerAdapter adapter = new facebookTimerAdapter(t);
 
                 t.Timer.Elapsed += adapter.on_elapsed;
 
                 listBoxTasks.Items.Add(t);
-              
+
             }
         }
 
     }
-    
+
     public class facebookTimerAdapter
     {
         public facebookTimerAdapter(TimedComponent i_timedComponent)
@@ -462,10 +462,11 @@ namespace Ex01.FacebookAppWinformsUI
         }
         public TimedComponent Timed { get; set; }
         public FbEventArgs Args { get; set; }
-       
+
         public void on_elapsed(Object source, System.Timers.ElapsedEventArgs e)
         {
             Timed.ActionObject.raiseEvent(Args);
 
+        }
     }
 }
