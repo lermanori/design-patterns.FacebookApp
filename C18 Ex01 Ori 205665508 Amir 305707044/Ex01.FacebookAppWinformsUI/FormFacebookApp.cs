@@ -10,7 +10,7 @@ using System.Net;
 using System.IO;
 using Ex01.FacebookAppLogic;
 using GMap.NET.MapProviders;
-
+using FacebookWrapper.ObjectModel;
 
 namespace Ex01.FacebookAppWinformsUI
 {
@@ -21,7 +21,7 @@ namespace Ex01.FacebookAppWinformsUI
         private readonly string k_EnterPostMessage = "What's On Your Mind?...";
         private readonly object k_EmptyListMessage = "There Are No Items to Show!";
         private readonly string k_PhotoUploadSuccededMessage = "Succes Uploading Photo!";
-        private readonly string k_IllegalFileMessage = "Must Choose A legal File!";
+        private readonly string k_PhotoUploadFailedMessage = "Failed to upload photo, please try again!";
         private readonly string k_EnterValidURLMessage = "Insert a valid http format url." + Environment.NewLine + @"example:http://www.google.com";
         private readonly string k_httpOpening = @"http://www.";
         private readonly string k_FailedAutoConnectMessage = "Auto Login Failed, Please Login Again. {0}Reason: {1}";
@@ -31,22 +31,19 @@ namespace Ex01.FacebookAppWinformsUI
 
         FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
         FacebookAppSettings m_LastSettings = null;
+        GeoFeature m_GeoFeature = new GeoFeature();
         string m_PhotoPath = string.Empty;
 
         //ui
         public FormFacebookApp()
         {
             loadSettingsAndCreateForm();
-
         }
 
         private void loadSettingsAndCreateForm()
         {
             m_LastSettings = FacebookAppSettings.LoadFromFile();
             InitializeComponent();
-            gMapUserFriends.MapProvider = GMapProviders.GoogleMap;
-            gMapUserFriends.SetPositionByKeywords("Tel Aviv, Israel");
-            //gMapUserFriends.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
             this.checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
         }
 
@@ -81,11 +78,7 @@ namespace Ex01.FacebookAppWinformsUI
         }
         private void fetchLoggedInUser()
         {
-
-            //m_currentUser = m_LoginResult.LoggedInUser;
-            //pictureBox1.Image = m_currentUser.ImageNormal;
-            pictureBox1.Image = m_FacebookApp.GetUserNormalImage();
-
+            pictureBox1.LoadAsync(m_FacebookApp.UserProfilePictureURL);
             if (m_LastSettings.ComboBoxWebBrowserItems.Count != 0)
             {
                 foreach (string s in m_LastSettings.ComboBoxWebBrowserItems)
@@ -106,6 +99,7 @@ namespace Ex01.FacebookAppWinformsUI
             buttonLogOut.Enabled = true;
             buttonFetchGroups.Enabled = true;
             buttonPostLink.Enabled = true;
+            tabControlGeo.Enabled = true;
         }
 
         //ui
@@ -118,14 +112,11 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void handleUserSettingsWhenClosingTheForm()
         {
-            //if (m_FacebookApp.CurrentUser != null)
-            //if (m_currentUser != null)
+
             if (m_FacebookApp.IsLoggedIn())
             {
-
                 m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
                 m_LastSettings.LastAccessToken = m_FacebookApp.GetAccessToken();
-                //m_LastSettings.LastAccessToken = m_LoginResult.AccessToken;
                 foreach (string s in comboBoxWebBrowser.Items)
                 {
                     if (!m_LastSettings.ComboBoxWebBrowserItems.Contains(s))
@@ -147,7 +138,6 @@ namespace Ex01.FacebookAppWinformsUI
         private void handleLogin()
         {
             m_FacebookApp.Login();
-            // m_LoginResult = FacebookService.Login("273882356720887", "email", "user_hometown", "user_birthday", "user_friends", "user_events", "groups_access_member_info", "publish_video");
             fetchLoggedInUser();
 
             if (m_FacebookApp.IsLoggedIn())
@@ -165,6 +155,7 @@ namespace Ex01.FacebookAppWinformsUI
             buttonLogOut.Enabled = false;
             buttonFetchGroups.Enabled = false;
             buttonPostLink.Enabled = false;
+            tabControlGeo.Enabled = false;
         }
 
         //ui
@@ -175,7 +166,6 @@ namespace Ex01.FacebookAppWinformsUI
         //ui
         private void handleLogout()
         {
-            //FacebookService.Logout(ResetUI);
             m_FacebookApp.Logout();
             resetUI();
             MessageBox.Show("Logged Out!");
@@ -187,6 +177,7 @@ namespace Ex01.FacebookAppWinformsUI
         private void resetUI()
         {
             pictureBox1.Image = null;
+
         }
 
         //ui
@@ -200,7 +191,6 @@ namespace Ex01.FacebookAppWinformsUI
         {
             if (!string.IsNullOrEmpty(textBoxUploadPost.Text) && textBoxUploadPost.Text != k_EnterPostMessage)
             {
-                //m_currentUser.PostStatus(post);
                 m_FacebookApp.PostStatus(i_StatusToPost);
             }
             else
@@ -215,37 +205,32 @@ namespace Ex01.FacebookAppWinformsUI
         //need to break into logic and ui
         private void buttonFetchGroups_Click(object sender, EventArgs e)
         {
-            //m_currentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
-            //m_FacebookApp.ReFetchUser();
-            //FacebookObjectCollection<Group> groupCollection = m_currentUser.Groups;
+            populateListboxGroups();
+        }
 
-            //FacebookObjectCollection<Group> groupCollection = m_FacebookApp.CurrentUser.Groups;
-            List<string> userGroupCollection = m_FacebookApp.GetUserGroups();
+        private void populateListboxGroups()
+        {
+            listBoxGroups.Items.Clear();
+            listBoxGroups.DisplayMember = "Name";
+            FacebookObjectCollection<Group> userGroupCollection = m_FacebookApp.FetchUserGroups();
 
-
-            //foreach (Group group in groupCollection)
-            //{
-            //    listBoxGroups.Items.Add(group);
-            //}
-
-            foreach (string groupName in userGroupCollection)
+            foreach (Group group in userGroupCollection)
             {
-                listBoxGroups.Items.Add(groupName);
+                listBoxGroups.Items.Add(group);
             }
 
             if (listBoxGroups.Items.Count == 0)
             {
                 listBoxGroups.Items.Add(k_EmptyListMessage);
             }
-
         }
+
         //ui --> need to give meaningful names
         private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string groupBioToShow = m_FacebookApp.GetUserGroupBio(listBoxGroups.SelectedItem as string);
-            textBoxDescriptionOfGroup.Text = groupBioToShow;
-            //Group currentGroup = listBoxGroups.SelectedItem as Group;
-            //textBoxDescriptionOfGroup.Text = currentGroup.Description;
+            Group selectedGroup = listBoxGroups.SelectedItem as Group;
+            string groupDescription = selectedGroup.Description;
+            textBoxDescriptionOfGroup.Text = groupDescription;
         }
 
 
@@ -292,14 +277,12 @@ namespace Ex01.FacebookAppWinformsUI
             }
             try
             {
-                //m_currentUser.PostPhoto(m_photoPath, title);
-                //m_FacebookApp.CurrentUser.PostPhoto(m_PhotoPath, title);
                 m_FacebookApp.PostChosenPhoto(m_PhotoPath, title);
                 MessageBox.Show(k_PhotoUploadSuccededMessage);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(k_IllegalFileMessage);
+                MessageBox.Show(k_PhotoUploadFailedMessage);
             }
             resetPictureButtons();
 
@@ -315,8 +298,6 @@ namespace Ex01.FacebookAppWinformsUI
         private void buttonPostLink_Click(object sender, EventArgs e)
         {
             string linkToPost = webBrowser.Url.ToString();
-            //m_currentUser.PostLink(webBrowser.Url.ToString());
-            //m_FacebookApp.CurrentUser.PostLink(webBrowser.Url.ToString());
             m_FacebookApp.PostChosenLink(linkToPost);
         }
 
@@ -344,9 +325,6 @@ namespace Ex01.FacebookAppWinformsUI
             string urlToShow = comboBoxWebBrowser.Text;
 
             Uri uriResult;
-            //bool result = Uri.TryCreate(urlToShow, UriKind.Absolute, out uriResult)
-            //    && uriResult.Scheme == Uri.UriSchemeHttp;
-
             bool result = m_FacebookApp.CreateURL(urlToShow, out uriResult);
 
             if (result)
@@ -374,57 +352,46 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void buttonFetchFriends_Click(object sender, EventArgs e)
         {
-            fetchUserFriends();
+            populateListboxFriends();
         }
 
-        private void fetchUserFriends()
+        private void populateListboxFriends()
         {
-            //m_currentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
-            //m_FacebookApp.CurrentUser.ReFetch(DynamicWrapper.eLoadOptions.Full);
-            //m_FacebookApp.ReFetchUser();
             listBoxFriends.Items.Clear();
             listBoxFriends.DisplayMember = "Name";
+            FacebookObjectCollection<User> userFriends = m_FacebookApp.FetchUserFriends();
 
-            //  FacebookObjectCollection<User> friendsCollection = m_currentUser.Friends;
-            //FacebookObjectCollection<User> friendsCollection = m_FacebookApp.CurrentUser.Friends;
-            List<string> userFriendsCollection = m_FacebookApp.GetUserFriends();
-
-
-            //foreach (User friend in friendsCollection)
-            //{
-            //    listBoxFriends.Items.Add(friend);
-            //    friend.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
-            //}
-
-            foreach (string friendName in userFriendsCollection)
+            foreach (User friend in userFriends)
             {
-                listBoxFriends.Items.Add(friendName);
+                listBoxFriends.Items.Add(friend);
+                friend.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
             }
 
             if (listBoxFriends.Items.Count == 0)
             {
                 listBoxFriends.Items.Add(k_EmptyListMessage);
             }
-
         }
 
         private void listBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            string friendName;
             StringBuilder bio = new StringBuilder();
 
             if (listBoxFriends.SelectedItems.Count == 1)
             {
-                friendName = listBoxFriends.SelectedItem as string;
-                bio = m_FacebookApp.GetUserBio(friendName);
-
-                // bio = getBio(friend);
-                //bio = m_FacebookApp.GetUserBio(friend);
+                bio.Append((listBoxFriends.SelectedItem as User).LastName);
             }
 
             textBoxFriendBio.Text = bio.ToString();
         }
 
+        private void tabControl1_Enter(object sender, EventArgs e)
+        {
+            gMapUserFriends.MapProvider = GMapProviders.GoogleMap;
+            gMapUserFriends.SetPositionByKeywords("Tel Aviv, Israel");
+            gMapUserFriends.ShowCenter = false;
+            populateListboxFriends();
+        }
     }
 }
