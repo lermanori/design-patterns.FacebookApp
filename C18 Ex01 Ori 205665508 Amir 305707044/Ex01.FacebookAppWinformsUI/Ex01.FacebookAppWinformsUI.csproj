@@ -97,10 +97,19 @@
     <Compile Include="FormFacebookApp.Designer.cs">
       <DependentUpon>FormFacebookApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPostStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPostStatus.Designer.cs">
+      <DependentUpon>FormPostStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormFacebookApp.resx">
       <DependentUpon>FormFacebookApp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPostStatus.resx">
+      <DependentUpon>FormPostStatus.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -113,6 +122,8 @@
     </Compile>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Ex01.FacebookAppLogic.FacebookAppEngine.datasource" />
+    <None Include="Properties\DataSources\Ex01.FacebookAppLogic.FacebookAppSettings.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
