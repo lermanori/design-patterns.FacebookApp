@@ -11,7 +11,6 @@ namespace Ex01.FacebookAppLogic
         {
             doWhenFinished += postStatus;
         }
-        public event EventHandler<FbEventArgs> doWhenFinished;
         private void postStatus(object sender, FbEventArgs e) { m_engine.PostStatus(e.postBody); }
         private FacebookAppEngine m_engine;
         public static FbActionPost Create(FacebookAppEngine i_engine)

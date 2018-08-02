@@ -14,7 +14,7 @@ using FacebookWrapper.ObjectModel;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public partial class FormFacebookApp : Form
+    public partial class Alm : Form
     {
         private readonly string r_EnterTitleMsg = "Enter Title";
         private readonly string r_MustEnterTextMessage = "You Must Enter Text!" + Environment.NewLine + "Please Try Again.";
@@ -48,7 +48,7 @@ namespace Ex01.FacebookAppWinformsUI
         string m_PhotoPath = string.Empty;
 
         //ui
-        public FormFacebookApp()
+        public Alm()
         {
             loadSettingsAndCreateForm();
         }
@@ -409,30 +409,25 @@ namespace Ex01.FacebookAppWinformsUI
 
         }
 
-        private void tabPage3_Enter(object sender, EventArgs e)
+        private void tabPage3_load(object sender, EventArgs e)
         {//think about how to implement lazy creation
             listBoxActions.Items.Add(new FormPostStatus());
         }
-
-
 
         private void buttonAddNewCommand_Click(object sender, EventArgs e)
         {
             if (listBoxActions.SelectedItem != null)
             {
                 Form CommandForm = listBoxActions.SelectedItem as Form;
-                CommandForm.FormClosing += on_closed;
+                //CommandForm.FormClosed += on_closed;
                 DialogResult dialogResult = CommandForm.ShowDialog();
+                if(dialogResult == DialogResult.OK)
+                {
+                    collectData(CommandForm);
+                }
             }
         }
 
-        private void on_closed(object sender, FormClosingEventArgs e)
-        {
-            if (!e.Cancel && e.CloseReason == CloseReason.UserClosing)
-            {
-                collectData(sender);
-            }
-        }
 
         private void collectData(object sender)
         {
@@ -452,18 +447,31 @@ namespace Ex01.FacebookAppWinformsUI
                 t.ActionObject.loadAction(args);
 
                 t.Timer = new System.Timers.Timer();
+                t.Timer.Enabled = false;
                 t.DateAndHour = timeToExecute;
-                t.Timer.Interval = (timeToExecute - DateTime.Now).Milliseconds > 0 ? (timeToExecute - DateTime.Now).Milliseconds : 1;
+
+                if((timeToExecute - DateTime.Now).TotalMilliseconds > 0)
+                {
+                    t.Timer.Interval = (timeToExecute - DateTime.Now).TotalMilliseconds;
+                }
+                else
+                {
+                    t.Timer.Interval = (1000)*5;
+                }
+
 
                 facebookTimerAdapter adapter = new facebookTimerAdapter(t);
+                adapter.Args = args;
+                adapter.Timed.Timer = t.Timer;
 
-                t.Timer.Elapsed += adapter.on_elapsed;
-                t.Timer.Start();
+                listBoxTasks.Items.Add(adapter.Timed);
 
-                listBoxTasks.Items.Add(t);
-
+                adapter.Timed.Timer.Elapsed += new System.Timers.ElapsedEventHandler(adapter.on_elapsed);
+                adapter.Timed.Timer.AutoReset = false;
+                adapter.Timed.Timer.Enabled = true;
             }
         }
+
 
         private void buttonCalcStats_Click(object sender, EventArgs e)
         {
@@ -498,22 +506,27 @@ namespace Ex01.FacebookAppWinformsUI
             pictureBoxMostActiveUser.LoadAsync(m_StatsAboutMyFriends.MostActiveUser.PictureNormalURL);
         }
 
-
     }
 
     public class facebookTimerAdapter
     {
+        private bool onlyOnce = false;
         public facebookTimerAdapter(TimedComponent i_timedComponent)
         {
             Timed = i_timedComponent;
         }
         public TimedComponent Timed { get; set; }
         public FbEventArgs Args { get; set; }
-
         public void on_elapsed(Object source, System.Timers.ElapsedEventArgs e)
         {
+            if(!onlyOnce)
+            {
+            onlyOnce = true;
             Timed.ActionObject.raiseEvent(Args);
-
+            MessageBox.Show("event raisen at" + DateTime.Now.ToString());
+            Timed.Timer.Enabled = false;
+            Timed.Timer.Elapsed -= on_elapsed;
+            }
         }
     }
 }

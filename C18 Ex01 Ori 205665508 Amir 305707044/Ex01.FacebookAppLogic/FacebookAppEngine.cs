@@ -16,18 +16,18 @@ namespace Ex01.FacebookAppLogic
                                                         user_friends, user_tagged_places, user_posts, user_gender, user_link, publish_video, 
                                                         groups_access_member_info, public_profile ";
 
-
         private LoginResult m_LoginResult = null;
-        public User CurrentUser { get; private set; }
-        //private User m_CurrentUser = null;
-        public string UserProfilePictureURL { get; private set; }
 
+        public User CurrentUser { get; private set; }
+
+        public string UserProfilePictureURL { get; private set; }
 
         public void Login()
         {
             m_LoginResult = FacebookService.Login(k_AppID, k_PermissionsNeeded);
             initializeMembersAfterSuccessfulConnection();
         }
+
         public void Connect(string i_AccessToken)
         {
             m_LoginResult = FacebookService.Connect(i_AccessToken);
@@ -44,26 +44,6 @@ namespace Ex01.FacebookAppLogic
         {
             return m_LoginResult.AccessToken;
         }
-
-        //public StringBuilder GetUserBio(string o_FriendName)
-        //{
-        //    StringBuilder bio = new StringBuilder();
-        //    User friendToGet = findUserByName(o_FriendName);
-
-        //    bio.AppendLine(friendToGet.Name);
-        //    // bio.AppendLine(i_Friend.Location.ToString());
-        //    bio.AppendLine(friendToGet.Email);
-        //    //  bio.AppendLine(i_Friend.Hometown.ToString());
-        //    bio.AppendLine("(Friends with: ");
-        //    foreach (User fof in friendToGet.Friends)
-        //    {
-        //        bio.AppendFormat("{0}, ", fof.FirstName);
-        //    }
-        //    bio.AppendLine(")");
-
-        //    return bio;
-        //}
-
 
         public void Logout()
         {
@@ -114,6 +94,7 @@ namespace Ex01.FacebookAppLogic
                     collectionOfUserPhotos.Add(photo);
                 }
             }
+
             return collectionOfUserPhotos;
         }
 
@@ -138,8 +119,6 @@ namespace Ex01.FacebookAppLogic
                 && i_UriResult.Scheme == Uri.UriSchemeHttp;
 
             return result;
-
         }
-
     }
 }

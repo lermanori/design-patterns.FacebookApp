@@ -15,7 +15,7 @@ namespace Ex01.FacebookAppLogic
         {
             Type type = ActionObject.GetType();
 
-            return string.Format("task {0} at time {1}",type.ToString() , DateAndHour.ToString());
+            return string.Format("task {0} at {1} s at {2}",type.ToString() , ((DateAndHour - DateTime.Now).TotalSeconds).ToString(),DateAndHour.ToString() );
         }
     }
 }
