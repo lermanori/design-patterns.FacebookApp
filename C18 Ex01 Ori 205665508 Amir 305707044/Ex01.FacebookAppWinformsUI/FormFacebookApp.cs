@@ -193,14 +193,19 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void handleLogout()
         {
-            m_FacebookApp.Logout();
-            resetUI();
-            MessageBox.Show("Logged Out!");
-
-            disableLoggedInFeatures();
-
-            buttonLogOut.Enabled = false;
-            buttonLogin.Enabled = true;
+            try
+            {
+                m_FacebookApp.Logout();
+                resetUI();
+                MessageBox.Show("Logged Out!");
+                disableLoggedInFeatures();
+                buttonLogOut.Enabled = false;
+                buttonLogin.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void disableLoggedInFeatures()
@@ -275,16 +280,23 @@ namespace Ex01.FacebookAppWinformsUI
         {
             listBoxGroups.Items.Clear();
             listBoxGroups.DisplayMember = "Name";
-            FacebookObjectCollection<Group> userGroupCollection = m_FacebookApp.FetchUserGroups();
-
-            foreach (Group group in userGroupCollection)
+            try
             {
-                listBoxGroups.Items.Add(group);
+                FacebookObjectCollection<Group> userGroupCollection = m_FacebookApp.FetchUserGroups();
+
+                foreach (Group group in userGroupCollection)
+                {
+                    listBoxGroups.Items.Add(group);
+                }
+
+                if (listBoxGroups.Items.Count == 0)
+                {
+                    listBoxGroups.Items.Add(k_EmptyListMessage);
+                }
             }
-
-            if (listBoxGroups.Items.Count == 0)
+            catch (Exception ex)
             {
-                listBoxGroups.Items.Add(k_EmptyListMessage);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -339,7 +351,7 @@ namespace Ex01.FacebookAppWinformsUI
                 m_FacebookApp.PostChosenPhoto(m_PhotoPath, title);
                 MessageBox.Show(k_PhotoUploadSuccededMessage);
             }
-            catch 
+            catch
             {
                 MessageBox.Show(k_PhotoUploadFailedMessage);
             }
@@ -533,14 +545,28 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void buttonShik_Click(object sender, EventArgs e)
         {
+            try
+            {
             m_ShickOShook.PublishPost(buttonShik.Text, m_FacebookApp);
             MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void buttonShook_Click(object sender, EventArgs e)
         {
+            try
+            {
             m_ShickOShook.PublishPost(buttonShook.Text, m_FacebookApp);
             MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
