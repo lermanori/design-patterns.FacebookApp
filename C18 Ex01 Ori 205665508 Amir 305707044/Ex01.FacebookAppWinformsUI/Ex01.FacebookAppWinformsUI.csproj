@@ -89,6 +89,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <None Include="App.config" />
+    <None Include="ClassDiagram11.cd" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Ex01.FacebookAppLogic.FacebookAppEngine.datasource" />
     <None Include="Properties\DataSources\Ex01.FacebookAppLogic.FacebookAppSettings.datasource" />

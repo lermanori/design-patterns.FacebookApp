@@ -43,7 +43,6 @@
             this.textBoxPost.Name = "textBoxPost";
             this.textBoxPost.Size = new System.Drawing.Size(480, 298);
             this.textBoxPost.TabIndex = 0;
-            this.textBoxPost.TextChanged += new System.EventHandler(this.textBoxPost_TextChanged);
             // 
             // contextMenuStrip1
             // 
@@ -80,7 +79,6 @@
             this.label1.Size = new System.Drawing.Size(401, 31);
             this.label1.TabIndex = 4;
             this.label1.Text = "please enter post Body and time";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // FormPostStatus
             // 

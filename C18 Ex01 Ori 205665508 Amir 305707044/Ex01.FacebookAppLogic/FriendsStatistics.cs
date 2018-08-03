@@ -11,7 +11,7 @@ namespace Ex01.FacebookAppLogic
         public const int k_YoungestAgeLimit = 20;
         public const int k_MiddleAgeLimit = 40;
         public const int k_AdultAgeLimit = 60;
-        private const int k_DaysInYear = 365;
+        public const int k_DaysInYear = 365;
 
         private readonly float r_Base = 100f;
 
@@ -21,7 +21,7 @@ namespace Ex01.FacebookAppLogic
         public float WomenRatio { get; private set; } = 0f;
         public int GenderLess { get; private set; } = 0;
         public float GenderLessRatio { get; private set; } = 0f;
-        public int Total { get; set; } = 0;
+        public int TotalFriends { get; set; } = 0;
 
         public int UntilTwentyYearsOld { get; private set; } = 0;
         public int TwentyOneToFourty { get; private set; } = 0;
@@ -45,7 +45,7 @@ namespace Ex01.FacebookAppLogic
             DateTime currentDatetime = DateTime.Today;
             FacebookObjectCollection<User> friendList = i_App.FetchUserFriends();
 
-            Total = friendList.Count;
+            TotalFriends = friendList.Count;
             MostFriendsUser = friendList[0];
             MostActiveUser = friendList[0];
 
@@ -149,7 +149,7 @@ namespace Ex01.FacebookAppLogic
 
         private float calculateRatio(int i_ParameterToCalculate)
         {
-            return (float)i_ParameterToCalculate / Total * r_Base;
+            return (float)i_ParameterToCalculate / TotalFriends * r_Base;
         }
     }
 }

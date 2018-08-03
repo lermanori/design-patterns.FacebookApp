@@ -15,7 +15,7 @@ namespace Ex01.FacebookAppWinformsUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Alm());
+            Application.Run(new FormFacebookApp());
         }
     }
 }

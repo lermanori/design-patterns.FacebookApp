@@ -7,6 +7,6 @@ namespace Ex01.FacebookAppLogic
 {
     public class FbEventArgs : EventArgs
     {
-        public string postBody { get; set; }
+        public string StatusBody { get; set; }
     }
 }

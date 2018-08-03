@@ -7,16 +7,19 @@ namespace Ex01.FacebookAppLogic
 {
     public class FbActionPost : FbAction
     {
-        public override void loadAction(FbEventArgs e)
+        private FacebookAppEngine m_Engine;
+
+        public override void LoadAction(FbEventArgs e)
         {
-            doWhenFinished += postStatus;
+            doWhenFinished += PostStatus;
         }
-        private void postStatus(object sender, FbEventArgs e) { m_engine.PostStatus(e.postBody); }
-        private FacebookAppEngine m_engine;
+
+        private void PostStatus(object sender, FbEventArgs e) { m_Engine.PostStatus(e.StatusBody); }
+
         public static FbActionPost Create(FacebookAppEngine i_engine)
         {
             FbActionPost actionPost = new FbActionPost();
-            actionPost.m_engine = i_engine; 
+            actionPost.m_Engine = i_engine; 
             return actionPost;
         }
     }

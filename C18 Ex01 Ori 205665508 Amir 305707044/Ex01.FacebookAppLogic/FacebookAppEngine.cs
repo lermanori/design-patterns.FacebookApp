@@ -11,8 +11,8 @@ namespace Ex01.FacebookAppLogic
 {
     public class FacebookAppEngine
     {
-        private readonly string k_AppID = "273882356720887";
-        private readonly string k_PermissionsNeeded = @"email, user_birthday, user_hometown, user_location, user_likes, user_events, user_photos, user_videos, 
+        private readonly string r_AppID = "273882356720887";
+        private readonly string r_PermissionsNeeded = @"email, user_birthday, user_hometown, user_location, user_likes, user_events, user_photos, user_videos, 
                                                         user_friends, user_tagged_places, user_posts, user_gender, user_link, publish_video, 
                                                         groups_access_member_info, public_profile ";
 
@@ -24,7 +24,7 @@ namespace Ex01.FacebookAppLogic
 
         public void Login()
         {
-            m_LoginResult = FacebookService.Login(k_AppID, k_PermissionsNeeded);
+            m_LoginResult = FacebookService.Login(r_AppID, r_PermissionsNeeded);
             initializeMembersAfterSuccessfulConnection();
         }
 
@@ -67,7 +67,7 @@ namespace Ex01.FacebookAppLogic
             return CurrentUser != null;
         }
 
-        public void refetchUser()
+        private void refetchUser()
         {
             CurrentUser.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
         }
@@ -113,10 +113,10 @@ namespace Ex01.FacebookAppLogic
             CurrentUser.PostLink(i_LinkToPost);
         }
 
-        public bool CreateURL(string i_UrlToShow, out Uri i_UriResult)
+        public bool CreateURL(string i_UrlToShow, out Uri o_UriResult)
         {
-            bool result = Uri.TryCreate(i_UrlToShow, UriKind.Absolute, out i_UriResult)
-                && i_UriResult.Scheme == Uri.UriSchemeHttp;
+            bool result = Uri.TryCreate(i_UrlToShow, UriKind.Absolute, out o_UriResult)
+                && o_UriResult.Scheme == Uri.UriSchemeHttp;
 
             return result;
         }

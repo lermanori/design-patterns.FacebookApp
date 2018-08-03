@@ -1,6 +1,6 @@
 ﻿namespace Ex01.FacebookAppWinformsUI
 {
-    partial class Alm
+    partial class FormFacebookApp
     {
         /// <summary>
         /// Required designer variable.

@@ -14,7 +14,7 @@ using FacebookWrapper.ObjectModel;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public partial class Alm : Form
+    public partial class FormFacebookApp : Form
     {
         private readonly string r_EnterTitleMsg = "Enter Title";
         private readonly string r_MustEnterTextMessage = "You Must Enter Text!" + Environment.NewLine + "Please Try Again.";
@@ -41,14 +41,14 @@ namespace Ex01.FacebookAppWinformsUI
         // LoginResult m_LoginResult;
         // User m_currentUser;
 
-        FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
-        FacebookAppSettings m_LastSettings = null;
-        FriendsStatistics m_StatsAboutMyFriends = new FriendsStatistics();
+        private FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
+        private FacebookAppSettings m_LastSettings = null;
+        private FriendsStatistics m_StatsAboutMyFriends = new FriendsStatistics();
 
-        string m_PhotoPath = string.Empty;
+        private string m_PhotoPath = string.Empty;
 
         //ui
-        public Alm()
+        public FormFacebookApp()
         {
             loadSettingsAndCreateForm();
         }
@@ -85,11 +85,13 @@ namespace Ex01.FacebookAppWinformsUI
                 //  m_LoginResult = FacebookService.Connect(m_LastSettings.LastAccessToken);
             }
         }
+
         private void populateUIWithUserInfo()
         {
             fetchLoggedInUser();
             enableLoggedInFeatures();
         }
+
         private void fetchLoggedInUser()
         {
             pictureBox1.LoadAsync(m_FacebookApp.UserProfilePictureURL);
@@ -103,8 +105,8 @@ namespace Ex01.FacebookAppWinformsUI
                     }
                 }
             }
-
         }
+
         private void enableLoggedInFeatures()
         {
             buttonChoosePhoto.Enabled = true;
@@ -116,14 +118,12 @@ namespace Ex01.FacebookAppWinformsUI
             buttonPostLink.Enabled = true;
             tabControlGeo.Enabled = true;
         }
-
         //ui
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             handleUserSettingsWhenClosingTheForm();
             base.OnFormClosing(e);
         }
-
 
         private void handleUserSettingsWhenClosingTheForm()
         {
@@ -139,7 +139,7 @@ namespace Ex01.FacebookAppWinformsUI
                         m_LastSettings.ComboBoxWebBrowserItems.Add(s);
                     }
                 }
-                m_LastSettings.saveToFile();
+               m_LastSettings.saveToFile();
             }
         }
 
@@ -318,10 +318,10 @@ namespace Ex01.FacebookAppWinformsUI
         private void comboBoxWebBrowser_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
-            ChangeURL(comboBox);
+            changeURL(comboBox);
         }
 
-        private void ChangeURL(ComboBox i_ComboBox)
+        private void changeURL(ComboBox i_ComboBox)
         {
             if (!string.IsNullOrEmpty(i_ComboBox.SelectedItem as string))
             {
@@ -419,7 +419,6 @@ namespace Ex01.FacebookAppWinformsUI
             if (listBoxActions.SelectedItem != null)
             {
                 Form CommandForm = listBoxActions.SelectedItem as Form;
-                //CommandForm.FormClosed += on_closed;
                 DialogResult dialogResult = CommandForm.ShowDialog();
                 if(dialogResult == DialogResult.OK)
                 {
@@ -436,15 +435,15 @@ namespace Ex01.FacebookAppWinformsUI
                 FormPostStatus postForm = sender as FormPostStatus;
 
 
-                string statusBody = postForm.statusBody;
-                DateTime timeToExecute = postForm.timeToExecute;
+                string statusBody = postForm.StatusBody;
+                DateTime timeToExecute = postForm.TimeToExecute;
 
                 FbEventArgs args = new FbEventArgs();
                 TimedComponent t = new TimedComponent();
 
-                args.postBody = statusBody;
+                args.StatusBody = statusBody;
                 t.ActionObject = FbActionPost.Create(m_FacebookApp);
-                t.ActionObject.loadAction(args);
+                t.ActionObject.LoadAction(args);
 
                 t.Timer = new System.Timers.Timer();
                 t.Timer.Enabled = false;
@@ -460,7 +459,7 @@ namespace Ex01.FacebookAppWinformsUI
                 }
 
 
-                facebookTimerAdapter adapter = new facebookTimerAdapter(t);
+                FacebookTimerAdapter adapter = new FacebookTimerAdapter(t);
                 adapter.Args = args;
                 adapter.Timed.Timer = t.Timer;
 
@@ -508,10 +507,10 @@ namespace Ex01.FacebookAppWinformsUI
 
     }
 
-    public class facebookTimerAdapter
+    public class FacebookTimerAdapter
     {
-        private bool onlyOnce = false;
-        public facebookTimerAdapter(TimedComponent i_timedComponent)
+        private bool m_ProcessOnlyOnce = false;
+        public FacebookTimerAdapter(TimedComponent i_timedComponent)
         {
             Timed = i_timedComponent;
         }
@@ -519,9 +518,9 @@ namespace Ex01.FacebookAppWinformsUI
         public FbEventArgs Args { get; set; }
         public void on_elapsed(Object source, System.Timers.ElapsedEventArgs e)
         {
-            if(!onlyOnce)
+            if(!m_ProcessOnlyOnce)
             {
-            onlyOnce = true;
+            m_ProcessOnlyOnce = true;
             Timed.ActionObject.raiseEvent(Args);
             MessageBox.Show("event raisen at" + DateTime.Now.ToString());
             Timed.Timer.Enabled = false;
