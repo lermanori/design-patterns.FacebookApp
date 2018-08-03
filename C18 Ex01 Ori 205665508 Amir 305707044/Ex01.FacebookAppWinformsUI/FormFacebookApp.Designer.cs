@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonLogin = new System.Windows.Forms.Button();
             this.listBoxGroups = new System.Windows.Forms.ListBox();
             this.buttonLogOut = new System.Windows.Forms.Button();
             this.buttonPostStatus = new System.Windows.Forms.Button();
@@ -51,7 +51,7 @@
             this.tabPageBasic = new System.Windows.Forms.TabPage();
             this.labelUploadLink = new System.Windows.Forms.Label();
             this.labelUploadPhoto = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxProfilePicture = new System.Windows.Forms.PictureBox();
             this.pictureBoxPostPhotoPreviewImage = new System.Windows.Forms.PictureBox();
             this.tabPageStatsAndShook = new System.Windows.Forms.TabPage();
             this.labelGetStatistics = new System.Windows.Forms.Label();
@@ -97,7 +97,7 @@
             this.buttonAddNewAction = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).BeginInit();
             this.tabPageStatsAndShook.SuspendLayout();
             this.panelShickOShook.SuspendLayout();
@@ -112,15 +112,15 @@
             this.tabPageAutomate.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // buttonLogin
             // 
-            this.button1.Location = new System.Drawing.Point(1208, 21);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 38);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "login";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.buttonLoginClick);
+            this.buttonLogin.Location = new System.Drawing.Point(1208, 21);
+            this.buttonLogin.Name = "buttonLogin";
+            this.buttonLogin.Size = new System.Drawing.Size(75, 38);
+            this.buttonLogin.TabIndex = 0;
+            this.buttonLogin.Text = "login";
+            this.buttonLogin.UseVisualStyleBackColor = true;
+            this.buttonLogin.Click += new System.EventHandler(this.buttonLoginClick);
             // 
             // listBoxGroups
             // 
@@ -163,7 +163,7 @@
             this.textBoxUploadPost.Name = "textBoxUploadPost";
             this.textBoxUploadPost.Size = new System.Drawing.Size(352, 90);
             this.textBoxUploadPost.TabIndex = 6;
-            this.textBoxUploadPost.Text = "enter post here";
+            this.textBoxUploadPost.Text = "What\'s On Your Mind?...";
             this.textBoxUploadPost.Click += new System.EventHandler(this.textBoxUploadPost_Click);
             // 
             // buttonFetchGroups
@@ -183,7 +183,7 @@
             // 
             // textBoxTitle
             // 
-            this.textBoxTitle.Location = new System.Drawing.Point(1134, 376);
+            this.textBoxTitle.Location = new System.Drawing.Point(1130, 332);
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(149, 22);
             this.textBoxTitle.TabIndex = 9;
@@ -335,9 +335,9 @@
             this.tabPageBasic.Controls.Add(this.labelUploadLink);
             this.tabPageBasic.Controls.Add(this.labelUploadPhoto);
             this.tabPageBasic.Controls.Add(this.listBoxGroups);
-            this.tabPageBasic.Controls.Add(this.button1);
+            this.tabPageBasic.Controls.Add(this.buttonLogin);
             this.tabPageBasic.Controls.Add(this.buttonLogOut);
-            this.tabPageBasic.Controls.Add(this.pictureBox1);
+            this.tabPageBasic.Controls.Add(this.pictureBoxProfilePicture);
             this.tabPageBasic.Controls.Add(this.checkBoxRememberUser);
             this.tabPageBasic.Controls.Add(this.buttonSubmitUrl);
             this.tabPageBasic.Controls.Add(this.buttonPostStatus);
@@ -385,14 +385,14 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Location = new System.Drawing.Point(1012, 21);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(150, 141);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
+            this.pictureBoxProfilePicture.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBoxProfilePicture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBoxProfilePicture.Location = new System.Drawing.Point(1012, 21);
+            this.pictureBoxProfilePicture.Name = "pictureBox1";
+            this.pictureBoxProfilePicture.Size = new System.Drawing.Size(150, 141);
+            this.pictureBoxProfilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxProfilePicture.TabIndex = 4;
+            this.pictureBoxProfilePicture.TabStop = false;
             // 
             // pictureBoxPostPhotoPreviewImage
             // 
@@ -472,7 +472,7 @@
             this.buttonShik.TabIndex = 23;
             this.buttonShik.Text = "Shik!";
             this.buttonShik.UseVisualStyleBackColor = false;
-            this.buttonShik.Click += new System.EventHandler(this.button3_Click);
+            this.buttonShik.Click += new System.EventHandler(this.buttonShik_Click);
             // 
             // labelTellYourFriends
             // 
@@ -890,11 +890,11 @@
             this.Name = "FormFacebookApp";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "newFacebook";
-            this.Load += new System.EventHandler(this.tabPage3_load);
+            this.Load += new System.EventHandler(this.tabPageAutomate_load);
             this.tabControl.ResumeLayout(false);
             this.tabPageBasic.ResumeLayout(false);
             this.tabPageBasic.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).EndInit();
             this.tabPageStatsAndShook.ResumeLayout(false);
             this.tabPageStatsAndShook.PerformLayout();
@@ -919,10 +919,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonLogin;
         private System.Windows.Forms.ListBox listBoxGroups;
         private System.Windows.Forms.Button buttonLogOut;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBoxProfilePicture;
         private System.Windows.Forms.Button buttonPostStatus;
         private System.Windows.Forms.TextBox textBoxUploadPost;
         private System.Windows.Forms.Button buttonFetchGroups;

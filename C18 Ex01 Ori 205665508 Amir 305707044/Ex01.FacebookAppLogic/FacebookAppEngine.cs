@@ -11,10 +11,16 @@ namespace Ex01.FacebookAppLogic
 {
     public class FacebookAppEngine
     {
-        private readonly string r_AppID = "273882356720887";
-        private readonly string r_PermissionsNeeded = @"email, user_birthday, user_hometown, user_location, user_likes, user_events, user_photos, user_videos, 
+        public const string k_AppID = "273882356720887";
+        public const string k_PermissionsNeeded = @"email, user_birthday, user_hometown, user_location, user_likes, user_events, user_photos, user_videos, 
                                                         user_friends, user_tagged_places, user_posts, user_gender, user_link, publish_video, 
                                                         groups_access_member_info, public_profile ";
+
+        public const string k_LoginFailedMessage = "Login Failed!";
+        public const string k_LogoutFailedMessage = "Logout Failed!";
+        public const string k_PostStatusFailedMessage = "Post Status Failed!";
+        public const string k_FailedToUpdateMessage = "Failed to update user";
+        public const string k_FailedToUpload = "Failed to Upload! Try Again";
 
         private LoginResult m_LoginResult = null;
 
@@ -24,14 +30,28 @@ namespace Ex01.FacebookAppLogic
 
         public void Login()
         {
-            m_LoginResult = FacebookService.Login(r_AppID, r_PermissionsNeeded);
-            initializeMembersAfterSuccessfulConnection();
+            try
+            {
+                m_LoginResult = FacebookService.Login(k_AppID, k_PermissionsNeeded);
+                initializeMembersAfterSuccessfulConnection();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(k_LoginFailedMessage, ex);
+            }
         }
 
         public void Connect(string i_AccessToken)
         {
-            m_LoginResult = FacebookService.Connect(i_AccessToken);
-            initializeMembersAfterSuccessfulConnection();
+            try
+            {
+                m_LoginResult = FacebookService.Connect(i_AccessToken);
+                initializeMembersAfterSuccessfulConnection();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(k_LoginFailedMessage, ex);
+            }
         }
 
         private void initializeMembersAfterSuccessfulConnection()
@@ -42,12 +62,19 @@ namespace Ex01.FacebookAppLogic
 
         public string GetAccessToken()
         {
-            return m_LoginResult.AccessToken;
+            return m_LoginResult?.AccessToken;
         }
 
         public void Logout()
         {
-            FacebookService.Logout(resetDataAfterLogout);
+            try
+            {
+                FacebookService.Logout(resetDataAfterLogout);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(k_LogoutFailedMessage, ex);
+            }
         }
 
         private void resetDataAfterLogout()
@@ -59,7 +86,14 @@ namespace Ex01.FacebookAppLogic
 
         public void PostStatus(string i_StatusToPost)
         {
-            CurrentUser.PostStatus(i_StatusToPost);
+            try
+            {
+                CurrentUser.PostStatus(i_StatusToPost);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(k_PostStatusFailedMessage, ex);
+            }
         }
 
         public bool IsLoggedIn()
@@ -69,17 +103,24 @@ namespace Ex01.FacebookAppLogic
 
         private void refetchUser()
         {
-            CurrentUser.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
+            try
+            {
+                CurrentUser.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(k_FailedToUpdateMessage, ex);
+            }
         }
 
         public FacebookObjectCollection<Group> FetchUserGroups()
         {
-            return CurrentUser.Groups;
+            return CurrentUser?.Groups;
         }
 
         public FacebookObjectCollection<Checkin> FetchUserCheckins()
         {
-            return CurrentUser.Checkins;
+            return CurrentUser?.Checkins;
         }
 
         public FacebookObjectCollection<Photo> FetchUserPhotos()
@@ -87,7 +128,7 @@ namespace Ex01.FacebookAppLogic
             FacebookObjectCollection<Photo> collectionOfUserPhotos = new FacebookObjectCollection<Photo>();
             refetchUser();
 
-            foreach (Album album in CurrentUser.Albums)
+            foreach (Album album in CurrentUser?.Albums)
             {
                 foreach (Photo photo in album.Photos)
                 {
@@ -100,17 +141,31 @@ namespace Ex01.FacebookAppLogic
 
         public FacebookObjectCollection<User> FetchUserFriends()
         {
-            return CurrentUser.Friends;
+            return CurrentUser?.Friends;
         }
 
         public void PostChosenPhoto(string i_PhotoPath, string i_PhotoTitle)
         {
-            CurrentUser.PostPhoto(i_PhotoPath, i_PhotoTitle);
+            try
+            {
+                CurrentUser.PostPhoto(i_PhotoPath, i_PhotoTitle);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(k_FailedToUpload, ex);
+            }
         }
 
         public void PostChosenLink(string i_LinkToPost)
         {
-            CurrentUser.PostLink(i_LinkToPost);
+            try
+            {
+                CurrentUser.PostLink(i_LinkToPost, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(k_FailedToUpload, ex);
+            }
         }
 
         public bool CreateURL(string i_UrlToShow, out Uri o_UriResult)
@@ -127,9 +182,8 @@ namespace Ex01.FacebookAppLogic
             Random randomFriendIndex = new Random();
             int randomNumber = randomFriendIndex.Next(CurrentUser.Friends.Count);
 
-            randomFriend = CurrentUser.Friends[randomNumber];
+            randomFriend = CurrentUser?.Friends[randomNumber];
             return randomFriend;
-            
         }
     }
 }
