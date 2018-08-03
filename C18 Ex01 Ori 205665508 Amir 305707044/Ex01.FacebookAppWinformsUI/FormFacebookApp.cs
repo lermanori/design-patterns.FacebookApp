@@ -122,7 +122,6 @@ namespace Ex01.FacebookAppWinformsUI
             m_ControlsToEnableOrDisable.Add(buttonPostStatus);
             m_ControlsToEnableOrDisable.Add(checkBoxRememberUser);
             m_ControlsToEnableOrDisable.Add(buttonPostLink);
-            m_ControlsToEnableOrDisable.Add(buttonLogOut);
             m_ControlsToEnableOrDisable.Add(buttonFetchGroups);
             m_ControlsToEnableOrDisable.Add(buttonPostLink);
             m_ControlsToEnableOrDisable.Add(textBoxUploadPost);
@@ -183,6 +182,7 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 enableLoggedInFeatures();
                 buttonLogin.Enabled = false;
+                buttonLogOut.Enabled = true;
             }
         }
 
@@ -198,6 +198,9 @@ namespace Ex01.FacebookAppWinformsUI
             MessageBox.Show("Logged Out!");
 
             disableLoggedInFeatures();
+
+            buttonLogOut.Enabled = false;
+            buttonLogin.Enabled = true;
         }
 
         private void disableLoggedInFeatures()
