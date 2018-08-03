@@ -38,12 +38,18 @@ namespace Ex01.FacebookAppWinformsUI
 
         private readonly string r_FriendsCountMessage = "Friends with {0} people!";
         private readonly string r_NumStatusesMessage = "Shared {0} statuses!";
+        private readonly string r_FailedToOperateMessage = "Failed To Perform! Please try again.";
+        private readonly string r_ShickOShookLabelText = "Tell {0} What you think!";
+        private readonly string r_NoPhotosForUser = "{0} has no pictures!";
+        private readonly string r_ShickOShookSuccesfulPostMessage = "You Told the world what you think about {0}'s apperance!";
+
         // LoginResult m_LoginResult;
         // User m_currentUser;
 
         private FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
         private FacebookAppSettings m_LastSettings = null;
         private FriendsStatistics m_StatsAboutMyFriends = new FriendsStatistics();
+        private ShickOShook m_ShickOShook = new ShickOShook();
 
         private string m_PhotoPath = string.Empty;
 
@@ -59,6 +65,7 @@ namespace Ex01.FacebookAppWinformsUI
 
             InitializeComponent();
             this.checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
+
         }
 
         //ui
@@ -116,7 +123,7 @@ namespace Ex01.FacebookAppWinformsUI
             buttonLogOut.Enabled = true;
             buttonFetchGroups.Enabled = true;
             buttonPostLink.Enabled = true;
-            tabControlGeo.Enabled = true;
+            tabControl.Enabled = true;
         }
         //ui
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -139,7 +146,7 @@ namespace Ex01.FacebookAppWinformsUI
                         m_LastSettings.ComboBoxWebBrowserItems.Add(s);
                     }
                 }
-               m_LastSettings.saveToFile();
+                m_LastSettings.saveToFile();
             }
         }
 
@@ -364,50 +371,6 @@ namespace Ex01.FacebookAppWinformsUI
             textBoxUploadPost.Text = string.Empty;
         }
 
-        private void buttonFetchFriends_Click(object sender, EventArgs e)
-        {
-            populateListBoxFriends();
-        }
-
-        private void populateListBoxFriends()
-        {
-            listBoxFriends.Items.Clear();
-            listBoxFriends.DisplayMember = "Name";
-            FacebookObjectCollection<User> userFriends = m_FacebookApp.FetchUserFriends();
-
-            foreach (User friend in userFriends)
-            {
-                listBoxFriends.Items.Add(friend);
-                friend.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
-            }
-
-            if (listBoxFriends.Items.Count == 0)
-            {
-                listBoxFriends.Items.Add(r_EmptyListMessage);
-            }
-        }
-
-        private void listBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                User selectedFriend = listBoxFriends.SelectedItem as User;
-
-                updateShownFriend(selectedFriend);
-            }
-            catch { }
-        }
-
-        private void updateShownFriend(User i_SelectedFriend)
-        {
-            pictureBoxFriendProfilePic.LoadAsync(i_SelectedFriend.PictureNormalURL);
-
-        }
-
-        private void showFriendsStatistics()
-        {
-
-        }
 
         private void tabPage3_load(object sender, EventArgs e)
         {//think about how to implement lazy creation
@@ -420,7 +383,7 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 Form CommandForm = listBoxActions.SelectedItem as Form;
                 DialogResult dialogResult = CommandForm.ShowDialog();
-                if(dialogResult == DialogResult.OK)
+                if (dialogResult == DialogResult.OK)
                 {
                     collectData(CommandForm);
                 }
@@ -433,6 +396,9 @@ namespace Ex01.FacebookAppWinformsUI
             if (sender is FormPostStatus)
             {
                 FormPostStatus postForm = sender as FormPostStatus;
+                collectDataForPost(sender);
+            }
+        }
 
         private void collectDataForPost(object sender)
         {
@@ -502,6 +468,48 @@ namespace Ex01.FacebookAppWinformsUI
             labelNumStatuses.Text = String.Format(r_NumStatusesMessage, m_StatsAboutMyFriends.MostActiveUser.Statuses.Count);
             pictureBoxMostActiveUser.LoadAsync(m_StatsAboutMyFriends.MostActiveUser.PictureNormalURL);
         }
+
+        private void buttonActivateShikOShook_Click(object sender, EventArgs e)
+        {
+
+            User randomFriend = m_FacebookApp.FetchRandomFriend();
+            try
+            {
+                m_ShickOShook.GetFriendPhotoURLArray(randomFriend);
+                if (m_ShickOShook.friendPhotoURLCollection != null)
+                {
+                    pictureBoxFriendPhotoShickOShook.LoadAsync(m_ShickOShook.CurrentPhotoURL);
+                    labelTellYourFriends.Text = string.Format(r_ShickOShookLabelText, m_ShickOShook.CurrentFriendFirstName);
+                    labelTellYourFriends.Visible = true;
+                }
+                else
+                {
+                    MessageBox.Show(string.Format(r_NoPhotosForUser, randomFriend.FirstName));
+                }
+            }
+            catch
+            {
+                MessageBox.Show(r_FailedToOperateMessage);
+            }
+        }
+
+        private void pictureBoxFriendPhotoShickOShook_Click(object sender, EventArgs e)
+        {
+            m_ShickOShook.ChangeCurrentPhotoURL();
+            pictureBoxFriendPhotoShickOShook.LoadAsync(m_ShickOShook.CurrentPhotoURL);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            m_ShickOShook.PublishPost(buttonShik.Text, m_FacebookApp);
+            MessageBox.Show(string.Format(r_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+        }
+
+        private void buttonShook_Click(object sender, EventArgs e)
+        {
+            m_ShickOShook.PublishPost(buttonShook.Text, m_FacebookApp);
+            MessageBox.Show(string.Format(r_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+        }
     }
 
     public class FacebookTimerAdapter
@@ -515,13 +523,13 @@ namespace Ex01.FacebookAppWinformsUI
         public FbEventArgs Args { get; set; }
         public void on_elapsed(Object source, System.Timers.ElapsedEventArgs e)
         {
-            if(!m_ProcessOnlyOnce)
+            if (!m_ProcessOnlyOnce)
             {
-            m_ProcessOnlyOnce = true;
-            Timed.ActionObject.raiseEvent(Args);
-            MessageBox.Show("event raisen at" + DateTime.Now.ToString());
-            Timed.Timer.Enabled = false;
-            Timed.Timer.Elapsed -= on_elapsed;
+                m_ProcessOnlyOnce = true;
+                Timed.ActionObject.raiseEvent(Args);
+                MessageBox.Show("event raisen at" + DateTime.Now.ToString());
+                Timed.Timer.Enabled = false;
+                Timed.Timer.Elapsed -= on_elapsed;
             }
         }
     }

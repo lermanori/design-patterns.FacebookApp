@@ -31,7 +31,6 @@
             this.button1 = new System.Windows.Forms.Button();
             this.listBoxGroups = new System.Windows.Forms.ListBox();
             this.buttonLogOut = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.buttonPostStatus = new System.Windows.Forms.Button();
             this.textBoxUploadPost = new System.Windows.Forms.TextBox();
             this.buttonFetchGroups = new System.Windows.Forms.Button();
@@ -39,7 +38,6 @@
             this.textBoxTitle = new System.Windows.Forms.TextBox();
             this.buttonPostPhoto = new System.Windows.Forms.Button();
             this.buttonChoosePhoto = new System.Windows.Forms.Button();
-            this.pictureBoxPostPhotoPreviewImage = new System.Windows.Forms.PictureBox();
             this.labelPostPhotoPreview = new System.Windows.Forms.Label();
             this.buttonPostLink = new System.Windows.Forms.Button();
             this.checkBoxRememberUser = new System.Windows.Forms.CheckBox();
@@ -49,9 +47,22 @@
             this.labelGroups = new System.Windows.Forms.Label();
             this.comboBoxWebBrowser = new System.Windows.Forms.ComboBox();
             this.buttonSubmitUrl = new System.Windows.Forms.Button();
-            this.tabControlGeo = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPageGeo = new System.Windows.Forms.TabPage();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabPageBasic = new System.Windows.Forms.TabPage();
+            this.labelUploadLink = new System.Windows.Forms.Label();
+            this.labelUploadPhoto = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBoxPostPhotoPreviewImage = new System.Windows.Forms.PictureBox();
+            this.tabPageStatsAndShook = new System.Windows.Forms.TabPage();
+            this.labelGetStatistics = new System.Windows.Forms.Label();
+            this.panelShickOShook = new System.Windows.Forms.Panel();
+            this.buttonShook = new System.Windows.Forms.Button();
+            this.buttonShik = new System.Windows.Forms.Button();
+            this.labelTellYourFriends = new System.Windows.Forms.Label();
+            this.pictureBoxFriendPhotoShickOShook = new System.Windows.Forms.PictureBox();
+            this.buttonActivateShickOShook = new System.Windows.Forms.Button();
+            this.labelShickOShookFeatureDescription = new System.Windows.Forms.Label();
+            this.labelShickOShookTitle = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.labelNumStatuses = new System.Windows.Forms.Label();
             this.pictureBoxMostActiveUser = new System.Windows.Forms.PictureBox();
@@ -80,25 +91,17 @@
             this.labelWomen = new System.Windows.Forms.Label();
             this.labelMen = new System.Windows.Forms.Label();
             this.labelGender = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.listBoxPhotos = new System.Windows.Forms.ListBox();
-            this.listBoxFriendCheckins = new System.Windows.Forms.ListBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.pictureBoxFriendProfilePic = new System.Windows.Forms.PictureBox();
-            this.buttonFetchGeo = new System.Windows.Forms.Button();
-            this.labelFriendBio = new System.Windows.Forms.Label();
-            this.textBoxFriendBio = new System.Windows.Forms.TextBox();
-            this.listBoxFriends = new System.Windows.Forms.ListBox();
-            this.buttonFetchFriends = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPageAutomate = new System.Windows.Forms.TabPage();
             this.listBoxTasks = new System.Windows.Forms.ListBox();
             this.listBoxActions = new System.Windows.Forms.ListBox();
             this.buttonAddNewAction = new System.Windows.Forms.Button();
+            this.tabControl.SuspendLayout();
+            this.tabPageBasic.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).BeginInit();
-            this.tabControlGeo.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPageGeo.SuspendLayout();
+            this.tabPageStatsAndShook.SuspendLayout();
+            this.panelShickOShook.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendPhotoShickOShook)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMostActiveUser)).BeginInit();
             this.panel4.SuspendLayout();
@@ -106,14 +109,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMostFriends)).BeginInit();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendProfilePic)).BeginInit();
-            this.tabPage3.SuspendLayout();
+            this.tabPageAutomate.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1234, 21);
+            this.button1.Location = new System.Drawing.Point(1208, 21);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 38);
             this.button1.TabIndex = 0;
@@ -135,7 +136,7 @@
             // buttonLogOut
             // 
             this.buttonLogOut.Enabled = false;
-            this.buttonLogOut.Location = new System.Drawing.Point(1234, 74);
+            this.buttonLogOut.Location = new System.Drawing.Point(1208, 65);
             this.buttonLogOut.Name = "buttonLogOut";
             this.buttonLogOut.Size = new System.Drawing.Size(75, 37);
             this.buttonLogOut.TabIndex = 3;
@@ -143,34 +144,24 @@
             this.buttonLogOut.UseVisualStyleBackColor = true;
             this.buttonLogOut.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBox1.Location = new System.Drawing.Point(1012, 21);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(150, 141);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            // 
             // buttonPostStatus
             // 
             this.buttonPostStatus.Enabled = false;
-            this.buttonPostStatus.Location = new System.Drawing.Point(626, 117);
+            this.buttonPostStatus.Location = new System.Drawing.Point(635, 124);
             this.buttonPostStatus.Name = "buttonPostStatus";
-            this.buttonPostStatus.Size = new System.Drawing.Size(219, 38);
+            this.buttonPostStatus.Size = new System.Drawing.Size(352, 38);
             this.buttonPostStatus.TabIndex = 5;
-            this.buttonPostStatus.Text = "post status";
+            this.buttonPostStatus.Text = "Post a Status!";
             this.buttonPostStatus.UseVisualStyleBackColor = true;
             this.buttonPostStatus.Click += new System.EventHandler(this.buttonPostStatus_click);
             // 
             // textBoxUploadPost
             // 
             this.textBoxUploadPost.ForeColor = System.Drawing.SystemColors.MenuText;
-            this.textBoxUploadPost.Location = new System.Drawing.Point(626, 21);
+            this.textBoxUploadPost.Location = new System.Drawing.Point(635, 21);
             this.textBoxUploadPost.Multiline = true;
             this.textBoxUploadPost.Name = "textBoxUploadPost";
-            this.textBoxUploadPost.Size = new System.Drawing.Size(219, 90);
+            this.textBoxUploadPost.Size = new System.Drawing.Size(352, 90);
             this.textBoxUploadPost.TabIndex = 6;
             this.textBoxUploadPost.Text = "enter post here";
             this.textBoxUploadPost.Click += new System.EventHandler(this.textBoxUploadPost_Click);
@@ -178,7 +169,7 @@
             // buttonFetchGroups
             // 
             this.buttonFetchGroups.Enabled = false;
-            this.buttonFetchGroups.Location = new System.Drawing.Point(435, 43);
+            this.buttonFetchGroups.Location = new System.Drawing.Point(423, 43);
             this.buttonFetchGroups.Name = "buttonFetchGroups";
             this.buttonFetchGroups.Size = new System.Drawing.Size(113, 35);
             this.buttonFetchGroups.TabIndex = 7;
@@ -192,7 +183,7 @@
             // 
             // textBoxTitle
             // 
-            this.textBoxTitle.Location = new System.Drawing.Point(1141, 378);
+            this.textBoxTitle.Location = new System.Drawing.Point(1134, 376);
             this.textBoxTitle.Name = "textBoxTitle";
             this.textBoxTitle.Size = new System.Drawing.Size(149, 22);
             this.textBoxTitle.TabIndex = 9;
@@ -202,7 +193,7 @@
             // buttonPostPhoto
             // 
             this.buttonPostPhoto.Enabled = false;
-            this.buttonPostPhoto.Location = new System.Drawing.Point(1141, 525);
+            this.buttonPostPhoto.Location = new System.Drawing.Point(1130, 525);
             this.buttonPostPhoto.Name = "buttonPostPhoto";
             this.buttonPostPhoto.Size = new System.Drawing.Size(103, 36);
             this.buttonPostPhoto.TabIndex = 8;
@@ -213,7 +204,7 @@
             // buttonChoosePhoto
             // 
             this.buttonChoosePhoto.Enabled = false;
-            this.buttonChoosePhoto.Location = new System.Drawing.Point(1141, 267);
+            this.buttonChoosePhoto.Location = new System.Drawing.Point(1130, 297);
             this.buttonChoosePhoto.Name = "buttonChoosePhoto";
             this.buttonChoosePhoto.Size = new System.Drawing.Size(114, 29);
             this.buttonChoosePhoto.TabIndex = 11;
@@ -221,21 +212,11 @@
             this.buttonChoosePhoto.UseVisualStyleBackColor = true;
             this.buttonChoosePhoto.Click += new System.EventHandler(this.buttonChoosePhoto_Click);
             // 
-            // pictureBoxPostPhotoPreviewImage
-            // 
-            this.pictureBoxPostPhotoPreviewImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.pictureBoxPostPhotoPreviewImage.Location = new System.Drawing.Point(824, 267);
-            this.pictureBoxPostPhotoPreviewImage.Name = "pictureBoxPostPhotoPreviewImage";
-            this.pictureBoxPostPhotoPreviewImage.Size = new System.Drawing.Size(311, 294);
-            this.pictureBoxPostPhotoPreviewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxPostPhotoPreviewImage.TabIndex = 12;
-            this.pictureBoxPostPhotoPreviewImage.TabStop = false;
-            // 
             // labelPostPhotoPreview
             // 
             this.labelPostPhotoPreview.AutoSize = true;
             this.labelPostPhotoPreview.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.labelPostPhotoPreview.Location = new System.Drawing.Point(821, 242);
+            this.labelPostPhotoPreview.Location = new System.Drawing.Point(814, 277);
             this.labelPostPhotoPreview.Name = "labelPostPhotoPreview";
             this.labelPostPhotoPreview.Size = new System.Drawing.Size(57, 17);
             this.labelPostPhotoPreview.TabIndex = 13;
@@ -244,7 +225,7 @@
             // buttonPostLink
             // 
             this.buttonPostLink.Enabled = false;
-            this.buttonPostLink.Location = new System.Drawing.Point(644, 231);
+            this.buttonPostLink.Location = new System.Drawing.Point(644, 262);
             this.buttonPostLink.Name = "buttonPostLink";
             this.buttonPostLink.Size = new System.Drawing.Size(124, 28);
             this.buttonPostLink.TabIndex = 14;
@@ -255,9 +236,9 @@
             // checkBoxRememberUser
             // 
             this.checkBoxRememberUser.AutoSize = true;
-            this.checkBoxRememberUser.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.checkBoxRememberUser.BackColor = System.Drawing.Color.Transparent;
             this.checkBoxRememberUser.Enabled = false;
-            this.checkBoxRememberUser.Location = new System.Drawing.Point(1187, 127);
+            this.checkBoxRememberUser.Location = new System.Drawing.Point(1181, 127);
             this.checkBoxRememberUser.Margin = new System.Windows.Forms.Padding(2);
             this.checkBoxRememberUser.Name = "checkBoxRememberUser";
             this.checkBoxRememberUser.Size = new System.Drawing.Size(122, 21);
@@ -267,10 +248,10 @@
             // 
             // webBrowser
             // 
-            this.webBrowser.Location = new System.Drawing.Point(23, 267);
+            this.webBrowser.Location = new System.Drawing.Point(23, 297);
             this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(745, 250);
+            this.webBrowser.Size = new System.Drawing.Size(745, 264);
             this.webBrowser.TabIndex = 15;
             this.webBrowser.Url = new System.Uri("", System.UriKind.Relative);
             // 
@@ -314,10 +295,10 @@
             "http://www.youtube.com/",
             "http://www.giphy.com/",
             "http://www.soundcloud.com/"});
-            this.comboBoxWebBrowser.Location = new System.Drawing.Point(23, 231);
+            this.comboBoxWebBrowser.Location = new System.Drawing.Point(23, 262);
             this.comboBoxWebBrowser.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxWebBrowser.Name = "comboBoxWebBrowser";
-            this.comboBoxWebBrowser.Size = new System.Drawing.Size(616, 24);
+            this.comboBoxWebBrowser.Size = new System.Drawing.Size(520, 24);
             this.comboBoxWebBrowser.TabIndex = 19;
             this.comboBoxWebBrowser.Text = "choose from list or enter your own";
             this.comboBoxWebBrowser.SelectedIndexChanged += new System.EventHandler(this.comboBoxWebBrowser_SelectedIndexChanged);
@@ -325,74 +306,226 @@
             // 
             // buttonSubmitUrl
             // 
-            this.buttonSubmitUrl.Location = new System.Drawing.Point(499, 195);
+            this.buttonSubmitUrl.Location = new System.Drawing.Point(547, 262);
             this.buttonSubmitUrl.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSubmitUrl.Name = "buttonSubmitUrl";
-            this.buttonSubmitUrl.Size = new System.Drawing.Size(92, 32);
+            this.buttonSubmitUrl.Size = new System.Drawing.Size(92, 28);
             this.buttonSubmitUrl.TabIndex = 20;
-            this.buttonSubmitUrl.Text = "submit url";
+            this.buttonSubmitUrl.Text = "Submit URL";
             this.buttonSubmitUrl.UseVisualStyleBackColor = true;
             this.buttonSubmitUrl.Click += new System.EventHandler(this.buttonSubmitUrl_onClick);
             // 
-            // tabControlGeo
+            // tabControl
             // 
-            this.tabControlGeo.Controls.Add(this.tabPage1);
-            this.tabControlGeo.Controls.Add(this.tabPageGeo);
-            this.tabControlGeo.Controls.Add(this.tabPage3);
-            this.tabControlGeo.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.tabControlGeo.Location = new System.Drawing.Point(1, 2);
-            this.tabControlGeo.Margin = new System.Windows.Forms.Padding(2);
-            this.tabControlGeo.Name = "tabControlGeo";
-            this.tabControlGeo.SelectedIndex = 0;
-            this.tabControlGeo.Size = new System.Drawing.Size(1325, 599);
-            this.tabControlGeo.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.tabControlGeo.TabIndex = 21;
+            this.tabControl.Controls.Add(this.tabPageBasic);
+            this.tabControl.Controls.Add(this.tabPageStatsAndShook);
+            this.tabControl.Controls.Add(this.tabPageAutomate);
+            this.tabControl.ImeMode = System.Windows.Forms.ImeMode.Off;
+            this.tabControl.Location = new System.Drawing.Point(1, 2);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(2);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(1325, 599);
+            this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
+            this.tabControl.TabIndex = 21;
             // 
-            // tabPage1
+            // tabPageBasic
             // 
-            this.tabPage1.Controls.Add(this.listBoxGroups);
-            this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Controls.Add(this.buttonLogOut);
-            this.tabPage1.Controls.Add(this.pictureBox1);
-            this.tabPage1.Controls.Add(this.checkBoxRememberUser);
-            this.tabPage1.Controls.Add(this.buttonSubmitUrl);
-            this.tabPage1.Controls.Add(this.buttonPostStatus);
-            this.tabPage1.Controls.Add(this.textBoxUploadPost);
-            this.tabPage1.Controls.Add(this.labelGroups);
-            this.tabPage1.Controls.Add(this.labelDescriptionOfGroups);
-            this.tabPage1.Controls.Add(this.labelPostPhotoPreview);
-            this.tabPage1.Controls.Add(this.buttonPostLink);
-            this.tabPage1.Controls.Add(this.textBoxTitle);
-            this.tabPage1.Controls.Add(this.buttonChoosePhoto);
-            this.tabPage1.Controls.Add(this.pictureBoxPostPhotoPreviewImage);
-            this.tabPage1.Controls.Add(this.comboBoxWebBrowser);
-            this.tabPage1.Controls.Add(this.buttonPostPhoto);
-            this.tabPage1.Controls.Add(this.textBoxDescriptionOfGroup);
-            this.tabPage1.Controls.Add(this.webBrowser);
-            this.tabPage1.Controls.Add(this.buttonFetchGroups);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1317, 570);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPageBasic.BackColor = System.Drawing.Color.PeachPuff;
+            this.tabPageBasic.Controls.Add(this.labelUploadLink);
+            this.tabPageBasic.Controls.Add(this.labelUploadPhoto);
+            this.tabPageBasic.Controls.Add(this.listBoxGroups);
+            this.tabPageBasic.Controls.Add(this.button1);
+            this.tabPageBasic.Controls.Add(this.buttonLogOut);
+            this.tabPageBasic.Controls.Add(this.pictureBox1);
+            this.tabPageBasic.Controls.Add(this.checkBoxRememberUser);
+            this.tabPageBasic.Controls.Add(this.buttonSubmitUrl);
+            this.tabPageBasic.Controls.Add(this.buttonPostStatus);
+            this.tabPageBasic.Controls.Add(this.textBoxUploadPost);
+            this.tabPageBasic.Controls.Add(this.labelGroups);
+            this.tabPageBasic.Controls.Add(this.labelDescriptionOfGroups);
+            this.tabPageBasic.Controls.Add(this.labelPostPhotoPreview);
+            this.tabPageBasic.Controls.Add(this.buttonPostLink);
+            this.tabPageBasic.Controls.Add(this.textBoxTitle);
+            this.tabPageBasic.Controls.Add(this.buttonChoosePhoto);
+            this.tabPageBasic.Controls.Add(this.pictureBoxPostPhotoPreviewImage);
+            this.tabPageBasic.Controls.Add(this.comboBoxWebBrowser);
+            this.tabPageBasic.Controls.Add(this.buttonPostPhoto);
+            this.tabPageBasic.Controls.Add(this.textBoxDescriptionOfGroup);
+            this.tabPageBasic.Controls.Add(this.webBrowser);
+            this.tabPageBasic.Controls.Add(this.buttonFetchGroups);
+            this.tabPageBasic.Location = new System.Drawing.Point(4, 25);
+            this.tabPageBasic.Name = "tabPageBasic";
+            this.tabPageBasic.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageBasic.Size = new System.Drawing.Size(1317, 570);
+            this.tabPageBasic.TabIndex = 0;
+            this.tabPageBasic.Text = "General Tab";
             // 
-            // tabPageGeo
+            // labelUploadLink
             // 
-            this.tabPageGeo.Controls.Add(this.panel5);
-            this.tabPageGeo.Controls.Add(this.panel4);
-            this.tabPageGeo.Controls.Add(this.panel3);
-            this.tabPageGeo.Controls.Add(this.buttonCalcStats);
-            this.tabPageGeo.Controls.Add(this.panel2);
-            this.tabPageGeo.Controls.Add(this.panel1);
-            this.tabPageGeo.Location = new System.Drawing.Point(4, 25);
-            this.tabPageGeo.Name = "tabPageGeo";
-            this.tabPageGeo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageGeo.Size = new System.Drawing.Size(1317, 570);
-            this.tabPageGeo.TabIndex = 1;
-            this.tabPageGeo.Text = "Geo";
-            this.tabPageGeo.UseVisualStyleBackColor = true;
+            this.labelUploadLink.AutoSize = true;
+            this.labelUploadLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelUploadLink.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.labelUploadLink.Location = new System.Drawing.Point(170, 235);
+            this.labelUploadLink.Name = "labelUploadLink";
+            this.labelUploadLink.Size = new System.Drawing.Size(144, 25);
+            this.labelUploadLink.TabIndex = 22;
+            this.labelUploadLink.Text = "Upload a Link";
+            // 
+            // labelUploadPhoto
+            // 
+            this.labelUploadPhoto.AutoSize = true;
+            this.labelUploadPhoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelUploadPhoto.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.labelUploadPhoto.Location = new System.Drawing.Point(884, 235);
+            this.labelUploadPhoto.Name = "labelUploadPhoto";
+            this.labelUploadPhoto.Size = new System.Drawing.Size(160, 25);
+            this.labelUploadPhoto.TabIndex = 21;
+            this.labelUploadPhoto.Text = "Upload a Photo";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBox1.Location = new System.Drawing.Point(1012, 21);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(150, 141);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBoxPostPhotoPreviewImage
+            // 
+            this.pictureBoxPostPhotoPreviewImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pictureBoxPostPhotoPreviewImage.Location = new System.Drawing.Point(817, 297);
+            this.pictureBoxPostPhotoPreviewImage.Name = "pictureBoxPostPhotoPreviewImage";
+            this.pictureBoxPostPhotoPreviewImage.Size = new System.Drawing.Size(311, 262);
+            this.pictureBoxPostPhotoPreviewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxPostPhotoPreviewImage.TabIndex = 12;
+            this.pictureBoxPostPhotoPreviewImage.TabStop = false;
+            // 
+            // tabPageStatsAndShook
+            // 
+            this.tabPageStatsAndShook.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(71)))), ((int)(((byte)(93)))));
+            this.tabPageStatsAndShook.Controls.Add(this.labelGetStatistics);
+            this.tabPageStatsAndShook.Controls.Add(this.panelShickOShook);
+            this.tabPageStatsAndShook.Controls.Add(this.panel5);
+            this.tabPageStatsAndShook.Controls.Add(this.panel4);
+            this.tabPageStatsAndShook.Controls.Add(this.panel3);
+            this.tabPageStatsAndShook.Controls.Add(this.buttonCalcStats);
+            this.tabPageStatsAndShook.Controls.Add(this.panel2);
+            this.tabPageStatsAndShook.Location = new System.Drawing.Point(4, 25);
+            this.tabPageStatsAndShook.Name = "tabPageStatsAndShook";
+            this.tabPageStatsAndShook.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageStatsAndShook.Size = new System.Drawing.Size(1317, 570);
+            this.tabPageStatsAndShook.TabIndex = 1;
+            this.tabPageStatsAndShook.Text = "Get Stats And Rate Your Friends!";
+            // 
+            // labelGetStatistics
+            // 
+            this.labelGetStatistics.AutoSize = true;
+            this.labelGetStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelGetStatistics.ForeColor = System.Drawing.Color.White;
+            this.labelGetStatistics.Location = new System.Drawing.Point(652, 30);
+            this.labelGetStatistics.Name = "labelGetStatistics";
+            this.labelGetStatistics.Size = new System.Drawing.Size(144, 36);
+            this.labelGetStatistics.TabIndex = 25;
+            this.labelGetStatistics.Text = "Get Statistics\r\nabout your friends";
+            // 
+            // panelShickOShook
+            // 
+            this.panelShickOShook.BackColor = System.Drawing.Color.Transparent;
+            this.panelShickOShook.BackgroundImage = global::Ex01.FacebookAppWinformsUI.Properties.Resources.ShickOShook;
+            this.panelShickOShook.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.panelShickOShook.Controls.Add(this.buttonShook);
+            this.panelShickOShook.Controls.Add(this.buttonShik);
+            this.panelShickOShook.Controls.Add(this.labelTellYourFriends);
+            this.panelShickOShook.Controls.Add(this.pictureBoxFriendPhotoShickOShook);
+            this.panelShickOShook.Controls.Add(this.buttonActivateShickOShook);
+            this.panelShickOShook.Controls.Add(this.labelShickOShookFeatureDescription);
+            this.panelShickOShook.Controls.Add(this.labelShickOShookTitle);
+            this.panelShickOShook.Location = new System.Drawing.Point(17, 26);
+            this.panelShickOShook.Name = "panelShickOShook";
+            this.panelShickOShook.Size = new System.Drawing.Size(602, 418);
+            this.panelShickOShook.TabIndex = 22;
+            // 
+            // buttonShook
+            // 
+            this.buttonShook.BackColor = System.Drawing.Color.Red;
+            this.buttonShook.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.buttonShook.Location = new System.Drawing.Point(334, 289);
+            this.buttonShook.Name = "buttonShook";
+            this.buttonShook.Size = new System.Drawing.Size(115, 54);
+            this.buttonShook.TabIndex = 24;
+            this.buttonShook.Text = "Shook!";
+            this.buttonShook.UseVisualStyleBackColor = false;
+            this.buttonShook.Click += new System.EventHandler(this.buttonShook_Click);
+            // 
+            // buttonShik
+            // 
+            this.buttonShik.BackColor = System.Drawing.Color.Green;
+            this.buttonShik.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.buttonShik.ForeColor = System.Drawing.Color.White;
+            this.buttonShik.Location = new System.Drawing.Point(455, 289);
+            this.buttonShik.Name = "buttonShik";
+            this.buttonShik.Size = new System.Drawing.Size(115, 54);
+            this.buttonShik.TabIndex = 23;
+            this.buttonShik.Text = "Shik!";
+            this.buttonShik.UseVisualStyleBackColor = false;
+            this.buttonShik.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // labelTellYourFriends
+            // 
+            this.labelTellYourFriends.AutoSize = true;
+            this.labelTellYourFriends.Location = new System.Drawing.Point(371, 257);
+            this.labelTellYourFriends.Name = "labelTellYourFriends";
+            this.labelTellYourFriends.Size = new System.Drawing.Size(141, 17);
+            this.labelTellYourFriends.TabIndex = 5;
+            this.labelTellYourFriends.Text = "labellTellYourFriends";
+            this.labelTellYourFriends.Visible = false;
+            // 
+            // pictureBoxFriendPhotoShickOShook
+            // 
+            this.pictureBoxFriendPhotoShickOShook.Location = new System.Drawing.Point(16, 141);
+            this.pictureBoxFriendPhotoShickOShook.Name = "pictureBoxFriendPhotoShickOShook";
+            this.pictureBoxFriendPhotoShickOShook.Size = new System.Drawing.Size(176, 202);
+            this.pictureBoxFriendPhotoShickOShook.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxFriendPhotoShickOShook.TabIndex = 3;
+            this.pictureBoxFriendPhotoShickOShook.TabStop = false;
+            this.pictureBoxFriendPhotoShickOShook.Click += new System.EventHandler(this.pictureBoxFriendPhotoShickOShook_Click);
+            // 
+            // buttonActivateShickOShook
+            // 
+            this.buttonActivateShickOShook.Location = new System.Drawing.Point(23, 92);
+            this.buttonActivateShickOShook.Name = "buttonActivateShickOShook";
+            this.buttonActivateShickOShook.Size = new System.Drawing.Size(151, 42);
+            this.buttonActivateShickOShook.TabIndex = 2;
+            this.buttonActivateShickOShook.Text = "Shick O Shook??";
+            this.buttonActivateShickOShook.UseVisualStyleBackColor = true;
+            this.buttonActivateShickOShook.Click += new System.EventHandler(this.buttonActivateShikOShook_Click);
+            // 
+            // labelShickOShookFeatureDescription
+            // 
+            this.labelShickOShookFeatureDescription.AutoSize = true;
+            this.labelShickOShookFeatureDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelShickOShookFeatureDescription.ForeColor = System.Drawing.Color.White;
+            this.labelShickOShookFeatureDescription.Location = new System.Drawing.Point(318, 58);
+            this.labelShickOShookFeatureDescription.Name = "labelShickOShookFeatureDescription";
+            this.labelShickOShookFeatureDescription.Size = new System.Drawing.Size(252, 51);
+            this.labelShickOShookFeatureDescription.TabIndex = 1;
+            this.labelShickOShookFeatureDescription.Text = "Get a random friend from your list,\r\nand rate their appearance!\r\nClicking will ma" +
+    "ke a post by your name!";
+            // 
+            // labelShickOShookTitle
+            // 
+            this.labelShickOShookTitle.AutoSize = true;
+            this.labelShickOShookTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelShickOShookTitle.ForeColor = System.Drawing.Color.White;
+            this.labelShickOShookTitle.Location = new System.Drawing.Point(191, 15);
+            this.labelShickOShookTitle.Name = "labelShickOShookTitle";
+            this.labelShickOShookTitle.Size = new System.Drawing.Size(185, 29);
+            this.labelShickOShookTitle.TabIndex = 0;
+            this.labelShickOShookTitle.Text = "Shik O Shook?";
             // 
             // panel5
             // 
@@ -400,7 +533,7 @@
             this.panel5.Controls.Add(this.pictureBoxMostActiveUser);
             this.panel5.Controls.Add(this.labelMostActiveUser);
             this.panel5.Controls.Add(this.labelMostActive);
-            this.panel5.Location = new System.Drawing.Point(397, 339);
+            this.panel5.Location = new System.Drawing.Point(802, 346);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(240, 196);
             this.panel5.TabIndex = 20;
@@ -409,6 +542,7 @@
             // 
             this.labelNumStatuses.AutoSize = true;
             this.labelNumStatuses.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelNumStatuses.ForeColor = System.Drawing.Color.White;
             this.labelNumStatuses.Location = new System.Drawing.Point(26, 65);
             this.labelNumStatuses.Name = "labelNumStatuses";
             this.labelNumStatuses.Size = new System.Drawing.Size(10, 15);
@@ -428,6 +562,7 @@
             // 
             this.labelMostActiveUser.AutoSize = true;
             this.labelMostActiveUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelMostActiveUser.ForeColor = System.Drawing.Color.White;
             this.labelMostActiveUser.Location = new System.Drawing.Point(26, 46);
             this.labelMostActiveUser.Name = "labelMostActiveUser";
             this.labelMostActiveUser.Size = new System.Drawing.Size(12, 17);
@@ -438,6 +573,7 @@
             // 
             this.labelMostActive.AutoSize = true;
             this.labelMostActive.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelMostActive.ForeColor = System.Drawing.Color.White;
             this.labelMostActive.Location = new System.Drawing.Point(16, 19);
             this.labelMostActive.Name = "labelMostActive";
             this.labelMostActive.Size = new System.Drawing.Size(208, 20);
@@ -455,15 +591,16 @@
             this.panel4.Controls.Add(this.labelMostFriends);
             this.panel4.Controls.Add(this.labelLeastFriends);
             this.panel4.Controls.Add(this.label6);
-            this.panel4.Location = new System.Drawing.Point(996, 92);
+            this.panel4.Location = new System.Drawing.Point(1057, 30);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(189, 327);
+            this.panel4.Size = new System.Drawing.Size(240, 312);
             this.panel4.TabIndex = 21;
             // 
             // labelFriendCountMost
             // 
             this.labelFriendCountMost.AutoSize = true;
             this.labelFriendCountMost.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelFriendCountMost.ForeColor = System.Drawing.Color.White;
             this.labelFriendCountMost.Location = new System.Drawing.Point(26, 88);
             this.labelFriendCountMost.Name = "labelFriendCountMost";
             this.labelFriendCountMost.Size = new System.Drawing.Size(14, 15);
@@ -474,6 +611,7 @@
             // 
             this.labelFriendCountLeast.AutoSize = true;
             this.labelFriendCountLeast.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelFriendCountLeast.ForeColor = System.Drawing.Color.White;
             this.labelFriendCountLeast.Location = new System.Drawing.Point(26, 220);
             this.labelFriendCountLeast.Name = "labelFriendCountLeast";
             this.labelFriendCountLeast.Size = new System.Drawing.Size(14, 15);
@@ -484,6 +622,7 @@
             // 
             this.labelLeastFriendsUser.AutoSize = true;
             this.labelLeastFriendsUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelLeastFriendsUser.ForeColor = System.Drawing.Color.White;
             this.labelLeastFriendsUser.Location = new System.Drawing.Point(26, 205);
             this.labelLeastFriendsUser.Name = "labelLeastFriendsUser";
             this.labelLeastFriendsUser.Size = new System.Drawing.Size(14, 15);
@@ -494,6 +633,7 @@
             // 
             this.labelMostFriendsUser.AutoSize = true;
             this.labelMostFriendsUser.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelMostFriendsUser.ForeColor = System.Drawing.Color.White;
             this.labelMostFriendsUser.Location = new System.Drawing.Point(26, 71);
             this.labelMostFriendsUser.Name = "labelMostFriendsUser";
             this.labelMostFriendsUser.Size = new System.Drawing.Size(14, 15);
@@ -522,6 +662,7 @@
             // 
             this.labelMostFriends.AutoSize = true;
             this.labelMostFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelMostFriends.ForeColor = System.Drawing.Color.White;
             this.labelMostFriends.Location = new System.Drawing.Point(37, 55);
             this.labelMostFriends.Name = "labelMostFriends";
             this.labelMostFriends.Size = new System.Drawing.Size(117, 18);
@@ -532,6 +673,7 @@
             // 
             this.labelLeastFriends.AutoSize = true;
             this.labelLeastFriends.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelLeastFriends.ForeColor = System.Drawing.Color.White;
             this.labelLeastFriends.Location = new System.Drawing.Point(37, 187);
             this.labelLeastFriends.Name = "labelLeastFriends";
             this.labelLeastFriends.Size = new System.Drawing.Size(115, 18);
@@ -542,6 +684,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(25, 19);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(116, 20);
@@ -556,15 +699,16 @@
             this.panel3.Controls.Add(this.labelLowestAgeRange);
             this.panel3.Controls.Add(this.labelMediumAgeRange);
             this.panel3.Controls.Add(this.labelAgeRange);
-            this.panel3.Location = new System.Drawing.Point(703, 111);
+            this.panel3.Location = new System.Drawing.Point(802, 30);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(240, 283);
+            this.panel3.Size = new System.Drawing.Size(240, 310);
             this.panel3.TabIndex = 20;
             // 
             // labelDidntEnterBirthday
             // 
             this.labelDidntEnterBirthday.AutoSize = true;
             this.labelDidntEnterBirthday.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelDidntEnterBirthday.ForeColor = System.Drawing.Color.White;
             this.labelDidntEnterBirthday.Location = new System.Drawing.Point(25, 189);
             this.labelDidntEnterBirthday.Name = "labelDidntEnterBirthday";
             this.labelDidntEnterBirthday.Size = new System.Drawing.Size(101, 18);
@@ -575,6 +719,7 @@
             // 
             this.labelOldestAgeRange.AutoSize = true;
             this.labelOldestAgeRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelOldestAgeRange.ForeColor = System.Drawing.Color.White;
             this.labelOldestAgeRange.Location = new System.Drawing.Point(25, 155);
             this.labelOldestAgeRange.Name = "labelOldestAgeRange";
             this.labelOldestAgeRange.Size = new System.Drawing.Size(46, 18);
@@ -585,6 +730,7 @@
             // 
             this.labelAdultAgeRange.AutoSize = true;
             this.labelAdultAgeRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelAdultAgeRange.ForeColor = System.Drawing.Color.White;
             this.labelAdultAgeRange.Location = new System.Drawing.Point(25, 122);
             this.labelAdultAgeRange.Name = "labelAdultAgeRange";
             this.labelAdultAgeRange.Size = new System.Drawing.Size(60, 18);
@@ -595,6 +741,7 @@
             // 
             this.labelLowestAgeRange.AutoSize = true;
             this.labelLowestAgeRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelLowestAgeRange.ForeColor = System.Drawing.Color.White;
             this.labelLowestAgeRange.Location = new System.Drawing.Point(25, 58);
             this.labelLowestAgeRange.Name = "labelLowestAgeRange";
             this.labelLowestAgeRange.Size = new System.Drawing.Size(51, 18);
@@ -605,6 +752,7 @@
             // 
             this.labelMediumAgeRange.AutoSize = true;
             this.labelMediumAgeRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelMediumAgeRange.ForeColor = System.Drawing.Color.White;
             this.labelMediumAgeRange.Location = new System.Drawing.Point(25, 89);
             this.labelMediumAgeRange.Name = "labelMediumAgeRange";
             this.labelMediumAgeRange.Size = new System.Drawing.Size(60, 18);
@@ -615,6 +763,7 @@
             // 
             this.labelAgeRange.AutoSize = true;
             this.labelAgeRange.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelAgeRange.ForeColor = System.Drawing.Color.White;
             this.labelAgeRange.Location = new System.Drawing.Point(25, 19);
             this.labelAgeRange.Name = "labelAgeRange";
             this.labelAgeRange.Size = new System.Drawing.Size(172, 20);
@@ -623,9 +772,9 @@
             // 
             // buttonCalcStats
             // 
-            this.buttonCalcStats.Location = new System.Drawing.Point(424, 82);
+            this.buttonCalcStats.Location = new System.Drawing.Point(655, 69);
             this.buttonCalcStats.Name = "buttonCalcStats";
-            this.buttonCalcStats.Size = new System.Drawing.Size(122, 31);
+            this.buttonCalcStats.Size = new System.Drawing.Size(141, 31);
             this.buttonCalcStats.TabIndex = 20;
             this.buttonCalcStats.Text = "Get Stats!";
             this.buttonCalcStats.UseVisualStyleBackColor = true;
@@ -637,7 +786,7 @@
             this.panel2.Controls.Add(this.labelWomen);
             this.panel2.Controls.Add(this.labelMen);
             this.panel2.Controls.Add(this.labelGender);
-            this.panel2.Location = new System.Drawing.Point(416, 119);
+            this.panel2.Location = new System.Drawing.Point(1057, 348);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(240, 196);
             this.panel2.TabIndex = 19;
@@ -646,6 +795,7 @@
             // 
             this.labelGenderLess.AutoSize = true;
             this.labelGenderLess.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelGenderLess.ForeColor = System.Drawing.Color.White;
             this.labelGenderLess.Location = new System.Drawing.Point(25, 122);
             this.labelGenderLess.Name = "labelGenderLess";
             this.labelGenderLess.Size = new System.Drawing.Size(104, 18);
@@ -656,6 +806,7 @@
             // 
             this.labelWomen.AutoSize = true;
             this.labelWomen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelWomen.ForeColor = System.Drawing.Color.White;
             this.labelWomen.Location = new System.Drawing.Point(25, 58);
             this.labelWomen.Name = "labelWomen";
             this.labelWomen.Size = new System.Drawing.Size(76, 18);
@@ -666,6 +817,7 @@
             // 
             this.labelMen.AutoSize = true;
             this.labelMen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelMen.ForeColor = System.Drawing.Color.White;
             this.labelMen.Location = new System.Drawing.Point(25, 89);
             this.labelMen.Name = "labelMen";
             this.labelMen.Size = new System.Drawing.Size(50, 18);
@@ -676,136 +828,29 @@
             // 
             this.labelGender.AutoSize = true;
             this.labelGender.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.labelGender.ForeColor = System.Drawing.Color.White;
             this.labelGender.Location = new System.Drawing.Point(25, 19);
             this.labelGender.Name = "labelGender";
             this.labelGender.Size = new System.Drawing.Size(145, 20);
             this.labelGender.TabIndex = 0;
             this.labelGender.Text = "Men or Women?";
             // 
-            // panel1
+            // tabPageAutomate
             // 
-            this.panel1.BackColor = System.Drawing.Color.Gray;
-            this.panel1.Controls.Add(this.listBoxPhotos);
-            this.panel1.Controls.Add(this.listBoxFriendCheckins);
-            this.panel1.Controls.Add(this.checkBox1);
-            this.panel1.Controls.Add(this.pictureBoxFriendProfilePic);
-            this.panel1.Controls.Add(this.buttonFetchGeo);
-            this.panel1.Controls.Add(this.labelFriendBio);
-            this.panel1.Controls.Add(this.textBoxFriendBio);
-            this.panel1.Controls.Add(this.listBoxFriends);
-            this.panel1.Controls.Add(this.buttonFetchFriends);
-            this.panel1.Location = new System.Drawing.Point(7, 92);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(277, 557);
-            this.panel1.TabIndex = 18;
-            // 
-            // listBoxPhotos
-            // 
-            this.listBoxPhotos.FormattingEnabled = true;
-            this.listBoxPhotos.ItemHeight = 16;
-            this.listBoxPhotos.Location = new System.Drawing.Point(261, 153);
-            this.listBoxPhotos.Margin = new System.Windows.Forms.Padding(2);
-            this.listBoxPhotos.Name = "listBoxPhotos";
-            this.listBoxPhotos.Size = new System.Drawing.Size(143, 100);
-            this.listBoxPhotos.TabIndex = 30;
-            // 
-            // listBoxFriendCheckins
-            // 
-            this.listBoxFriendCheckins.FormattingEnabled = true;
-            this.listBoxFriendCheckins.ItemHeight = 16;
-            this.listBoxFriendCheckins.Location = new System.Drawing.Point(261, 49);
-            this.listBoxFriendCheckins.Margin = new System.Windows.Forms.Padding(2);
-            this.listBoxFriendCheckins.Name = "listBoxFriendCheckins";
-            this.listBoxFriendCheckins.Size = new System.Drawing.Size(143, 100);
-            this.listBoxFriendCheckins.TabIndex = 29;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(261, 16);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(2);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(98, 21);
-            this.checkBox1.TabIndex = 28;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // pictureBoxFriendProfilePic
-            // 
-            this.pictureBoxFriendProfilePic.Location = new System.Drawing.Point(158, 49);
-            this.pictureBoxFriendProfilePic.Margin = new System.Windows.Forms.Padding(2);
-            this.pictureBoxFriendProfilePic.Name = "pictureBoxFriendProfilePic";
-            this.pictureBoxFriendProfilePic.Size = new System.Drawing.Size(90, 91);
-            this.pictureBoxFriendProfilePic.TabIndex = 27;
-            this.pictureBoxFriendProfilePic.TabStop = false;
-            // 
-            // buttonFetchGeo
-            // 
-            this.buttonFetchGeo.Location = new System.Drawing.Point(417, 16);
-            this.buttonFetchGeo.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonFetchGeo.Name = "buttonFetchGeo";
-            this.buttonFetchGeo.Size = new System.Drawing.Size(78, 35);
-            this.buttonFetchGeo.TabIndex = 24;
-            this.buttonFetchGeo.UseVisualStyleBackColor = true;
-         
-            // 
-            // labelFriendBio
-            // 
-            this.labelFriendBio.AutoSize = true;
-            this.labelFriendBio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.labelFriendBio.Location = new System.Drawing.Point(10, 259);
-            this.labelFriendBio.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.labelFriendBio.Name = "labelFriendBio";
-            this.labelFriendBio.Size = new System.Drawing.Size(155, 18);
-            this.labelFriendBio.TabIndex = 20;
-            this.labelFriendBio.Text = "Selected Friend Bio";
-            // 
-            // textBoxFriendBio
-            // 
-            this.textBoxFriendBio.Location = new System.Drawing.Point(13, 290);
-            this.textBoxFriendBio.Margin = new System.Windows.Forms.Padding(1);
-            this.textBoxFriendBio.Multiline = true;
-            this.textBoxFriendBio.Name = "textBoxFriendBio";
-            this.textBoxFriendBio.Size = new System.Drawing.Size(143, 106);
-            this.textBoxFriendBio.TabIndex = 17;
-            // 
-            // listBoxFriends
-            // 
-            this.listBoxFriends.FormattingEnabled = true;
-            this.listBoxFriends.ItemHeight = 16;
-            this.listBoxFriends.Location = new System.Drawing.Point(11, 49);
-            this.listBoxFriends.Margin = new System.Windows.Forms.Padding(2);
-            this.listBoxFriends.Name = "listBoxFriends";
-            this.listBoxFriends.Size = new System.Drawing.Size(143, 164);
-            this.listBoxFriends.TabIndex = 0;
-            this.listBoxFriends.SelectedIndexChanged += new System.EventHandler(this.listBoxFriends_SelectedIndexChanged);
-            // 
-            // buttonFetchFriends
-            // 
-            this.buttonFetchFriends.Location = new System.Drawing.Point(13, 16);
-            this.buttonFetchFriends.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonFetchFriends.Name = "buttonFetchFriends";
-            this.buttonFetchFriends.Size = new System.Drawing.Size(141, 29);
-            this.buttonFetchFriends.TabIndex = 2;
-            this.buttonFetchFriends.Text = "Fetch Friends";
-            this.buttonFetchFriends.UseVisualStyleBackColor = true;
-            this.buttonFetchFriends.Click += new System.EventHandler(this.buttonFetchFriends_Click);
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.listBoxTasks);
-            this.tabPage3.Controls.Add(this.listBoxActions);
-            this.tabPage3.Controls.Add(this.buttonAddNewAction);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1317, 570);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tabPageAutomate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(163)))), ((int)(((byte)(174)))), ((int)(((byte)(197)))));
+            this.tabPageAutomate.Controls.Add(this.listBoxTasks);
+            this.tabPageAutomate.Controls.Add(this.listBoxActions);
+            this.tabPageAutomate.Controls.Add(this.buttonAddNewAction);
+            this.tabPageAutomate.Location = new System.Drawing.Point(4, 25);
+            this.tabPageAutomate.Name = "tabPageAutomate";
+            this.tabPageAutomate.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAutomate.Size = new System.Drawing.Size(1317, 570);
+            this.tabPageAutomate.TabIndex = 2;
+            this.tabPageAutomate.Text = "Automate Facebook Tasks";
             // 
             // listBoxTasks
             // 
+            this.listBoxTasks.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.listBoxTasks.FormattingEnabled = true;
             this.listBoxTasks.ItemHeight = 16;
             this.listBoxTasks.Location = new System.Drawing.Point(24, 22);
@@ -815,6 +860,7 @@
             // 
             // listBoxActions
             // 
+            this.listBoxActions.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.listBoxActions.DisplayMember = "text";
             this.listBoxActions.FormattingEnabled = true;
             this.listBoxActions.ItemHeight = 16;
@@ -839,18 +885,22 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1328, 612);
-            this.Controls.Add(this.tabControlGeo);
+            this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "FormFacebookApp";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Form1";
+            this.Text = "newFacebook";
             this.Load += new System.EventHandler(this.tabPage3_load);
+            this.tabControl.ResumeLayout(false);
+            this.tabPageBasic.ResumeLayout(false);
+            this.tabPageBasic.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).EndInit();
-            this.tabControlGeo.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPageGeo.ResumeLayout(false);
+            this.tabPageStatsAndShook.ResumeLayout(false);
+            this.tabPageStatsAndShook.PerformLayout();
+            this.panelShickOShook.ResumeLayout(false);
+            this.panelShickOShook.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendPhotoShickOShook)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMostActiveUser)).EndInit();
@@ -862,10 +912,7 @@
             this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendProfilePic)).EndInit();
-            this.tabPage3.ResumeLayout(false);
+            this.tabPageAutomate.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -895,25 +942,14 @@
         private System.Windows.Forms.Button buttonSubmitUrl;
 
         private System.Windows.Forms.CheckBox checkBoxRememberUser;
-        private System.Windows.Forms.TabControl tabControlGeo;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPageGeo;
-        private System.Windows.Forms.Button buttonFetchFriends;
-        private System.Windows.Forms.ListBox listBoxFriends;
-        private System.Windows.Forms.TextBox textBoxFriendBio;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label labelFriendBio;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage tabPageBasic;
+        private System.Windows.Forms.TabPage tabPageStatsAndShook;
 
-        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPageAutomate;
         private System.Windows.Forms.Button buttonAddNewAction;
         private System.Windows.Forms.ListBox listBoxActions;
         private System.Windows.Forms.ListBox listBoxTasks;
-
-        private System.Windows.Forms.PictureBox pictureBoxFriendProfilePic;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.ListBox listBoxPhotos;
-        private System.Windows.Forms.ListBox listBoxFriendCheckins;
-        private System.Windows.Forms.Button buttonFetchGeo;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label labelGender;
         private System.Windows.Forms.Label labelWomen;
@@ -942,6 +978,17 @@
         private System.Windows.Forms.Label labelMostActiveUser;
         private System.Windows.Forms.Label labelFriendCountMost;
         private System.Windows.Forms.Label labelFriendCountLeast;
+        private System.Windows.Forms.Panel panelShickOShook;
+        private System.Windows.Forms.Label labelShickOShookFeatureDescription;
+        private System.Windows.Forms.Label labelShickOShookTitle;
+        private System.Windows.Forms.Button buttonActivateShickOShook;
+        private System.Windows.Forms.Label labelTellYourFriends;
+        private System.Windows.Forms.PictureBox pictureBoxFriendPhotoShickOShook;
+        private System.Windows.Forms.Button buttonShook;
+        private System.Windows.Forms.Button buttonShik;
+        private System.Windows.Forms.Label labelUploadLink;
+        private System.Windows.Forms.Label labelUploadPhoto;
+        private System.Windows.Forms.Label labelGetStatistics;
     }
 }
 

@@ -87,6 +87,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.config" />
     <None Include="ClassDiagram11.cd" />
@@ -108,6 +109,12 @@
       <Project>{3c3f0768-d39b-4f63-b6a6-3fbb17d05b4c}</Project>
       <Name>Ex01.FacebookAppLogic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ShikOShook.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ShickOShook.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

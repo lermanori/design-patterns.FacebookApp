@@ -120,5 +120,16 @@ namespace Ex01.FacebookAppLogic
 
             return result;
         }
+
+        public User FetchRandomFriend()
+        {
+            User randomFriend = null;
+            Random randomFriendIndex = new Random();
+            int randomNumber = randomFriendIndex.Next(CurrentUser.Friends.Count);
+
+            randomFriend = CurrentUser.Friends[randomNumber];
+            return randomFriend;
+            
+        }
     }
 }
