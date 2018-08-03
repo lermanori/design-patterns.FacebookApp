@@ -14,8 +14,9 @@ namespace Ex01.FacebookAppLogic
         public override string ToString()
         {
             Type type = ActionObject.GetType();
+            string[] typeAsString = type.ToString().Split('.');
 
-            return string.Format("task {0} at {1} s at {2}",type.ToString() , ((DateAndHour - DateTime.Now).TotalSeconds).ToString(),DateAndHour.ToString() );
+            return string.Format("task {0} at {1} s at {2}",typeAsString[typeAsString.Length-1], ((DateAndHour - DateTime.Now).TotalSeconds).ToString(),DateAndHour.ToString() );
         }
     }
 }

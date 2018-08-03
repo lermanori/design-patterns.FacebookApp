@@ -434,51 +434,49 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 FormPostStatus postForm = sender as FormPostStatus;
 
+        private void collectDataForPost(object sender)
+        {
+            FormPostStatus postForm = sender as FormPostStatus;
 
-                string statusBody = postForm.StatusBody;
-                DateTime timeToExecute = postForm.TimeToExecute;
+            string statusBody = postForm.StatusBody;
+            DateTime timeToExecute = postForm.TimeToExecute;
 
-                FbEventArgs args = new FbEventArgs();
-                TimedComponent t = new TimedComponent();
+            FbEventArgs args = new FbEventArgs();
+            TimedComponent t = new TimedComponent();
 
-                args.StatusBody = statusBody;
-                t.ActionObject = FbActionPost.Create(m_FacebookApp);
-                t.ActionObject.LoadAction(args);
+            args.StatusBody = statusBody;
+            t.ActionObject = FbActionPost.Create(m_FacebookApp);
+            t.ActionObject.LoadAction(args);
 
-                t.Timer = new System.Timers.Timer();
-                t.Timer.Enabled = false;
-                t.DateAndHour = timeToExecute;
+            t.Timer = new System.Timers.Timer();
+            t.Timer.Enabled = false;
+            t.DateAndHour = timeToExecute;
 
-                if((timeToExecute - DateTime.Now).TotalMilliseconds > 0)
-                {
-                    t.Timer.Interval = (timeToExecute - DateTime.Now).TotalMilliseconds;
-                }
-                else
-                {
-                    t.Timer.Interval = (1000)*5;
-                }
-
-
-                FacebookTimerAdapter adapter = new FacebookTimerAdapter(t);
-                adapter.Args = args;
-                adapter.Timed.Timer = t.Timer;
-
-                listBoxTasks.Items.Add(adapter.Timed);
-
-                adapter.Timed.Timer.Elapsed += new System.Timers.ElapsedEventHandler(adapter.on_elapsed);
-                adapter.Timed.Timer.AutoReset = false;
-                adapter.Timed.Timer.Enabled = true;
+            if ((timeToExecute - DateTime.Now).TotalMilliseconds > 0)
+            {
+                t.Timer.Interval = (timeToExecute - DateTime.Now).TotalMilliseconds;
             }
-        }
+            else
+            {
+                t.Timer.Interval = (1000) * 5;
+            }
 
+            FacebookTimerAdapter adapter = new FacebookTimerAdapter(t);
+            adapter.Args = args;
+            adapter.Timed.Timer = t.Timer;
+
+            listBoxTasks.Items.Add(adapter.Timed);
+
+            adapter.Timed.Timer.Elapsed += new System.Timers.ElapsedEventHandler(adapter.on_elapsed);
+            adapter.Timed.Timer.AutoReset = false;
+            adapter.Timed.Timer.Enabled = true;
+        }
 
         private void buttonCalcStats_Click(object sender, EventArgs e)
         {
             m_StatsAboutMyFriends.CalculateStatisticsAboutFriends(m_FacebookApp);
 
             updateUIAccordingToStatistics();
-
-
         }
 
         private void updateUIAccordingToStatistics()
@@ -504,7 +502,6 @@ namespace Ex01.FacebookAppWinformsUI
             labelNumStatuses.Text = String.Format(r_NumStatusesMessage, m_StatsAboutMyFriends.MostActiveUser.Statuses.Count);
             pictureBoxMostActiveUser.LoadAsync(m_StatsAboutMyFriends.MostActiveUser.PictureNormalURL);
         }
-
     }
 
     public class FacebookTimerAdapter
