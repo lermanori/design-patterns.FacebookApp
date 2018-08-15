@@ -71,6 +71,7 @@
     <Compile Include="FormPostStatus.Designer.cs">
       <DependentUpon>FormPostStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="IfbAutomatable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormFacebookApp.resx">

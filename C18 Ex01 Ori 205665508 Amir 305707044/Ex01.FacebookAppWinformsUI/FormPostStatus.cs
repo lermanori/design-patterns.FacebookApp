@@ -6,10 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public partial class FormPostStatus : Form
+    public partial class FormPostStatus : Form , IfbAutomatable
     {
         public string StatusBody { get; set; }
 
@@ -27,6 +28,11 @@ namespace Ex01.FacebookAppWinformsUI
             this.DialogResult = DialogResult.OK;
             
             this.Close();
+        }
+        public FbEventArgs collectData()
+        {
+            FbEventArgs result = new FbEventArgs { StatusBody=StatusBody, time = TimeToExecute };
+            return result;
         }
     }
 }

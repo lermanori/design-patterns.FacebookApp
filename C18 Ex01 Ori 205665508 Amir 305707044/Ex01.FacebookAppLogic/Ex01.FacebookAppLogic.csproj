@@ -39,7 +39,6 @@
   <ItemGroup>
     <Compile Include="FacebookAppEngine.cs" />
     <Compile Include="FacebookAppSettings.cs" />
-    <Compile Include="FacebookTimerAdapter.cs" />
     <Compile Include="FbAction.cs" />
     <Compile Include="FbActionPost.cs" />
     <Compile Include="FbEventArgs.cs" />

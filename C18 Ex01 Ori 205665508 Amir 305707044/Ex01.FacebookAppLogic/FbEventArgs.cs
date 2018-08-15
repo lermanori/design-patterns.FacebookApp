@@ -8,5 +8,6 @@ namespace Ex01.FacebookAppLogic
     public class FbEventArgs : EventArgs
     {
         public string StatusBody { get; set; }
+        public DateTime time { get; set; }
     }
 }

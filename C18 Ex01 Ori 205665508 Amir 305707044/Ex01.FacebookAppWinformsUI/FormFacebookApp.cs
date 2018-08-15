@@ -432,56 +432,13 @@ namespace Ex01.FacebookAppWinformsUI
                 DialogResult dialogResult = CommandForm.ShowDialog();
                 if (dialogResult == DialogResult.OK)
                 {
-                    collectData(CommandForm);
+                    IfbAutomatable fbTaskToAutomate = CommandForm as IfbAutomatable;
+                    FbEventArgs args = (fbTaskToAutomate)?.collectData();
+                    TimedComponent timedComponent = TimedComponent.create(args, m_FacebookApp);
+                    listBoxTasks.Items.Add(timedComponent);
+                    timedComponent.Timer.Start();
                 }
             }
-        }
-
-        private void collectData(object sender)
-        {
-            if (sender is FormPostStatus)
-            {
-                FormPostStatus postForm = sender as FormPostStatus;
-                collectDataForPost(sender);
-            }
-        }
-
-        private void collectDataForPost(object sender)
-        {
-            FormPostStatus postForm = sender as FormPostStatus;
-
-            string statusBody = postForm.StatusBody;
-            DateTime timeToExecute = postForm.TimeToExecute;
-
-            FbEventArgs args = new FbEventArgs();
-            TimedComponent t = new TimedComponent();
-
-            args.StatusBody = statusBody;
-            t.ActionObject = FbActionPost.Create(m_FacebookApp);
-            t.ActionObject.LoadAction(args);
-
-            t.Timer = new System.Timers.Timer();
-            t.Timer.Enabled = false;
-            t.DateAndHour = timeToExecute;
-
-            if ((timeToExecute - DateTime.Now).TotalMilliseconds > 0)
-            {
-                t.Timer.Interval = (timeToExecute - DateTime.Now).TotalMilliseconds;
-            }
-            else
-            {
-                t.Timer.Interval = 1000 * 5;
-            }
-
-            FacebookTimerAdapter adapter = new FacebookTimerAdapter(t);
-            adapter.Args = args;
-            adapter.Timed.Timer = t.Timer;
-
-            listBoxTasks.Items.Add(adapter.Timed);
-
-            adapter.Timed.Timer.Elapsed += new System.Timers.ElapsedEventHandler(adapter.on_elapsed);
-            adapter.Timed.Timer.AutoReset = false;
-            adapter.Timed.Timer.Enabled = true;
         }
 
         private void buttonCalcStats_Click(object sender, EventArgs e)

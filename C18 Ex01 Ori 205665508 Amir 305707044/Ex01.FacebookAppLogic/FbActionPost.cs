@@ -16,7 +16,7 @@ namespace Ex01.FacebookAppLogic
             return actionPost;
         }
 
-        public override void LoadAction(FbEventArgs e)
+        public override void LoadAction()
         {
             doWhenFinished += postStatusAction;
         }
@@ -25,5 +25,10 @@ namespace Ex01.FacebookAppLogic
         {
             m_Engine.PostStatus(e.StatusBody);
         }
+        public override string GetName()
+        {
+            return "post status";
+        }
+
     }
 }
