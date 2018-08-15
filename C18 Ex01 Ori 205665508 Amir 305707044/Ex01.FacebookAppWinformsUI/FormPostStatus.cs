@@ -12,6 +12,7 @@ namespace Ex01.FacebookAppWinformsUI
     public partial class FormPostStatus : Form
     {
         public string StatusBody { get; set; }
+
         public DateTime TimeToExecute { get; set; }
 
         public FormPostStatus()
@@ -29,5 +30,3 @@ namespace Ex01.FacebookAppWinformsUI
         }
     }
 }
-
-     

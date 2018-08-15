@@ -8,6 +8,7 @@ namespace Ex01.FacebookAppLogic
     public abstract class FbAction
     {
         public abstract void LoadAction(FbEventArgs e);
+
         public event EventHandler<FbEventArgs> doWhenFinished;
 
         public void raiseEvent(FbEventArgs e)
@@ -16,4 +17,3 @@ namespace Ex01.FacebookAppLogic
         }
     }
 }
-

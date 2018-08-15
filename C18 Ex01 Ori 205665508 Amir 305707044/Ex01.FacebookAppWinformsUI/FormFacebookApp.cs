@@ -16,38 +16,39 @@ namespace Ex01.FacebookAppWinformsUI
 {
     public partial class FormFacebookApp : Form
     {
-        private readonly string r_EnterTitleMsg = "Enter Title";
+        public const string k_EnterTitleMsg = "Enter Title";
         private readonly string r_MustEnterTextMessage = "You Must Enter Text!" + Environment.NewLine + "Please Try Again.";
-        private readonly string r_EnterPostMessage = "What's On Your Mind?...";
-        private readonly object r_EmptyListMessage = "There Are No Items to Show!";
-        private readonly string r_PhotoUploadSuccededMessage = "Succes Uploading Photo!";
-        private readonly string r_PhotoUploadFailedMessage = "Failed to upload photo, please try again!";
+        public const string k_EnterPostMessage = "What's On Your Mind?...";
+        public const string k_EmptyListMessage = "There Are No Items to Show!";
+        public const string k_PhotoUploadSuccededMessage = "Succes Uploading Photo!";
+        public const string k_PhotoUploadFailedMessage = "Failed to upload photo, please try again!";
         private readonly string r_EnterValidURLMessage = "Insert a valid http format url." + Environment.NewLine + @"example:http://www.google.com";
-        private readonly string r_httpOpening = @"http://www.";
-        private readonly string r_FailedAutoConnectMessage = "Auto Login Failed, Please Login Again. {0}Reason: {1}";
-
-        private readonly string r_GeneralStatsLabelText = "{0}: {1} ({2}%)";
-        private readonly string r_Men = "Men";
-        private readonly string r_Women = "Women";
-        private readonly string r_GenderLess = "Genderless";
-        private readonly string r_UntilTwenty = "0 - 20";
-        private readonly string r_TwentyOneToFourty = "21 - 40";
-        private readonly string r_FourtyOneToSixty = "41 - 60";
-        private readonly string r_AboveSixty = "60+";
-        private readonly string r_BirthdatyLess = "No Birthday";
-
-        private readonly string r_FriendsCountMessage = "Friends with {0} people!";
-        private readonly string r_NumStatusesMessage = "Shared {0} statuses!";
-        // LoginResult m_LoginResult;
-        // User m_currentUser;
+        public const string k_httpOpening = @"http://www.";
+        public const string k_FailedAutoConnectMessage = "Auto Login Failed, Please Login Again. {0}Reason: {1}";
+        public const string k_GeneralStatsLabelText = "{0}: {1} ({2}%)";
+        public const string k_Men = "Men";
+        public const string k_Women = "Women";
+        public const string k_GenderLess = "Genderless";
+        public const string k_UntilTwenty = "0 - 20";
+        public const string k_TwentyOneToFourty = "21 - 40";
+        public const string k_FourtyOneToSixty = "41 - 60";
+        public const string k_AboveSixty = "60+";
+        public const string k_BirthdatyLess = "No Birthday";
+        public const string k_FriendsCountMessage = "Friends with {0} people!";
+        public const string k_NumStatusesMessage = "Shared {0} statuses!";
+        public const string k_FailedToOperateMessage = "Failed To Perform! Please try again.";
+        public const string k_ShickOShookLabelText = "Tell {0} What you think!";
+        public const string k_NoPhotosForUser = "{0} has no pictures!";
+        public const string k_ShickOShookSuccesfulPostMessage = "You Told the world what you think about {0}'s apperance!";
 
         private FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
         private FacebookAppSettings m_LastSettings = null;
         private FriendsStatistics m_StatsAboutMyFriends = new FriendsStatistics();
+        private ShickOShook m_ShickOShook = new ShickOShook();
 
+        private List<Control> m_ControlsToEnableOrDisable = new List<Control>();
         private string m_PhotoPath = string.Empty;
 
-        //ui
         public FormFacebookApp()
         {
             loadSettingsAndCreateForm();
@@ -58,10 +59,11 @@ namespace Ex01.FacebookAppWinformsUI
             m_LastSettings = FacebookAppSettings.LoadFromFile();
 
             InitializeComponent();
+            populateArrayOfControls();
+
             this.checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
         }
 
-        //ui
         protected override void OnShown(EventArgs e)
         {
             handleAccountConnectionWhileOpeningForm();
@@ -80,9 +82,8 @@ namespace Ex01.FacebookAppWinformsUI
                 catch (Exception ex)
                 {
                     FacebookAppSettings.DeleteFile();
-                    MessageBox.Show(string.Format(r_FailedAutoConnectMessage, Environment.NewLine, ex.Message));
+                    MessageBox.Show(string.Format(k_FailedAutoConnectMessage, Environment.NewLine, ex.Message));
                 }
-                //  m_LoginResult = FacebookService.Connect(m_LastSettings.LastAccessToken);
             }
         }
 
@@ -94,7 +95,7 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void fetchLoggedInUser()
         {
-            pictureBox1.LoadAsync(m_FacebookApp.UserProfilePictureURL);
+            pictureBoxProfilePicture.LoadAsync(m_FacebookApp.UserProfilePictureURL);
             if (m_LastSettings.ComboBoxWebBrowserItems.Count != 0)
             {
                 foreach (string s in m_LastSettings.ComboBoxWebBrowserItems)
@@ -109,16 +110,33 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void enableLoggedInFeatures()
         {
-            buttonChoosePhoto.Enabled = true;
-            buttonPostStatus.Enabled = true;
-            checkBoxRememberUser.Enabled = true;
-            buttonPostLink.Enabled = true;
-            buttonLogOut.Enabled = true;
-            buttonFetchGroups.Enabled = true;
-            buttonPostLink.Enabled = true;
-            tabControlGeo.Enabled = true;
+            foreach (Control ctr in m_ControlsToEnableOrDisable)
+            {
+                ctr.Enabled = true;
+            }
         }
-        //ui
+
+        private void populateArrayOfControls()
+        {
+            m_ControlsToEnableOrDisable.Add(buttonChoosePhoto);
+            m_ControlsToEnableOrDisable.Add(buttonPostStatus);
+            m_ControlsToEnableOrDisable.Add(checkBoxRememberUser);
+            m_ControlsToEnableOrDisable.Add(buttonPostLink);
+            m_ControlsToEnableOrDisable.Add(buttonFetchGroups);
+            m_ControlsToEnableOrDisable.Add(buttonPostLink);
+            m_ControlsToEnableOrDisable.Add(textBoxUploadPost);
+            m_ControlsToEnableOrDisable.Add(textBoxTitle);
+            m_ControlsToEnableOrDisable.Add(buttonActivateShickOShook);
+            m_ControlsToEnableOrDisable.Add(buttonShik);
+            m_ControlsToEnableOrDisable.Add(buttonShook);
+            m_ControlsToEnableOrDisable.Add(buttonCalcStats);
+            m_ControlsToEnableOrDisable.Add(buttonAddNewAction);
+            m_ControlsToEnableOrDisable.Add(pictureBoxFriendPhotoShickOShook);
+            m_ControlsToEnableOrDisable.Add(textBoxDescriptionOfGroup);
+
+            disableLoggedInFeatures();
+        }
+
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             handleUserSettingsWhenClosingTheForm();
@@ -127,8 +145,7 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void handleUserSettingsWhenClosingTheForm()
         {
-
-            if (m_FacebookApp.IsLoggedIn())
+            if (m_FacebookApp.IsLoggedIn() && checkBoxRememberUser.Checked)
             {
                 m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
                 m_LastSettings.LastAccessToken = m_FacebookApp.GetAccessToken();
@@ -139,71 +156,110 @@ namespace Ex01.FacebookAppWinformsUI
                         m_LastSettings.ComboBoxWebBrowserItems.Add(s);
                     }
                 }
-               m_LastSettings.saveToFile();
+
+                m_LastSettings.SaveToFile();
             }
         }
 
-        //ui
         private void buttonLoginClick(object sender, EventArgs e)
         {
             handleLogin();
         }
 
-        //ui
         private void handleLogin()
         {
-            m_FacebookApp.Login();
-            fetchLoggedInUser();
+            try
+            {
+                m_FacebookApp.Login();
+                fetchLoggedInUser();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             if (m_FacebookApp.IsLoggedIn())
             {
                 enableLoggedInFeatures();
+                buttonLogin.Enabled = false;
+                buttonLogOut.Enabled = true;
             }
         }
-        //ui
-        private void disableLoggedInFeatures()
-        {
-            buttonChoosePhoto.Enabled = false;
-            buttonPostStatus.Enabled = false;
-            checkBoxRememberUser.Enabled = false;
-            buttonPostLink.Enabled = false;
-            buttonLogOut.Enabled = false;
-            buttonFetchGroups.Enabled = false;
-            buttonPostLink.Enabled = false;
-        }
 
-        //ui
         private void buttonLogout_Click(object sender, EventArgs e)
         {
             handleLogout();
         }
-        //ui
+
         private void handleLogout()
         {
-            m_FacebookApp.Logout();
-            resetUI();
-            MessageBox.Show("Logged Out!");
-
-            disableLoggedInFeatures();
+            try
+            {
+                m_FacebookApp.Logout();
+                resetUI();
+                MessageBox.Show("Logged Out!");
+                disableLoggedInFeatures();
+                buttonLogOut.Enabled = false;
+                buttonLogin.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        //ui -->Needs to be worked on
+        private void disableLoggedInFeatures()
+        {
+            foreach (Control ctr in m_ControlsToEnableOrDisable)
+            {
+                ctr.Enabled = false;
+            }
+        }
+
         private void resetUI()
         {
-            pictureBox1.Image = null;
-
+            pictureBoxProfilePicture.Image = null;
+            listBoxGroups.Items.Clear();
+            textBoxDescriptionOfGroup.Text = string.Empty;
+            textBoxUploadPost.Text = string.Empty;
+            resetPictureButtons();
+            pictureBoxFriendPhotoShickOShook.Image = null;
+            resetStatsFeature();
+            listBoxTasks.Items.Clear();
         }
 
-        //ui
+        private void resetStatsFeature()
+        {
+            labelMen.Text = string.Format(k_GeneralStatsLabelText, k_Men, "0", "0");
+            labelWomen.Text = string.Format(k_GeneralStatsLabelText, k_Women, "0", "0");
+            labelGenderLess.Text = string.Format(k_GeneralStatsLabelText, k_GenderLess, "0", "0");
+
+            labelLowestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_UntilTwenty, "0", "0");
+            labelMediumAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_TwentyOneToFourty, "0", "0");
+            labelAdultAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_FourtyOneToSixty, "0", "0");
+            labelOldestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_AboveSixty, "0", "0");
+            labelDidntEnterBirthday.Text = string.Format(k_GeneralStatsLabelText, k_BirthdatyLess, "0", "0");
+
+            labelMostFriendsUser.Text = string.Empty;
+            labelFriendCountMost.Text = string.Empty;
+            pictureBoxMostFriends.Image = null;
+            labelLeastFriendsUser.Text = string.Empty;
+            labelFriendCountLeast.Text = string.Empty;
+            pictureBoxLeastFriends.Image = null;
+
+            labelMostActiveUser.Text = string.Empty;
+            labelNumStatuses.Text = string.Empty;
+            pictureBoxMostActiveUser.Image = null;
+        }
+
         private void buttonPostStatus_click(object sender, EventArgs e)
         {
             postStatus(textBoxUploadPost.Text);
         }
 
-        //ui
         public void postStatus(string i_StatusToPost)
         {
-            if (!string.IsNullOrEmpty(textBoxUploadPost.Text) && textBoxUploadPost.Text != r_EnterPostMessage)
+            if (!string.IsNullOrEmpty(textBoxUploadPost.Text) && textBoxUploadPost.Text != k_EnterPostMessage)
             {
                 m_FacebookApp.PostStatus(i_StatusToPost);
             }
@@ -212,11 +268,9 @@ namespace Ex01.FacebookAppWinformsUI
                 MessageBox.Show(r_MustEnterTextMessage);
             }
 
-            textBoxUploadPost.Text = r_EnterPostMessage;
+            textBoxUploadPost.Text = k_EnterPostMessage;
         }
 
-        //ui
-        //need to break into logic and ui
         private void buttonFetchGroups_Click(object sender, EventArgs e)
         {
             populateListBoxGroups();
@@ -226,20 +280,26 @@ namespace Ex01.FacebookAppWinformsUI
         {
             listBoxGroups.Items.Clear();
             listBoxGroups.DisplayMember = "Name";
-            FacebookObjectCollection<Group> userGroupCollection = m_FacebookApp.FetchUserGroups();
-
-            foreach (Group group in userGroupCollection)
+            try
             {
-                listBoxGroups.Items.Add(group);
+                FacebookObjectCollection<Group> userGroupCollection = m_FacebookApp.FetchUserGroups();
+
+                foreach (Group group in userGroupCollection)
+                {
+                    listBoxGroups.Items.Add(group);
+                }
+
+                if (listBoxGroups.Items.Count == 0)
+                {
+                    listBoxGroups.Items.Add(k_EmptyListMessage);
+                }
             }
-
-            if (listBoxGroups.Items.Count == 0)
+            catch (Exception ex)
             {
-                listBoxGroups.Items.Add(r_EmptyListMessage);
+                MessageBox.Show(ex.Message);
             }
         }
 
-        //ui --> need to give meaningful names
         private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
             Group selectedGroup = listBoxGroups.SelectedItem as Group;
@@ -247,28 +307,25 @@ namespace Ex01.FacebookAppWinformsUI
             textBoxDescriptionOfGroup.Text = groupDescription;
         }
 
-
-        //ui
         private void resetPictureButtons()
         {
             pictureBoxPostPhotoPreviewImage.Image = null;
-            textBoxTitle.Text = r_EnterTitleMsg;
+            textBoxTitle.Text = k_EnterTitleMsg;
             buttonPostPhoto.Enabled = false;
         }
 
-        //ui
         private void buttonChoosePhoto_Click(object sender, EventArgs e)
         {
             chooseAndLoadPhoto();
         }
 
-        //need to check if file is legal
         private void chooseAndLoadPhoto()
         {
             if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 m_PhotoPath = openFileDialog1.FileName;
             }
+
             if (!string.IsNullOrEmpty(m_PhotoPath))
             {
                 pictureBoxPostPhotoPreviewImage.LoadAsync(m_PhotoPath);
@@ -276,7 +333,6 @@ namespace Ex01.FacebookAppWinformsUI
             }
         }
 
-        //ui
         private void buttonPostPhoto_Click(object sender, EventArgs e)
         {
             handlePhotoUpload();
@@ -285,25 +341,24 @@ namespace Ex01.FacebookAppWinformsUI
         private void handlePhotoUpload()
         {
             string title = string.Empty;
-            if (textBoxTitle.Text != r_EnterTitleMsg)
+            if (textBoxTitle.Text != k_EnterTitleMsg)
             {
                 title = textBoxTitle.Text;
             }
+
             try
             {
                 m_FacebookApp.PostChosenPhoto(m_PhotoPath, title);
-                MessageBox.Show(r_PhotoUploadSuccededMessage);
+                MessageBox.Show(k_PhotoUploadSuccededMessage);
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(r_PhotoUploadFailedMessage);
+                MessageBox.Show(k_PhotoUploadFailedMessage);
             }
-            resetPictureButtons();
 
+            resetPictureButtons();
         }
 
-
-        //ui
         private void textBoxTitle_Click(object sender, EventArgs e)
         {
             textBoxTitle.Text = string.Empty;
@@ -350,13 +405,13 @@ namespace Ex01.FacebookAppWinformsUI
             else
             {
                 MessageBox.Show(r_EnterValidURLMessage);
-                comboBoxWebBrowser.Text = r_httpOpening;
+                comboBoxWebBrowser.Text = k_httpOpening;
             }
         }
 
         private void comboBoxWebBrowser_Click(object sender, EventArgs e)
         {
-            comboBoxWebBrowser.Text = r_httpOpening;
+            comboBoxWebBrowser.Text = k_httpOpening;
         }
 
         private void textBoxUploadPost_Click(object sender, EventArgs e)
@@ -364,53 +419,8 @@ namespace Ex01.FacebookAppWinformsUI
             textBoxUploadPost.Text = string.Empty;
         }
 
-        private void buttonFetchFriends_Click(object sender, EventArgs e)
+        private void tabPageAutomate_load(object sender, EventArgs e)
         {
-            populateListBoxFriends();
-        }
-
-        private void populateListBoxFriends()
-        {
-            listBoxFriends.Items.Clear();
-            listBoxFriends.DisplayMember = "Name";
-            FacebookObjectCollection<User> userFriends = m_FacebookApp.FetchUserFriends();
-
-            foreach (User friend in userFriends)
-            {
-                listBoxFriends.Items.Add(friend);
-                friend.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
-            }
-
-            if (listBoxFriends.Items.Count == 0)
-            {
-                listBoxFriends.Items.Add(r_EmptyListMessage);
-            }
-        }
-
-        private void listBoxFriends_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                User selectedFriend = listBoxFriends.SelectedItem as User;
-
-                updateShownFriend(selectedFriend);
-            }
-            catch { }
-        }
-
-        private void updateShownFriend(User i_SelectedFriend)
-        {
-            pictureBoxFriendProfilePic.LoadAsync(i_SelectedFriend.PictureNormalURL);
-
-        }
-
-        private void showFriendsStatistics()
-        {
-
-        }
-
-        private void tabPage3_load(object sender, EventArgs e)
-        {//think about how to implement lazy creation
             listBoxActions.Items.Add(new FormPostStatus());
         }
 
@@ -420,19 +430,21 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 Form CommandForm = listBoxActions.SelectedItem as Form;
                 DialogResult dialogResult = CommandForm.ShowDialog();
-                if(dialogResult == DialogResult.OK)
+                if (dialogResult == DialogResult.OK)
                 {
                     collectData(CommandForm);
                 }
             }
         }
 
-
         private void collectData(object sender)
         {
             if (sender is FormPostStatus)
             {
                 FormPostStatus postForm = sender as FormPostStatus;
+                collectDataForPost(sender);
+            }
+        }
 
         private void collectDataForPost(object sender)
         {
@@ -458,7 +470,7 @@ namespace Ex01.FacebookAppWinformsUI
             }
             else
             {
-                t.Timer.Interval = (1000) * 5;
+                t.Timer.Interval = 1000 * 5;
             }
 
             FacebookTimerAdapter adapter = new FacebookTimerAdapter(t);
@@ -475,53 +487,85 @@ namespace Ex01.FacebookAppWinformsUI
         private void buttonCalcStats_Click(object sender, EventArgs e)
         {
             m_StatsAboutMyFriends.CalculateStatisticsAboutFriends(m_FacebookApp);
-
             updateUIAccordingToStatistics();
         }
 
         private void updateUIAccordingToStatistics()
         {
-            labelMen.Text = string.Format(r_GeneralStatsLabelText, r_Men, m_StatsAboutMyFriends.Men, m_StatsAboutMyFriends.MenRatio.ToString());
-            labelWomen.Text = string.Format(r_GeneralStatsLabelText, r_Women, m_StatsAboutMyFriends.Women, m_StatsAboutMyFriends.WomenRatio.ToString());
-            labelGenderLess.Text = string.Format(r_GeneralStatsLabelText, r_GenderLess, m_StatsAboutMyFriends.GenderLess, m_StatsAboutMyFriends.GenderLessRatio.ToString());
+            labelMen.Text = string.Format(k_GeneralStatsLabelText, k_Men, m_StatsAboutMyFriends.Men, m_StatsAboutMyFriends.MenRatio.ToString());
+            labelWomen.Text = string.Format(k_GeneralStatsLabelText, k_Women, m_StatsAboutMyFriends.Women, m_StatsAboutMyFriends.WomenRatio.ToString());
+            labelGenderLess.Text = string.Format(k_GeneralStatsLabelText, k_GenderLess, m_StatsAboutMyFriends.GenderLess, m_StatsAboutMyFriends.GenderLessRatio.ToString());
 
-            labelLowestAgeRange.Text = string.Format(r_GeneralStatsLabelText, r_UntilTwenty, m_StatsAboutMyFriends.UntilTwentyYearsOld, m_StatsAboutMyFriends.UntilTwentyYearsOldRatio);
-            labelMediumAgeRange.Text = string.Format(r_GeneralStatsLabelText, r_TwentyOneToFourty, m_StatsAboutMyFriends.TwentyOneToFourty, m_StatsAboutMyFriends.TwentyOneToFourtyRatio);
-            labelAdultAgeRange.Text = string.Format(r_GeneralStatsLabelText, r_FourtyOneToSixty, m_StatsAboutMyFriends.FourtyOneToSixty, m_StatsAboutMyFriends.FourtyOneToSixtyRatio);
-            labelOldestAgeRange.Text = string.Format(r_GeneralStatsLabelText, r_AboveSixty, m_StatsAboutMyFriends.AboveSixty, m_StatsAboutMyFriends.AboveSixtyRatio);
-            labelDidntEnterBirthday.Text = string.Format(r_GeneralStatsLabelText, r_BirthdatyLess, m_StatsAboutMyFriends.DidntEnterBirthday, m_StatsAboutMyFriends.DidntEnterBirthdayRatio);
+            labelLowestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_UntilTwenty, m_StatsAboutMyFriends.UntilTwentyYearsOld, m_StatsAboutMyFriends.UntilTwentyYearsOldRatio);
+            labelMediumAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_TwentyOneToFourty, m_StatsAboutMyFriends.TwentyOneToFourty, m_StatsAboutMyFriends.TwentyOneToFourtyRatio);
+            labelAdultAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_FourtyOneToSixty, m_StatsAboutMyFriends.FourtyOneToSixty, m_StatsAboutMyFriends.FourtyOneToSixtyRatio);
+            labelOldestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_AboveSixty, m_StatsAboutMyFriends.AboveSixty, m_StatsAboutMyFriends.AboveSixtyRatio);
+            labelDidntEnterBirthday.Text = string.Format(k_GeneralStatsLabelText, k_BirthdatyLess, m_StatsAboutMyFriends.DidntEnterBirthday, m_StatsAboutMyFriends.DidntEnterBirthdayRatio);
 
             labelMostFriendsUser.Text = m_StatsAboutMyFriends.MostFriendsUser.Name;
-            labelFriendCountMost.Text = string.Format(r_FriendsCountMessage, m_StatsAboutMyFriends.MostFriendsUser.Friends.Count);
+            labelFriendCountMost.Text = string.Format(k_FriendsCountMessage, m_StatsAboutMyFriends.MostFriendsUser.Friends.Count);
             pictureBoxMostFriends.LoadAsync(m_StatsAboutMyFriends.MostFriendsUser.PictureNormalURL);
             labelLeastFriendsUser.Text = m_StatsAboutMyFriends.LeastFriendsUser.Name;
-            labelFriendCountLeast.Text = string.Format(r_FriendsCountMessage, m_StatsAboutMyFriends.LeastFriendsUser.Friends.Count);
+            labelFriendCountLeast.Text = string.Format(k_FriendsCountMessage, m_StatsAboutMyFriends.LeastFriendsUser.Friends.Count);
             pictureBoxLeastFriends.LoadAsync(m_StatsAboutMyFriends.LeastFriendsUser.PictureNormalURL);
 
             labelMostActiveUser.Text = m_StatsAboutMyFriends.MostActiveUser.Name;
-            labelNumStatuses.Text = String.Format(r_NumStatusesMessage, m_StatsAboutMyFriends.MostActiveUser.Statuses.Count);
+            labelNumStatuses.Text = string.Format(k_NumStatusesMessage, m_StatsAboutMyFriends.MostActiveUser.Statuses.Count);
             pictureBoxMostActiveUser.LoadAsync(m_StatsAboutMyFriends.MostActiveUser.PictureNormalURL);
         }
-    }
 
-    public class FacebookTimerAdapter
-    {
-        private bool m_ProcessOnlyOnce = false;
-        public FacebookTimerAdapter(TimedComponent i_timedComponent)
+        private void buttonActivateShikOShook_Click(object sender, EventArgs e)
         {
-            Timed = i_timedComponent;
-        }
-        public TimedComponent Timed { get; set; }
-        public FbEventArgs Args { get; set; }
-        public void on_elapsed(Object source, System.Timers.ElapsedEventArgs e)
-        {
-            if(!m_ProcessOnlyOnce)
+            User randomFriend = m_FacebookApp.FetchRandomFriend();
+            try
             {
-            m_ProcessOnlyOnce = true;
-            Timed.ActionObject.raiseEvent(Args);
-            MessageBox.Show("event raisen at" + DateTime.Now.ToString());
-            Timed.Timer.Enabled = false;
-            Timed.Timer.Elapsed -= on_elapsed;
+                m_ShickOShook.GetFriendPhotoURLArray(randomFriend);
+                if (m_ShickOShook.friendPhotoURLCollection != null)
+                {
+                    pictureBoxFriendPhotoShickOShook.LoadAsync(m_ShickOShook.CurrentPhotoURL);
+                    labelTellYourFriends.Text = string.Format(k_ShickOShookLabelText, m_ShickOShook.CurrentFriendFirstName);
+                    labelTellYourFriends.Visible = true;
+                }
+                else
+                {
+                    MessageBox.Show(string.Format(k_NoPhotosForUser, randomFriend.FirstName));
+                }
+            }
+            catch
+            {
+                MessageBox.Show(k_FailedToOperateMessage);
+            }
+        }
+
+        private void pictureBoxFriendPhotoShickOShook_Click(object sender, EventArgs e)
+        {
+            m_ShickOShook.ChangeCurrentPhotoURL();
+            pictureBoxFriendPhotoShickOShook.LoadAsync(m_ShickOShook.CurrentPhotoURL);
+        }
+
+        private void buttonShik_Click(object sender, EventArgs e)
+        {
+            try
+            {
+            m_ShickOShook.PublishPost(buttonShik.Text, m_FacebookApp);
+            MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void buttonShook_Click(object sender, EventArgs e)
+        {
+            try
+            {
+            m_ShickOShook.PublishPost(buttonShook.Text, m_FacebookApp);
+            MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
