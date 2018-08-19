@@ -40,6 +40,9 @@
     <Compile Include="FacebookAppEngine.cs" />
     <Compile Include="FacebookAppSettings.cs" />
     <Compile Include="FbAction.cs" />
+    <Compile Include="FbActionFactory.cs" />
+    <Compile Include="FbActionLink.cs" />
+    <Compile Include="FbActionPhoto.cs" />
     <Compile Include="FbActionPost.cs" />
     <Compile Include="FbEventArgs.cs" />
     <Compile Include="FriendsStatistics.cs">

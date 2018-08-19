@@ -394,7 +394,7 @@ namespace Ex01.FacebookAppWinformsUI
             string urlToShow = comboBoxWebBrowser.Text;
 
             Uri uriResult;
-            bool result = m_FacebookApp.CreateURL(urlToShow, out uriResult);
+            bool result = FacebookAppEngine.CreateURL(urlToShow, out uriResult);
 
             if (result)
             {
@@ -422,6 +422,8 @@ namespace Ex01.FacebookAppWinformsUI
         private void tabPageAutomate_load(object sender, EventArgs e)
         {
             listBoxActions.Items.Add(new FormPostStatus());
+            listBoxActions.Items.Add(new FormPostPhoto());
+            listBoxActions.Items.Add(new FormPostLink());
         }
 
         private void buttonAddNewCommand_Click(object sender, EventArgs e)
@@ -434,11 +436,31 @@ namespace Ex01.FacebookAppWinformsUI
                 {
                     IfbAutomatable fbTaskToAutomate = CommandForm as IfbAutomatable;
                     FbEventArgs args = (fbTaskToAutomate)?.collectData();
-                    TimedComponent timedComponent = TimedComponent.create(args, m_FacebookApp);
+                    TasksType taskType = (TasksType)(fbTaskToAutomate)?.getTaskType();
+                    TimedComponent timedComponent = TimedComponent.create(args, m_FacebookApp,taskType);
+                    timedComponent.Timer.Elapsed += Timer_Elapsed;
+
                     listBoxTasks.Items.Add(timedComponent);
                     timedComponent.Timer.Start();
                 }
             }
+        }
+
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            listBoxTasks.Invoke(new Action(() => { RefreshListBox(); }));
+
+        }
+
+        private void RefreshListBox()
+        {
+            ListBox.ObjectCollection objArr = listBoxTasks.Items;
+            listBoxTasks.Items.Clear();
+            foreach (object obj in objArr)
+            {
+                listBoxTasks.Items.Add(obj);
+            }
+            listBoxTasks.Update();
         }
 
         private void buttonCalcStats_Click(object sender, EventArgs e)

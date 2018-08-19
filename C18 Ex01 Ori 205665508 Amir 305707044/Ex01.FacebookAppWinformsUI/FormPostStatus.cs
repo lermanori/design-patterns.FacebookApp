@@ -34,5 +34,10 @@ namespace Ex01.FacebookAppWinformsUI
             FbEventArgs result = new FbEventArgs { StatusBody=StatusBody, time = TimeToExecute };
             return result;
         }
+        public TasksType getTaskType()
+        {
+            return TasksType.status;
+        }
+        
     }
 }

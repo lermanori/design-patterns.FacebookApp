@@ -9,6 +9,7 @@ namespace Ex01.FacebookAppLogic
     public class TimedComponent
     {
         private bool m_ProcessOnlyOnce;
+        public bool Invoked { get; private set; }
 
         public FbEventArgs FbEventArgs { get; set; }
 
@@ -16,9 +17,12 @@ namespace Ex01.FacebookAppLogic
 
         public FbAction ActionObject { get; set; }
 
-        public static TimedComponent create(FbEventArgs i_Args,FacebookAppEngine i_Engine)
+
+        public static TimedComponent create(FbEventArgs i_Args, FacebookAppEngine i_Engine, TasksType i_ChosenTask)
         {
-            TimedComponent timedComponent = new TimedComponent { FbEventArgs = i_Args, ActionObject = FbActionPost.Create(i_Engine), Timer = new System.Timers.Timer() };
+            //need to switch fbactionpost.create to factory wholl get an enum
+
+            TimedComponent timedComponent = new TimedComponent { FbEventArgs = i_Args, ActionObject = FbActionFactory.Create(i_Engine, i_ChosenTask), Timer = new System.Timers.Timer() ,Invoked = false};
 
             timedComponent.ActionObject.LoadAction();
 
@@ -33,15 +37,14 @@ namespace Ex01.FacebookAppLogic
             {
                 timedComponent.Timer.Interval = 1000 * 5;//if the time already passed the user wants it instantaniasly so well post it in 5 seconds
             }
-            return timedComponent; 
-
-    }
+            return timedComponent;
+        }
 
         public void on_elapsed(object source, System.Timers.ElapsedEventArgs e)
         {
-            if (!m_ProcessOnlyOnce)
+            if (!Invoked)
             {
-                m_ProcessOnlyOnce = true;
+                Invoked = true;
                 ActionObject.raiseEvent(FbEventArgs);
                 Timer.Enabled = false;
                 Timer.Elapsed -= on_elapsed;
@@ -51,8 +54,15 @@ namespace Ex01.FacebookAppLogic
         public override string ToString()
         {
             string ActionName = ActionObject.GetName();
-
-            return string.Format("Task {0} at {1}",ActionName, (FbEventArgs.time - DateTime.Now).TotalSeconds.ToString());
+            string timeToPresent = FbEventArgs.time - DateTime.Now > TimeSpan.Zero ? (FbEventArgs.time - DateTime.Now).TotalSeconds.ToString() : "this moment";
+            if (!Invoked)
+            {
+                return string.Format("Task {0} at {1} seconds to be procesed", ActionName, timeToPresent);
+            }
+            else
+            {
+                return string.Format("Task {0} at {1} has beed completed", ActionName, timeToPresent);
+            }
         }
     }
 }

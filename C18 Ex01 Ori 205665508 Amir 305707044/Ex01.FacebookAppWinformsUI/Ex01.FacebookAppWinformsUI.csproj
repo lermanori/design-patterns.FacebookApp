@@ -59,6 +59,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormPostLink.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPostLink.Designer.cs">
+      <DependentUpon>FormPostLink.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPostPhoto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPostPhoto.Designer.cs">
+      <DependentUpon>FormPostPhoto.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormFacebookApp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +86,12 @@
     <Compile Include="IfbAutomatable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormPostLink.resx">
+      <DependentUpon>FormPostLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPostPhoto.resx">
+      <DependentUpon>FormPostPhoto.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormFacebookApp.resx">
       <DependentUpon>FormFacebookApp.cs</DependentUpon>
     </EmbeddedResource>

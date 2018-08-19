@@ -168,7 +168,7 @@ namespace Ex01.FacebookAppLogic
             }
         }
 
-        public bool CreateURL(string i_UrlToShow, out Uri o_UriResult)
+        public static bool CreateURL(string i_UrlToShow, out Uri o_UriResult)
         {
             bool result = Uri.TryCreate(i_UrlToShow, UriKind.Absolute, out o_UriResult)
                 && o_UriResult.Scheme == Uri.UriSchemeHttp;

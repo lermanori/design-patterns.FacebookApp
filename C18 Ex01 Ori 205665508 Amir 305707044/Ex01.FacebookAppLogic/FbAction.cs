@@ -16,7 +16,7 @@ namespace Ex01.FacebookAppLogic
             doWhenFinished?.Invoke(this, e);
         }
         public abstract string GetName();
-        
+
         
     }
 }
