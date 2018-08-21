@@ -60,8 +60,6 @@ namespace Ex01.FacebookAppWinformsUI
 
             InitializeComponent();
             populateArrayOfControls();
-
-            this.checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
         }
 
         protected override void OnShown(EventArgs e)
@@ -91,6 +89,7 @@ namespace Ex01.FacebookAppWinformsUI
         {
             fetchLoggedInUser();
             enableLoggedInFeatures();
+            checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
         }
 
         private void fetchLoggedInUser()
@@ -110,6 +109,9 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void enableLoggedInFeatures()
         {
+            buttonLogin.Enabled = false;
+            buttonLogOut.Enabled = true;
+
             foreach (Control ctr in m_ControlsToEnableOrDisable)
             {
                 ctr.Enabled = true;
@@ -133,6 +135,7 @@ namespace Ex01.FacebookAppWinformsUI
             m_ControlsToEnableOrDisable.Add(buttonAddNewAction);
             m_ControlsToEnableOrDisable.Add(pictureBoxFriendPhotoShickOShook);
             m_ControlsToEnableOrDisable.Add(textBoxDescriptionOfGroup);
+
 
             disableLoggedInFeatures();
         }
@@ -181,8 +184,7 @@ namespace Ex01.FacebookAppWinformsUI
             if (m_FacebookApp.IsLoggedIn())
             {
                 enableLoggedInFeatures();
-                buttonLogin.Enabled = false;
-                buttonLogOut.Enabled = true;
+
             }
         }
 
@@ -214,6 +216,7 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 ctr.Enabled = false;
             }
+
         }
 
         private void resetUI()
@@ -254,10 +257,10 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void buttonPostStatus_click(object sender, EventArgs e)
         {
-            postStatus(textBoxUploadPost.Text);
+            PostStatus(textBoxUploadPost.Text);
         }
 
-        public void postStatus(string i_StatusToPost)
+        public void PostStatus(string i_StatusToPost)
         {
             if (!string.IsNullOrEmpty(textBoxUploadPost.Text) && textBoxUploadPost.Text != k_EnterPostMessage)
             {
@@ -367,20 +370,20 @@ namespace Ex01.FacebookAppWinformsUI
         private void buttonPostLink_Click(object sender, EventArgs e)
         {
             string linkToPost = webBrowser.Url.ToString();
-            m_FacebookApp.PostChosenLink(linkToPost);
+            m_FacebookApp.PostChosenLink(linkToPost,string.Empty);
         }
 
         private void comboBoxWebBrowser_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
-            changeURL(comboBox);
+            changeURLFromComboBoxSelectedItem();
         }
 
-        private void changeURL(ComboBox i_ComboBox)
+        private void changeURLFromComboBoxSelectedItem()
         {
-            if (!string.IsNullOrEmpty(i_ComboBox.SelectedItem as string))
+            if (!string.IsNullOrEmpty(comboBoxWebBrowser.SelectedItem as string))
             {
-                webBrowser.Url = new System.Uri(i_ComboBox.SelectedItem as string);
+                webBrowser.Url = new System.Uri(comboBoxWebBrowser.SelectedItem as string);
             }
         }
 

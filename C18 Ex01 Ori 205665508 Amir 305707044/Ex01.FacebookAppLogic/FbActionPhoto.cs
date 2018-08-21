@@ -10,6 +10,8 @@ namespace Ex01.FacebookAppLogic
     {
         private FacebookAppEngine m_Engine;
 
+        private FbActionPhoto() { }
+
         public static FbActionPhoto Create(FacebookAppEngine i_Engine)
         {
             return new FbActionPhoto { m_Engine = i_Engine };

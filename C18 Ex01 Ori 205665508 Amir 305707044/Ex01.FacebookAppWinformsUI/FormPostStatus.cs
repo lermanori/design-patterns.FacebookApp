@@ -23,11 +23,11 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void buttonSubmit_Click(object sender, EventArgs e)
         {
-            this.TimeToExecute = dateTimePickerPost.Value;
-            this.StatusBody = textBoxPost.Text;
+            TimeToExecute = dateTimePickerPost.Value;
+            StatusBody = textBoxPost.Text;
             this.DialogResult = DialogResult.OK;
             
-            this.Close();
+            Close();
         }
         public FbEventArgs collectData()
         {

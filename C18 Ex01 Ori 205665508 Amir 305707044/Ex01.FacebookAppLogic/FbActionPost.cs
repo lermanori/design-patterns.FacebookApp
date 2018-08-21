@@ -9,6 +9,8 @@ namespace Ex01.FacebookAppLogic
     {
         private FacebookAppEngine m_Engine;
 
+        private FbActionPost() { }
+
         public static FbActionPost Create(FacebookAppEngine i_Engine)
         {
             return new FbActionPost { m_Engine = i_Engine };
