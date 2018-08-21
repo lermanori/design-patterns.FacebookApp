@@ -60,8 +60,6 @@ namespace Ex01.FacebookAppWinformsUI
 
             InitializeComponent();
             populateArrayOfControls();
-
-            this.checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
         }
 
         protected override void OnShown(EventArgs e)
@@ -91,6 +89,7 @@ namespace Ex01.FacebookAppWinformsUI
         {
             fetchLoggedInUser();
             enableLoggedInFeatures();
+            checkBoxRememberUser.Checked = m_LastSettings.RememberUser;
         }
 
         private void fetchLoggedInUser()
@@ -110,6 +109,9 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void enableLoggedInFeatures()
         {
+            buttonLogin.Enabled = false;
+            buttonLogOut.Enabled = true;
+
             foreach (Control ctr in m_ControlsToEnableOrDisable)
             {
                 ctr.Enabled = true;
@@ -133,6 +135,7 @@ namespace Ex01.FacebookAppWinformsUI
             m_ControlsToEnableOrDisable.Add(buttonAddNewAction);
             m_ControlsToEnableOrDisable.Add(pictureBoxFriendPhotoShickOShook);
             m_ControlsToEnableOrDisable.Add(textBoxDescriptionOfGroup);
+
 
             disableLoggedInFeatures();
         }
@@ -181,8 +184,7 @@ namespace Ex01.FacebookAppWinformsUI
             if (m_FacebookApp.IsLoggedIn())
             {
                 enableLoggedInFeatures();
-                buttonLogin.Enabled = false;
-                buttonLogOut.Enabled = true;
+
             }
         }
 
@@ -214,6 +216,7 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 ctr.Enabled = false;
             }
+
         }
 
         private void resetUI()
@@ -254,10 +257,10 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void buttonPostStatus_click(object sender, EventArgs e)
         {
-            postStatus(textBoxUploadPost.Text);
+            PostStatus(textBoxUploadPost.Text);
         }
 
-        public void postStatus(string i_StatusToPost)
+        public void PostStatus(string i_StatusToPost)
         {
             if (!string.IsNullOrEmpty(textBoxUploadPost.Text) && textBoxUploadPost.Text != k_EnterPostMessage)
             {
@@ -367,20 +370,20 @@ namespace Ex01.FacebookAppWinformsUI
         private void buttonPostLink_Click(object sender, EventArgs e)
         {
             string linkToPost = webBrowser.Url.ToString();
-            m_FacebookApp.PostChosenLink(linkToPost);
+            m_FacebookApp.PostChosenLink(linkToPost,string.Empty);
         }
 
         private void comboBoxWebBrowser_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
-            changeURL(comboBox);
+            changeURLFromComboBoxSelectedItem();
         }
 
-        private void changeURL(ComboBox i_ComboBox)
+        private void changeURLFromComboBoxSelectedItem()
         {
-            if (!string.IsNullOrEmpty(i_ComboBox.SelectedItem as string))
+            if (!string.IsNullOrEmpty(comboBoxWebBrowser.SelectedItem as string))
             {
-                webBrowser.Url = new System.Uri(i_ComboBox.SelectedItem as string);
+                webBrowser.Url = new System.Uri(comboBoxWebBrowser.SelectedItem as string);
             }
         }
 
@@ -394,7 +397,7 @@ namespace Ex01.FacebookAppWinformsUI
             string urlToShow = comboBoxWebBrowser.Text;
 
             Uri uriResult;
-            bool result = m_FacebookApp.CreateURL(urlToShow, out uriResult);
+            bool result = FacebookAppEngine.CreateURL(urlToShow, out uriResult);
 
             if (result)
             {
@@ -422,6 +425,8 @@ namespace Ex01.FacebookAppWinformsUI
         private void tabPageAutomate_load(object sender, EventArgs e)
         {
             listBoxActions.Items.Add(new FormPostStatus());
+            listBoxActions.Items.Add(new FormPostPhoto());
+            listBoxActions.Items.Add(new FormPostLink());
         }
 
         private void buttonAddNewCommand_Click(object sender, EventArgs e)
@@ -432,56 +437,33 @@ namespace Ex01.FacebookAppWinformsUI
                 DialogResult dialogResult = CommandForm.ShowDialog();
                 if (dialogResult == DialogResult.OK)
                 {
-                    collectData(CommandForm);
+                    IfbAutomatable fbTaskToAutomate = CommandForm as IfbAutomatable;
+                    FbEventArgs args = (fbTaskToAutomate)?.collectData();
+                    TasksType taskType = (TasksType)(fbTaskToAutomate)?.getTaskType();
+                    TimedComponent timedComponent = TimedComponent.create(args, m_FacebookApp,taskType);
+                    timedComponent.Timer.Elapsed += Timer_Elapsed;
+
+                    listBoxTasks.Items.Add(timedComponent);
+                    timedComponent.Timer.Start();
                 }
             }
         }
 
-        private void collectData(object sender)
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (sender is FormPostStatus)
-            {
-                FormPostStatus postForm = sender as FormPostStatus;
-                collectDataForPost(sender);
-            }
+            listBoxTasks.Invoke(new Action(() => { RefreshListBox(); }));
+
         }
 
-        private void collectDataForPost(object sender)
+        private void RefreshListBox()
         {
-            FormPostStatus postForm = sender as FormPostStatus;
-
-            string statusBody = postForm.StatusBody;
-            DateTime timeToExecute = postForm.TimeToExecute;
-
-            FbEventArgs args = new FbEventArgs();
-            TimedComponent t = new TimedComponent();
-
-            args.StatusBody = statusBody;
-            t.ActionObject = FbActionPost.Create(m_FacebookApp);
-            t.ActionObject.LoadAction(args);
-
-            t.Timer = new System.Timers.Timer();
-            t.Timer.Enabled = false;
-            t.DateAndHour = timeToExecute;
-
-            if ((timeToExecute - DateTime.Now).TotalMilliseconds > 0)
+            ListBox.ObjectCollection objArr = listBoxTasks.Items;
+            listBoxTasks.Items.Clear();
+            foreach (object obj in objArr)
             {
-                t.Timer.Interval = (timeToExecute - DateTime.Now).TotalMilliseconds;
+                listBoxTasks.Items.Add(obj);
             }
-            else
-            {
-                t.Timer.Interval = 1000 * 5;
-            }
-
-            FacebookTimerAdapter adapter = new FacebookTimerAdapter(t);
-            adapter.Args = args;
-            adapter.Timed.Timer = t.Timer;
-
-            listBoxTasks.Items.Add(adapter.Timed);
-
-            adapter.Timed.Timer.Elapsed += new System.Timers.ElapsedEventHandler(adapter.on_elapsed);
-            adapter.Timed.Timer.AutoReset = false;
-            adapter.Timed.Timer.Enabled = true;
+            listBoxTasks.Update();
         }
 
         private void buttonCalcStats_Click(object sender, EventArgs e)

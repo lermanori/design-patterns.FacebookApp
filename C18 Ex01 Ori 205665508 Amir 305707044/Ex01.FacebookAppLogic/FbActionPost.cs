@@ -9,14 +9,14 @@ namespace Ex01.FacebookAppLogic
     {
         private FacebookAppEngine m_Engine;
 
+        private FbActionPost() { }
+
         public static FbActionPost Create(FacebookAppEngine i_Engine)
         {
-            FbActionPost actionPost = new FbActionPost();
-            actionPost.m_Engine = i_Engine; 
-            return actionPost;
+            return new FbActionPost { m_Engine = i_Engine };
         }
 
-        public override void LoadAction(FbEventArgs e)
+        public override void LoadAction()
         {
             doWhenFinished += postStatusAction;
         }
@@ -25,5 +25,11 @@ namespace Ex01.FacebookAppLogic
         {
             m_Engine.PostStatus(e.StatusBody);
         }
+
+        public override string GetName()
+        {
+            return "post status";
+        }
+
     }
 }

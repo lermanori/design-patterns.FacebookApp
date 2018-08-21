@@ -148,7 +148,7 @@ namespace Ex01.FacebookAppLogic
         {
             try
             {
-                CurrentUser.PostPhoto(i_PhotoPath, i_PhotoTitle);
+                CurrentUser.PostPhoto(i_PhotoPath, i_PhotoTitle,string.Empty);
             }
             catch (Exception ex)
             {
@@ -156,11 +156,11 @@ namespace Ex01.FacebookAppLogic
             }
         }
 
-        public void PostChosenLink(string i_LinkToPost)
+        public void PostChosenLink(string i_LinkToPost,string i_statusBody)
         {
             try
             {
-                CurrentUser.PostLink(i_LinkToPost, string.Empty);
+                CurrentUser.PostLink(i_LinkToPost,i_statusBody);
             }
             catch (Exception ex)
             {
@@ -168,7 +168,7 @@ namespace Ex01.FacebookAppLogic
             }
         }
 
-        public bool CreateURL(string i_UrlToShow, out Uri o_UriResult)
+        public static bool CreateURL(string i_UrlToShow, out Uri o_UriResult)
         {
             bool result = Uri.TryCreate(i_UrlToShow, UriKind.Absolute, out o_UriResult)
                 && o_UriResult.Scheme == Uri.UriSchemeHttp;
