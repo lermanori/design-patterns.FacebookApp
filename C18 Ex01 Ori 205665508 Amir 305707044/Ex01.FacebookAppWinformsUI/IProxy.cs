@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public interface IProxy
+    public interface IProxyForm
     {
         DialogResult ShowDialog();
     }

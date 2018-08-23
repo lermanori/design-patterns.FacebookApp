@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    class FormPostLinkProxy : IProxy
+    class FormPostLinkProxy : IProxyForm
     {
         private FormPostLink m_FormPostLink = null;
 
@@ -25,7 +25,7 @@ namespace Ex01.FacebookAppWinformsUI
             return "Post Link";
         }
 
-        internal static IProxy Create()
+        internal static IProxyForm Create()
         {
             return new FormPostLinkProxy();
         }

@@ -10,7 +10,7 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public partial class FormPostPhoto : Form ,IfbAutomatable,IProxy
+    public partial class FormPostPhoto : Form ,IfbAutomatable,IProxyForm
     {
         public const string k_EnterTitleMsg = "Enter Title";
 

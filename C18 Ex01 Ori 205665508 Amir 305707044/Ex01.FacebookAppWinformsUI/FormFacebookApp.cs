@@ -424,17 +424,16 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void tabPageAutomate_load(object sender, EventArgs e)
         {
-            listBoxActions.Items.Add(FormPostProxyFactory.create(TasksType.status));
-            listBoxActions.Items.Add(FormPostProxyFactory.create(TasksType.photo));
-            listBoxActions.Items.Add(FormPostProxyFactory.create(TasksType.link));
-
+            listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.status));
+            listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.photo));
+            listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.link));
         }
 
         private void buttonAddNewCommand_Click(object sender, EventArgs e)
         {
             if (listBoxActions.SelectedItem != null)
             {
-                IProxy CommandForm = listBoxActions.SelectedItem as IProxy;
+                IProxyForm CommandForm = listBoxActions.SelectedItem as IProxyForm;
                 DialogResult dialogResult = CommandForm.ShowDialog();
                 if (dialogResult == DialogResult.OK)
                 {

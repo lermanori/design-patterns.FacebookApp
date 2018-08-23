@@ -9,9 +9,9 @@ namespace Ex01.FacebookAppWinformsUI
     public static class FormPostProxyFactory
     {
 
-        public static IProxy create(TasksType i_taskToAutomate)
+        public static IProxyForm Create(TasksType i_taskToAutomate)
         {
-            IProxy res = null;
+            IProxyForm res = null;
             switch (i_taskToAutomate)
             {
                 case TasksType.status:

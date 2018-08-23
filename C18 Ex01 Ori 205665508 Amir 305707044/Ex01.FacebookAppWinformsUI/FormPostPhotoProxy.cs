@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    class FormPostPhotoProxy : IProxy
+    class FormPostPhotoProxy : IProxyForm
     {
         private FormPostPhoto m_FormPostPhoto = null;
 
@@ -25,7 +25,7 @@ namespace Ex01.FacebookAppWinformsUI
             return "Post Photo";
         }
 
-        internal static IProxy Create()
+        internal static IProxyForm Create()
         {
             return new FormPostPhotoProxy();
         }

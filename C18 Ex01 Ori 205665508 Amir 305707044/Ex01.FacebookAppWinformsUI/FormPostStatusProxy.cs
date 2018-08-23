@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    class FormPostStatusProxy : IProxy
+    class FormPostStatusProxy : IProxyForm
     {
        private FormPostStatus m_formPostStatus = null;
 
@@ -22,7 +22,7 @@ namespace Ex01.FacebookAppWinformsUI
             return m_formPostStatus.ShowDialog();
         }
 
-        internal static IProxy Create()
+        internal static IProxyForm Create()
         {
             return new FormPostStatusProxy();
         }
