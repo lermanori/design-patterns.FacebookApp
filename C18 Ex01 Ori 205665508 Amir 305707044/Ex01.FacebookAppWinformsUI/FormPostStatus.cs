@@ -10,7 +10,7 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public partial class FormPostStatus : Form , IfbAutomatable
+    public partial class FormPostStatus : Form , IfbAutomatable, IProxy
     {
         public string StatusBody { get; set; }
 

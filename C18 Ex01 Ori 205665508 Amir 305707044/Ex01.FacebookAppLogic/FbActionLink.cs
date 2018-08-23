@@ -7,7 +7,6 @@ namespace Ex01.FacebookAppLogic
 {
     class FbActionLink : FbAction
     {
-        private FacebookAppEngine m_Engine;
 
         private FbActionLink() { }
 
@@ -18,7 +17,7 @@ namespace Ex01.FacebookAppLogic
 
         public override void LoadAction()
         {
-            doWhenFinished += postLinkAction;
+            DoWhenFinished += postLinkAction;
         }
 
         private void postLinkAction(object sender, FbEventArgs e)
@@ -28,7 +27,7 @@ namespace Ex01.FacebookAppLogic
 
         public override string GetName()
         {
-            return "post Link";
+            return "Post Link";
         }
     }
 }

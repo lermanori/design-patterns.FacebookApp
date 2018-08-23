@@ -10,7 +10,7 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public partial class FormPostLink : Form ,IfbAutomatable
+    public partial class FormPostLink : Form ,IfbAutomatable,IProxy
     {
         public const string k_EnterTitleMsg = "Enter Title";
         public const string k_httpOpening = @"http://www.";
@@ -115,22 +115,3 @@ namespace Ex01.FacebookAppWinformsUI
     }
 
 }
-/*
- *      
-
-        public FbEventArgs collectData()
-        {
-            FbEventArgs result = new FbEventArgs { StatusBody = StatusBody, time = TimeToExecute, PathToImage = PathToImage };
-            return result;
-        }
-        public TasksType getTaskType()
-        {
-            return TasksType.photo;
-        }
-
-
-
-
-
- * 
- */

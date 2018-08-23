@@ -8,7 +8,6 @@ namespace Ex01.FacebookAppLogic
 {
     public class TimedComponent
     {
-        private bool m_ProcessOnlyOnce;
         public bool Invoked { get; private set; }
 
         public FbEventArgs FbEventArgs { get; set; }
@@ -18,7 +17,7 @@ namespace Ex01.FacebookAppLogic
         public FbAction ActionObject { get; set; }
 
 
-        public static TimedComponent create(FbEventArgs i_Args, FacebookAppEngine i_Engine, TasksType i_ChosenTask)
+        public static TimedComponent Create(FbEventArgs i_Args, FacebookAppEngine i_Engine, TasksType i_ChosenTask)
         {
             //need to switch fbactionpost.create to factory wholl get an enum
 
@@ -40,7 +39,7 @@ namespace Ex01.FacebookAppLogic
             return timedComponent;
         }
 
-        public void on_elapsed(object source, System.Timers.ElapsedEventArgs e)
+        private void on_elapsed(object source, System.Timers.ElapsedEventArgs e)
         {
             if (!Invoked)
             {

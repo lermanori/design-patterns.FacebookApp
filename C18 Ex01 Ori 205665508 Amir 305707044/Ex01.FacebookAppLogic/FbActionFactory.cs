@@ -6,7 +6,8 @@ using System.Text;
 namespace Ex01.FacebookAppLogic
 {
     public enum TasksType {status,photo,link }
-    class FbActionFactory
+
+     public static class FbActionFactory
     {
         public static FbAction Create(FacebookAppEngine i_Engine,TasksType i_taskToAutomate)
         {

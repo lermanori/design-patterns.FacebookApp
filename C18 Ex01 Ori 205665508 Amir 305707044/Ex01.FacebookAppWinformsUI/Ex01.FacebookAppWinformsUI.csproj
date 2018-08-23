@@ -65,6 +65,7 @@
     <Compile Include="FormPostLink.Designer.cs">
       <DependentUpon>FormPostLink.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPostLinkProxy.cs" />
     <Compile Include="FormPostPhoto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -77,13 +78,17 @@
     <Compile Include="FormFacebookApp.Designer.cs">
       <DependentUpon>FormFacebookApp.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPostPhotoProxy.cs" />
+    <Compile Include="FormPostProxyFactory.cs" />
     <Compile Include="FormPostStatus.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormPostStatus.Designer.cs">
       <DependentUpon>FormPostStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPostStatusProxy.cs" />
     <Compile Include="IfbAutomatable.cs" />
+    <Compile Include="IProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormPostLink.resx">

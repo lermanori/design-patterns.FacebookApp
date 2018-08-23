@@ -8,8 +8,6 @@ namespace Ex01.FacebookAppLogic
 {
     class FbActionPhoto : FbAction
     {
-        private FacebookAppEngine m_Engine;
-
         private FbActionPhoto() { }
 
         public static FbActionPhoto Create(FacebookAppEngine i_Engine)
@@ -19,7 +17,7 @@ namespace Ex01.FacebookAppLogic
 
         public override void LoadAction()
         {
-            doWhenFinished += postPhotoAction;
+            DoWhenFinished += postPhotoAction;
         }
 
         private void postPhotoAction(object sender, FbEventArgs e)

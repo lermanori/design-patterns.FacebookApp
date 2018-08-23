@@ -424,23 +424,24 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void tabPageAutomate_load(object sender, EventArgs e)
         {
-            listBoxActions.Items.Add(new FormPostStatus());
-            listBoxActions.Items.Add(new FormPostPhoto());
-            listBoxActions.Items.Add(new FormPostLink());
+            listBoxActions.Items.Add(FormPostProxyFactory.create(TasksType.status));
+            listBoxActions.Items.Add(FormPostProxyFactory.create(TasksType.photo));
+            listBoxActions.Items.Add(FormPostProxyFactory.create(TasksType.link));
+
         }
 
         private void buttonAddNewCommand_Click(object sender, EventArgs e)
         {
             if (listBoxActions.SelectedItem != null)
             {
-                Form CommandForm = listBoxActions.SelectedItem as Form;
+                IProxy CommandForm = listBoxActions.SelectedItem as IProxy;
                 DialogResult dialogResult = CommandForm.ShowDialog();
                 if (dialogResult == DialogResult.OK)
                 {
                     IfbAutomatable fbTaskToAutomate = CommandForm as IfbAutomatable;
                     FbEventArgs args = (fbTaskToAutomate)?.collectData();
                     TasksType taskType = (TasksType)(fbTaskToAutomate)?.getTaskType();
-                    TimedComponent timedComponent = TimedComponent.create(args, m_FacebookApp,taskType);
+                    TimedComponent timedComponent = TimedComponent.Create(args, m_FacebookApp,taskType);
                     timedComponent.Timer.Elapsed += Timer_Elapsed;
 
                     listBoxTasks.Items.Add(timedComponent);
