@@ -442,6 +442,7 @@ namespace Ex01.FacebookAppWinformsUI
                     TasksType taskType = (TasksType)(fbTaskToAutomate)?.GetTaskType();
                     //TimedComponent timedComponent = TimedComponent.Create(args, m_FacebookApp, taskType); ---> Needs To Be Erased, moved it into the facade
                     TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
+                    timedComponent.ActionObject.DoWhenFinishedError += (i_object,i_e) => MessageBox.Show("there was a probloem during invoking the action");
                     timedComponent.Timer.Elapsed += Timer_Elapsed;
 
                     listBoxTasks.Items.Add(timedComponent);
@@ -458,13 +459,13 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void RefreshListBox()
         {
-            ListBox.ObjectCollection objArr = listBoxTasks.Items;
-            listBoxTasks.Items.Clear();
-            foreach (object obj in objArr)
+            int count = listBoxTasks.Items.Count;
+            listBoxTasks.SuspendLayout();
+            for (int i = 0; i < count; i++)
             {
-                listBoxTasks.Items.Add(obj);
+                listBoxTasks.Items[i] = listBoxTasks.Items[i];
             }
-            listBoxTasks.Update();
+            listBoxTasks.ResumeLayout();
         }
 
         private void buttonCalcStats_Click(object sender, EventArgs e)

@@ -21,7 +21,7 @@ namespace Ex01.FacebookAppLogic
         {
             //need to switch fbactionpost.create to factory wholl get an enum
 
-            TimedComponent timedComponent = new TimedComponent { FbEventArgs = i_Args, ActionObject = FbActionFactory.Create(i_Engine, i_ChosenTask), Timer = new System.Timers.Timer() ,Invoked = false};
+            TimedComponent timedComponent = new TimedComponent { FbEventArgs = i_Args, ActionObject = FbActionFactory.Create(i_Engine, i_ChosenTask), Timer = new System.Timers.Timer(), Invoked = false };
 
             timedComponent.ActionObject.LoadAction();
 
@@ -44,7 +44,14 @@ namespace Ex01.FacebookAppLogic
             if (!Invoked)
             {
                 Invoked = true;
-                ActionObject.raiseEvent(FbEventArgs);
+                try
+                {
+                    ActionObject.raiseEvent(FbEventArgs);
+                }
+                catch 
+                {
+                    ActionObject.raiseErrorEvent();
+                }
                 Timer.Enabled = false;
                 Timer.Elapsed -= on_elapsed;
             }
