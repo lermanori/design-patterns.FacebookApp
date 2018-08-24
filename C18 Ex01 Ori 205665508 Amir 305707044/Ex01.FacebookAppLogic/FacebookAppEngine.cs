@@ -26,7 +26,17 @@ namespace Ex01.FacebookAppLogic
 
         public User CurrentUser { get; private set; }
 
+        public FriendsStatistics FriendStatisticsFeature { get; }
+        
+        public ShickOShook ShickOShookFeature { get; }
+
         public string UserProfilePictureURL { get; private set; }
+
+        public FacebookAppEngine()
+        {
+            FriendStatisticsFeature = new FriendsStatistics();
+            ShickOShookFeature = new ShickOShook();
+        }
 
         public void Login()
         {
@@ -184,6 +194,11 @@ namespace Ex01.FacebookAppLogic
 
             randomFriend = CurrentUser?.Friends[randomNumber];
             return randomFriend;
+        }
+
+        public TimedComponent CreateTimedComponent(FbEventArgs args, TasksType taskType)
+        {
+            return TimedComponent.Create(args, this, taskType);
         }
     }
 }

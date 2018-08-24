@@ -71,7 +71,7 @@ namespace Ex01.FacebookAppWinformsUI
             FbEventArgs result = new FbEventArgs { StatusBody = StatusBody, time = TimeToExecute, PathToImage = PathToImage };
             return result;
         }
-        public TasksType getTaskType()
+        public TasksType GetTaskType()
         {
             return TasksType.photo;
         }

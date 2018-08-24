@@ -43,8 +43,8 @@ namespace Ex01.FacebookAppWinformsUI
 
         private FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
         private FacebookAppSettings m_LastSettings = null;
-        private FriendsStatistics m_StatsAboutMyFriends = new FriendsStatistics();
-        private ShickOShook m_ShickOShook = new ShickOShook();
+        //private FriendsStatistics m_StatsAboutMyFriends = new FriendsStatistics();
+        //private ShickOShook m_ShickOShook = new ShickOShook();
 
         private List<Control> m_ControlsToEnableOrDisable = new List<Control>();
         private string m_PhotoPath = string.Empty;
@@ -370,7 +370,7 @@ namespace Ex01.FacebookAppWinformsUI
         private void buttonPostLink_Click(object sender, EventArgs e)
         {
             string linkToPost = webBrowser.Url.ToString();
-            m_FacebookApp.PostChosenLink(linkToPost,string.Empty);
+            m_FacebookApp.PostChosenLink(linkToPost, string.Empty);
         }
 
         private void comboBoxWebBrowser_SelectedIndexChanged(object sender, EventArgs e)
@@ -439,8 +439,9 @@ namespace Ex01.FacebookAppWinformsUI
                 {
                     IfbAutomatable fbTaskToAutomate = CommandForm as IfbAutomatable;
                     FbEventArgs args = (fbTaskToAutomate)?.collectData();
-                    TasksType taskType = (TasksType)(fbTaskToAutomate)?.getTaskType();
-                    TimedComponent timedComponent = TimedComponent.Create(args, m_FacebookApp,taskType);
+                    TasksType taskType = (TasksType)(fbTaskToAutomate)?.GetTaskType();
+                    //TimedComponent timedComponent = TimedComponent.Create(args, m_FacebookApp, taskType);
+                    TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
                     timedComponent.Timer.Elapsed += Timer_Elapsed;
 
                     listBoxTasks.Items.Add(timedComponent);
@@ -468,32 +469,32 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void buttonCalcStats_Click(object sender, EventArgs e)
         {
-            m_StatsAboutMyFriends.CalculateStatisticsAboutFriends(m_FacebookApp);
+            m_FacebookApp.FriendStatisticsFeature.CalculateStatisticsAboutFriends(m_FacebookApp);
             updateUIAccordingToStatistics();
         }
 
         private void updateUIAccordingToStatistics()
         {
-            labelMen.Text = string.Format(k_GeneralStatsLabelText, k_Men, m_StatsAboutMyFriends.Men, m_StatsAboutMyFriends.MenRatio.ToString());
-            labelWomen.Text = string.Format(k_GeneralStatsLabelText, k_Women, m_StatsAboutMyFriends.Women, m_StatsAboutMyFriends.WomenRatio.ToString());
-            labelGenderLess.Text = string.Format(k_GeneralStatsLabelText, k_GenderLess, m_StatsAboutMyFriends.GenderLess, m_StatsAboutMyFriends.GenderLessRatio.ToString());
+            labelMen.Text = string.Format(k_GeneralStatsLabelText, k_Men, m_FacebookApp.FriendStatisticsFeature.Men, m_FacebookApp.FriendStatisticsFeature.MenRatio.ToString());
+            labelWomen.Text = string.Format(k_GeneralStatsLabelText, k_Women, m_FacebookApp.FriendStatisticsFeature.Women, m_FacebookApp.FriendStatisticsFeature.WomenRatio.ToString());
+            labelGenderLess.Text = string.Format(k_GeneralStatsLabelText, k_GenderLess, m_FacebookApp.FriendStatisticsFeature.GenderLess, m_FacebookApp.FriendStatisticsFeature.GenderLessRatio.ToString());
 
-            labelLowestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_UntilTwenty, m_StatsAboutMyFriends.UntilTwentyYearsOld, m_StatsAboutMyFriends.UntilTwentyYearsOldRatio);
-            labelMediumAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_TwentyOneToFourty, m_StatsAboutMyFriends.TwentyOneToFourty, m_StatsAboutMyFriends.TwentyOneToFourtyRatio);
-            labelAdultAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_FourtyOneToSixty, m_StatsAboutMyFriends.FourtyOneToSixty, m_StatsAboutMyFriends.FourtyOneToSixtyRatio);
-            labelOldestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_AboveSixty, m_StatsAboutMyFriends.AboveSixty, m_StatsAboutMyFriends.AboveSixtyRatio);
-            labelDidntEnterBirthday.Text = string.Format(k_GeneralStatsLabelText, k_BirthdatyLess, m_StatsAboutMyFriends.DidntEnterBirthday, m_StatsAboutMyFriends.DidntEnterBirthdayRatio);
+            labelLowestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_UntilTwenty, m_FacebookApp.FriendStatisticsFeature.UntilTwentyYearsOld, m_FacebookApp.FriendStatisticsFeature.UntilTwentyYearsOldRatio);
+            labelMediumAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_TwentyOneToFourty, m_FacebookApp.FriendStatisticsFeature.TwentyOneToFourty, m_FacebookApp.FriendStatisticsFeature.TwentyOneToFourtyRatio);
+            labelAdultAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_FourtyOneToSixty, m_FacebookApp.FriendStatisticsFeature.FourtyOneToSixty, m_FacebookApp.FriendStatisticsFeature.FourtyOneToSixtyRatio);
+            labelOldestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_AboveSixty, m_FacebookApp.FriendStatisticsFeature.AboveSixty, m_FacebookApp.FriendStatisticsFeature.AboveSixtyRatio);
+            labelDidntEnterBirthday.Text = string.Format(k_GeneralStatsLabelText, k_BirthdatyLess, m_FacebookApp.FriendStatisticsFeature.DidntEnterBirthday, m_FacebookApp.FriendStatisticsFeature.DidntEnterBirthdayRatio);
 
-            labelMostFriendsUser.Text = m_StatsAboutMyFriends.MostFriendsUser.Name;
-            labelFriendCountMost.Text = string.Format(k_FriendsCountMessage, m_StatsAboutMyFriends.MostFriendsUser.Friends.Count);
-            pictureBoxMostFriends.LoadAsync(m_StatsAboutMyFriends.MostFriendsUser.PictureNormalURL);
-            labelLeastFriendsUser.Text = m_StatsAboutMyFriends.LeastFriendsUser.Name;
-            labelFriendCountLeast.Text = string.Format(k_FriendsCountMessage, m_StatsAboutMyFriends.LeastFriendsUser.Friends.Count);
-            pictureBoxLeastFriends.LoadAsync(m_StatsAboutMyFriends.LeastFriendsUser.PictureNormalURL);
+            labelMostFriendsUser.Text = m_FacebookApp.FriendStatisticsFeature.MostFriendsUser.Name;
+            labelFriendCountMost.Text = string.Format(k_FriendsCountMessage, m_FacebookApp.FriendStatisticsFeature.MostFriendsUser.Friends.Count);
+            pictureBoxMostFriends.LoadAsync(m_FacebookApp.FriendStatisticsFeature.MostFriendsUser.PictureNormalURL);
+            labelLeastFriendsUser.Text = m_FacebookApp.FriendStatisticsFeature.LeastFriendsUser.Name;
+            labelFriendCountLeast.Text = string.Format(k_FriendsCountMessage, m_FacebookApp.FriendStatisticsFeature.LeastFriendsUser.Friends.Count);
+            pictureBoxLeastFriends.LoadAsync(m_FacebookApp.FriendStatisticsFeature.LeastFriendsUser.PictureNormalURL);
 
-            labelMostActiveUser.Text = m_StatsAboutMyFriends.MostActiveUser.Name;
-            labelNumStatuses.Text = string.Format(k_NumStatusesMessage, m_StatsAboutMyFriends.MostActiveUser.Statuses.Count);
-            pictureBoxMostActiveUser.LoadAsync(m_StatsAboutMyFriends.MostActiveUser.PictureNormalURL);
+            labelMostActiveUser.Text = m_FacebookApp.FriendStatisticsFeature.MostActiveUser.Name;
+            labelNumStatuses.Text = string.Format(k_NumStatusesMessage, m_FacebookApp.FriendStatisticsFeature.MostActiveUser.Statuses.Count);
+            pictureBoxMostActiveUser.LoadAsync(m_FacebookApp.FriendStatisticsFeature.MostActiveUser.PictureNormalURL);
         }
 
         private void buttonActivateShikOShook_Click(object sender, EventArgs e)
@@ -501,11 +502,11 @@ namespace Ex01.FacebookAppWinformsUI
             User randomFriend = m_FacebookApp.FetchRandomFriend();
             try
             {
-                m_ShickOShook.GetFriendPhotoURLArray(randomFriend);
-                if (m_ShickOShook.friendPhotoURLCollection != null)
+                m_FacebookApp.ShickOShookFeature.GetFriendPhotoURLArray(randomFriend);
+                if (m_FacebookApp.ShickOShookFeature.friendPhotoURLCollection != null)
                 {
-                    pictureBoxFriendPhotoShickOShook.LoadAsync(m_ShickOShook.CurrentPhotoURL);
-                    labelTellYourFriends.Text = string.Format(k_ShickOShookLabelText, m_ShickOShook.CurrentFriendFirstName);
+                    pictureBoxFriendPhotoShickOShook.LoadAsync(m_FacebookApp.ShickOShookFeature.CurrentPhotoURL);
+                    labelTellYourFriends.Text = string.Format(k_ShickOShookLabelText, m_FacebookApp.ShickOShookFeature.CurrentFriendFirstName);
                     labelTellYourFriends.Visible = true;
                 }
                 else
@@ -521,18 +522,18 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void pictureBoxFriendPhotoShickOShook_Click(object sender, EventArgs e)
         {
-            m_ShickOShook.ChangeCurrentPhotoURL();
-            pictureBoxFriendPhotoShickOShook.LoadAsync(m_ShickOShook.CurrentPhotoURL);
+            m_FacebookApp.ShickOShookFeature.ChangeCurrentPhotoURL();
+            pictureBoxFriendPhotoShickOShook.LoadAsync(m_FacebookApp.ShickOShookFeature.CurrentPhotoURL);
         }
 
         private void buttonShik_Click(object sender, EventArgs e)
         {
             try
             {
-            m_ShickOShook.PublishPost(buttonShik.Text, m_FacebookApp);
-            MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+                m_FacebookApp.ShickOShookFeature.PublishPost(buttonShik.Text, m_FacebookApp);
+                MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_FacebookApp.ShickOShookFeature.CurrentFriendFirstName));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -542,10 +543,10 @@ namespace Ex01.FacebookAppWinformsUI
         {
             try
             {
-            m_ShickOShook.PublishPost(buttonShook.Text, m_FacebookApp);
-            MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+                m_FacebookApp.ShickOShookFeature.PublishPost(buttonShook.Text, m_FacebookApp);
+                MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_FacebookApp.ShickOShookFeature.CurrentFriendFirstName));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

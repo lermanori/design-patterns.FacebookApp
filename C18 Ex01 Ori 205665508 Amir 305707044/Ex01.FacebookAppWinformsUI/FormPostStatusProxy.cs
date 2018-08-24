@@ -3,28 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    class FormPostStatusProxy : IProxyForm
+    class FormPostStatusProxy : IProxyForm , IfbAutomatable
     {
        private FormPostStatus m_formPostStatus = null;
 
         private FormPostStatusProxy() { }
 
-        public DialogResult ShowDialog()
+        private void initializeIfNull()
         {
             if(m_formPostStatus == null)
             {
                 m_formPostStatus = new FormPostStatus();
             }
-
+        }
+        public DialogResult ShowDialog()
+        {
+            initializeIfNull();
             return m_formPostStatus.ShowDialog();
         }
 
         internal static IProxyForm Create()
         {
             return new FormPostStatusProxy();
+        }
+
+        public FbEventArgs collectData()
+        {
+            initializeIfNull();
+            return m_formPostStatus.collectData();
+        }
+
+        public TasksType GetTaskType()
+        {
+            initializeIfNull();
+            return m_formPostStatus.GetTaskType();
         }
 
         public override string ToString()

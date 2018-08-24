@@ -9,6 +9,6 @@ namespace Ex01.FacebookAppWinformsUI
     interface IfbAutomatable
     {
         FbEventArgs collectData();
-        TasksType getTaskType();
+        TasksType GetTaskType();
     }
 }
