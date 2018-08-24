@@ -440,7 +440,7 @@ namespace Ex01.FacebookAppWinformsUI
                     IfbAutomatable fbTaskToAutomate = CommandForm as IfbAutomatable;
                     FbEventArgs args = (fbTaskToAutomate)?.collectData();
                     TasksType taskType = (TasksType)(fbTaskToAutomate)?.GetTaskType();
-                    //TimedComponent timedComponent = TimedComponent.Create(args, m_FacebookApp, taskType);
+                    //TimedComponent timedComponent = TimedComponent.Create(args, m_FacebookApp, taskType); ---> Needs To Be Erased, moved it into the facade
                     TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
                     timedComponent.Timer.Elapsed += Timer_Elapsed;
 
