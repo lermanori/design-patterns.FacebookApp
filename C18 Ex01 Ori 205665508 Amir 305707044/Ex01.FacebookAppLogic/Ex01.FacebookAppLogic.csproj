@@ -45,6 +45,7 @@
     <Compile Include="FbActionPhoto.cs" />
     <Compile Include="FbActionPost.cs" />
     <Compile Include="FbEventArgs.cs" />
+    <Compile Include="FileUtils.cs" />
     <Compile Include="FriendsStatistics.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>

@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Ex01.FacebookAppLogic
 {
-    public class FacebookAppSettings 
+    public class FacebookAppSettings
     {
         private static readonly string r_SettingsFilePath = @"FacebookSettings.json";
 
@@ -27,36 +27,63 @@ namespace Ex01.FacebookAppLogic
 
         public static FacebookAppSettings LoadFromFile()
         {
-            FacebookAppSettings settings = null;
-            StreamReader fileToLoad = null;
+            FacebookAppSettings settings;
             try
             {
-                fileToLoad = File.OpenText(r_SettingsFilePath);
-                JsonSerializer serializer = new JsonSerializer();
-                settings = (FacebookAppSettings)serializer.Deserialize(fileToLoad, typeof(FacebookAppSettings));
+                settings = FileUtils.LoadFromFile<FacebookAppSettings>(r_SettingsFilePath);
             }
             catch
             {
                 settings = new FacebookAppSettings();
             }
-
-            return settings; 
+            return settings;
+        }
+        public void SaveToFile()
+        {
+            FileUtils.SaveToFile<FacebookAppSettings>(this, r_SettingsFilePath);
         }
 
         public static void DeleteFile()
         {
-            File.Delete(r_SettingsFilePath);
+            FileUtils.DeleteFile(r_SettingsFilePath);
         }
 
-        public void SaveToFile()
-        {
-            using (FileStream fileToSave = File.Open(r_SettingsFilePath, FileMode.Create, FileAccess.Write))
-            using (StreamWriter writer = new StreamWriter(fileToSave))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Formatting = Formatting.Indented;
-                serializer.Serialize(writer, this);
-            }
-        }
+
+
+
+
+        //public static FacebookAppSettings LoadFromFile()
+        //{
+        //    FacebookAppSettings settings = null;
+        //    StreamReader fileToLoad = null;
+        //    try
+        //    {
+        //        fileToLoad = File.OpenText(r_SettingsFilePath);
+        //        JsonSerializer serializer = new JsonSerializer();
+        //        settings = (FacebookAppSettings)serializer.Deserialize(fileToLoad, typeof(FacebookAppSettings));
+        //    }
+        //    catch
+        //    {
+        //        settings = new FacebookAppSettings();
+        //    }
+
+        //    return settings; 
+        //}
+
+        //public static void DeleteFile()
+        //{
+        //    File.Delete(r_SettingsFilePath);
+        //}
+
+        //public void SaveToFile()
+        //{
+        //    using (FileStream fileToSave = File.Open(r_SettingsFilePath, FileMode.Create, FileAccess.Write))
+        //    using (StreamWriter writer = new StreamWriter(fileToSave))
+        //    {
+        //        JsonSerializer serializer = new JsonSerializer();
+        //        serializer.Formatting = Formatting.Indented;
+        //        serializer.Serialize(writer, this);
+        //    }
+        //}
     }
 }
