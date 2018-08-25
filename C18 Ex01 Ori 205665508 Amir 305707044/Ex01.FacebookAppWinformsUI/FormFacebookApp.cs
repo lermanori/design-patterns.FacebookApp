@@ -369,6 +369,11 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void buttonPostLink_Click(object sender, EventArgs e)
         {
+            uploadLink();
+        }
+
+        private void uploadLink()
+        {
             string linkToPost = webBrowser.Url.ToString();
             m_FacebookApp.PostChosenLink(linkToPost, string.Empty);
         }
@@ -424,12 +429,22 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void tabPageAutomate_load(object sender, EventArgs e)
         {
+            populateListboxWithTimeableActions();
+        }
+
+        private void populateListboxWithTimeableActions()
+        {
             listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.status));
             listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.photo));
             listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.link));
         }
 
         private void buttonAddNewCommand_Click(object sender, EventArgs e)
+        {
+            addATimedCommandToCommit();
+        }
+
+        private void addATimedCommandToCommit()
         {
             if (listBoxActions.SelectedItem != null)
             {
@@ -442,7 +457,7 @@ namespace Ex01.FacebookAppWinformsUI
                     TasksType taskType = (TasksType)(fbTaskToAutomate)?.GetTaskType();
                     //TimedComponent timedComponent = TimedComponent.Create(args, m_FacebookApp, taskType); ---> Needs To Be Erased, moved it into the facade
                     TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
-                    timedComponent.ActionObject.DoWhenFinishedError += (i_object,i_e) => MessageBox.Show("there was a probloem during invoking the action");
+                    timedComponent.ActionObject.DoWhenFinishedError += (i_object, i_e) => MessageBox.Show("there was a probloem during invoking the action");
                     timedComponent.Timer.Elapsed += Timer_Elapsed;
 
                     listBoxTasks.Items.Add(timedComponent);
@@ -454,7 +469,6 @@ namespace Ex01.FacebookAppWinformsUI
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             listBoxTasks.Invoke(new Action(() => { RefreshListBox(); }));
-
         }
 
         private void RefreshListBox()
@@ -469,6 +483,11 @@ namespace Ex01.FacebookAppWinformsUI
         }
 
         private void buttonCalcStats_Click(object sender, EventArgs e)
+        {
+            activateCalcStatisticsFeature();
+        }
+
+        private void activateCalcStatisticsFeature()
         {
             m_FacebookApp.FriendStatisticsFeature.CalculateStatisticsAboutFriends(m_FacebookApp);
             updateUIAccordingToStatistics();
@@ -499,6 +518,11 @@ namespace Ex01.FacebookAppWinformsUI
         }
 
         private void buttonActivateShikOShook_Click(object sender, EventArgs e)
+        {
+            activateShickOShook();
+        }
+
+        private void activateShickOShook()
         {
             User randomFriend = m_FacebookApp.FetchRandomFriend();
             try
