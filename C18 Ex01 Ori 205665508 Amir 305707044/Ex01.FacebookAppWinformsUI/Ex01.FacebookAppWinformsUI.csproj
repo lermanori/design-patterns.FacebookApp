@@ -117,6 +117,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Ex01.FacebookAppLogic.FacebookAppEngine.datasource" />
     <None Include="Properties\DataSources\Ex01.FacebookAppLogic.FacebookAppSettings.datasource" />
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.Group.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

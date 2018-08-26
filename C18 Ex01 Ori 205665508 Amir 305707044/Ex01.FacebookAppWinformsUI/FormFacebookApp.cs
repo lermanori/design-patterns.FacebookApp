@@ -134,7 +134,6 @@ namespace Ex01.FacebookAppWinformsUI
             m_ControlsToEnableOrDisable.Add(buttonCalcStats);
             m_ControlsToEnableOrDisable.Add(buttonAddNewAction);
             m_ControlsToEnableOrDisable.Add(pictureBoxFriendPhotoShickOShook);
-            m_ControlsToEnableOrDisable.Add(textBoxDescriptionOfGroup);
 
 
             disableLoggedInFeatures();
@@ -223,7 +222,6 @@ namespace Ex01.FacebookAppWinformsUI
         {
             pictureBoxProfilePicture.Image = null;
             listBoxGroups.Items.Clear();
-            textBoxDescriptionOfGroup.Text = string.Empty;
             textBoxUploadPost.Text = string.Empty;
             resetPictureButtons();
             pictureBoxFriendPhotoShickOShook.Image = null;
@@ -281,33 +279,34 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void populateListBoxGroups()
         {
-            listBoxGroups.Items.Clear();
-            listBoxGroups.DisplayMember = "Name";
-            try
-            {
-                FacebookObjectCollection<Group> userGroupCollection = m_FacebookApp.FetchUserGroups();
 
-                foreach (Group group in userGroupCollection)
-                {
-                    listBoxGroups.Items.Add(group);
-                }
+            groupBindingSource.DataSource = m_FacebookApp.CurrentUser.Groups;
+            //listBoxGroups.Items.Clear();
+            //listBoxGroups.DisplayMember = "Name";
+            //try
+            //{
+            //    FacebookObjectCollection<Group> userGroupCollection = m_FacebookApp.FetchUserGroups();
 
-                if (listBoxGroups.Items.Count == 0)
-                {
-                    listBoxGroups.Items.Add(k_EmptyListMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //    foreach (Group group in userGroupCollection)
+            //    {
+            //        listBoxGroups.Items.Add(group);
+            //    }
+
+            //    if (listBoxGroups.Items.Count == 0)
+            //    {
+            //        listBoxGroups.Items.Add(k_EmptyListMessage);
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
 
         private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
         {
             Group selectedGroup = listBoxGroups.SelectedItem as Group;
             string groupDescription = selectedGroup.Description;
-            textBoxDescriptionOfGroup.Text = groupDescription;
         }
 
         private void resetPictureButtons()
