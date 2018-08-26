@@ -303,12 +303,6 @@ namespace Ex01.FacebookAppWinformsUI
             //}
         }
 
-        private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Group selectedGroup = listBoxGroups.SelectedItem as Group;
-            string groupDescription = selectedGroup.Description;
-        }
-
         private void resetPictureButtons()
         {
             pictureBoxPostPhotoPreviewImage.Image = null;
@@ -524,6 +518,7 @@ namespace Ex01.FacebookAppWinformsUI
         private void activateShickOShook()
         {
             User randomFriend = m_FacebookApp.FetchRandomFriend();
+            userBindingSource.DataSource = randomFriend;
             try
             {
                 m_FacebookApp.ShickOShookFeature.GetFriendPhotoURLArray(randomFriend);
@@ -532,6 +527,7 @@ namespace Ex01.FacebookAppWinformsUI
                     pictureBoxFriendPhotoShickOShook.LoadAsync(m_FacebookApp.ShickOShookFeature.CurrentPhotoURL);
                     labelTellYourFriends.Text = string.Format(k_ShickOShookLabelText, m_FacebookApp.ShickOShookFeature.CurrentFriendFirstName);
                     labelTellYourFriends.Visible = true;
+                   
                 }
                 else
                 {

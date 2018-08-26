@@ -32,6 +32,12 @@
             System.Windows.Forms.Label descriptionLabel;
             System.Windows.Forms.Label linkLabel;
             System.Windows.Forms.Label nameLabel;
+            System.Windows.Forms.Label aboutLabel;
+            System.Windows.Forms.Label emailLabel;
+            System.Windows.Forms.Label nameLabel2;
+            System.Windows.Forms.Label religionLabel;
+            System.Windows.Forms.Label birthdayLabel;
+            System.Windows.Forms.Label quotesLabel;
             this.buttonLogin = new System.Windows.Forms.Button();
             this.listBoxGroups = new System.Windows.Forms.ListBox();
             this.groupBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -65,11 +71,9 @@
             this.tabPageStatsAndShook = new System.Windows.Forms.TabPage();
             this.labelGetStatistics = new System.Windows.Forms.Label();
             this.panelShickOShook = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.buttonShook = new System.Windows.Forms.Button();
             this.buttonShik = new System.Windows.Forms.Button();
             this.labelTellYourFriends = new System.Windows.Forms.Label();
-            this.pictureBoxFriendPhotoShickOShook = new System.Windows.Forms.PictureBox();
             this.buttonActivateShickOShook = new System.Windows.Forms.Button();
             this.labelShickOShookFeatureDescription = new System.Windows.Forms.Label();
             this.labelShickOShookTitle = new System.Windows.Forms.Label();
@@ -105,9 +109,23 @@
             this.listBoxTasks = new System.Windows.Forms.ListBox();
             this.listBoxActions = new System.Windows.Forms.ListBox();
             this.buttonAddNewAction = new System.Windows.Forms.Button();
+            this.pictureBoxFriendPhotoShickOShook = new System.Windows.Forms.PictureBox();
+            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.aboutTextBox = new System.Windows.Forms.TextBox();
+            this.emailLinkLabel = new System.Windows.Forms.LinkLabel();
+            this.nameLabel3 = new System.Windows.Forms.Label();
+            this.religionLabel1 = new System.Windows.Forms.Label();
+            this.birthdayLabel1 = new System.Windows.Forms.Label();
+            this.quotesLabel1 = new System.Windows.Forms.Label();
             descriptionLabel = new System.Windows.Forms.Label();
             linkLabel = new System.Windows.Forms.Label();
             nameLabel = new System.Windows.Forms.Label();
+            aboutLabel = new System.Windows.Forms.Label();
+            emailLabel = new System.Windows.Forms.Label();
+            nameLabel2 = new System.Windows.Forms.Label();
+            religionLabel = new System.Windows.Forms.Label();
+            birthdayLabel = new System.Windows.Forms.Label();
+            quotesLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.groupBindingSource)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPageBasic.SuspendLayout();
@@ -117,7 +135,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).BeginInit();
             this.tabPageStatsAndShook.SuspendLayout();
             this.panelShickOShook.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendPhotoShickOShook)).BeginInit();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMostActiveUser)).BeginInit();
             this.panel4.SuspendLayout();
@@ -126,6 +143,8 @@
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabPageAutomate.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendPhotoShickOShook)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // descriptionLabel
@@ -177,7 +196,6 @@
             this.listBoxGroups.Name = "listBoxGroups";
             this.listBoxGroups.Size = new System.Drawing.Size(168, 228);
             this.listBoxGroups.TabIndex = 2;
-            this.listBoxGroups.SelectedIndexChanged += new System.EventHandler(this.listBoxGroups_SelectedIndexChanged);
             // 
             // groupBindingSource
             // 
@@ -376,7 +394,7 @@
             this.tabControl.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1377, 636);
+            this.tabControl.Size = new System.Drawing.Size(1377, 664);
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl.TabIndex = 21;
             // 
@@ -514,6 +532,7 @@
             // 
             // tabPageStatsAndShook
             // 
+            this.tabPageStatsAndShook.AutoScroll = true;
             this.tabPageStatsAndShook.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(71)))), ((int)(((byte)(93)))));
             this.tabPageStatsAndShook.Controls.Add(this.labelGetStatistics);
             this.tabPageStatsAndShook.Controls.Add(this.panelShickOShook);
@@ -526,7 +545,7 @@
             this.tabPageStatsAndShook.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPageStatsAndShook.Name = "tabPageStatsAndShook";
             this.tabPageStatsAndShook.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.tabPageStatsAndShook.Size = new System.Drawing.Size(1369, 607);
+            this.tabPageStatsAndShook.Size = new System.Drawing.Size(1369, 635);
             this.tabPageStatsAndShook.TabIndex = 1;
             this.tabPageStatsAndShook.Text = "Get Stats And Rate Your Friends!";
             // 
@@ -535,7 +554,7 @@
             this.labelGetStatistics.AutoSize = true;
             this.labelGetStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.labelGetStatistics.ForeColor = System.Drawing.Color.White;
-            this.labelGetStatistics.Location = new System.Drawing.Point(652, 30);
+            this.labelGetStatistics.Location = new System.Drawing.Point(711, 26);
             this.labelGetStatistics.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGetStatistics.Name = "labelGetStatistics";
             this.labelGetStatistics.Size = new System.Drawing.Size(144, 36);
@@ -547,7 +566,18 @@
             this.panelShickOShook.BackColor = System.Drawing.Color.Transparent;
             this.panelShickOShook.BackgroundImage = global::Ex01.FacebookAppWinformsUI.Properties.Resources.ShickOShook;
             this.panelShickOShook.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.panelShickOShook.Controls.Add(this.label1);
+            this.panelShickOShook.Controls.Add(quotesLabel);
+            this.panelShickOShook.Controls.Add(this.quotesLabel1);
+            this.panelShickOShook.Controls.Add(birthdayLabel);
+            this.panelShickOShook.Controls.Add(this.birthdayLabel1);
+            this.panelShickOShook.Controls.Add(aboutLabel);
+            this.panelShickOShook.Controls.Add(this.aboutTextBox);
+            this.panelShickOShook.Controls.Add(emailLabel);
+            this.panelShickOShook.Controls.Add(this.emailLinkLabel);
+            this.panelShickOShook.Controls.Add(nameLabel2);
+            this.panelShickOShook.Controls.Add(this.nameLabel3);
+            this.panelShickOShook.Controls.Add(religionLabel);
+            this.panelShickOShook.Controls.Add(this.religionLabel1);
             this.panelShickOShook.Controls.Add(this.buttonShook);
             this.panelShickOShook.Controls.Add(this.buttonShik);
             this.panelShickOShook.Controls.Add(this.labelTellYourFriends);
@@ -555,29 +585,17 @@
             this.panelShickOShook.Controls.Add(this.buttonActivateShickOShook);
             this.panelShickOShook.Controls.Add(this.labelShickOShookFeatureDescription);
             this.panelShickOShook.Controls.Add(this.labelShickOShookTitle);
-            this.panelShickOShook.Location = new System.Drawing.Point(18, 26);
+            this.panelShickOShook.Location = new System.Drawing.Point(18, 6);
             this.panelShickOShook.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panelShickOShook.Name = "panelShickOShook";
-            this.panelShickOShook.Size = new System.Drawing.Size(602, 418);
+            this.panelShickOShook.Size = new System.Drawing.Size(593, 626);
             this.panelShickOShook.TabIndex = 22;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label1.Location = new System.Drawing.Point(14, 357);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(175, 34);
-            this.label1.TabIndex = 25;
-            this.label1.Text = "Clicking On Friend Picture \r\nWill Browse The Picture ";
-            this.label1.Visible = false;
             // 
             // buttonShook
             // 
             this.buttonShook.BackColor = System.Drawing.Color.Red;
             this.buttonShook.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.buttonShook.Location = new System.Drawing.Point(334, 289);
+            this.buttonShook.Location = new System.Drawing.Point(337, 396);
             this.buttonShook.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonShook.Name = "buttonShook";
             this.buttonShook.Size = new System.Drawing.Size(114, 54);
@@ -591,7 +609,7 @@
             this.buttonShik.BackColor = System.Drawing.Color.Green;
             this.buttonShik.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.buttonShik.ForeColor = System.Drawing.Color.White;
-            this.buttonShik.Location = new System.Drawing.Point(454, 289);
+            this.buttonShik.Location = new System.Drawing.Point(457, 396);
             this.buttonShik.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonShik.Name = "buttonShik";
             this.buttonShik.Size = new System.Drawing.Size(114, 54);
@@ -604,7 +622,7 @@
             // 
             this.labelTellYourFriends.AutoSize = true;
             this.labelTellYourFriends.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.labelTellYourFriends.Location = new System.Drawing.Point(370, 257);
+            this.labelTellYourFriends.Location = new System.Drawing.Point(373, 364);
             this.labelTellYourFriends.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelTellYourFriends.Name = "labelTellYourFriends";
             this.labelTellYourFriends.Size = new System.Drawing.Size(141, 17);
@@ -612,20 +630,9 @@
             this.labelTellYourFriends.Text = "labellTellYourFriends";
             this.labelTellYourFriends.Visible = false;
             // 
-            // pictureBoxFriendPhotoShickOShook
-            // 
-            this.pictureBoxFriendPhotoShickOShook.Location = new System.Drawing.Point(16, 141);
-            this.pictureBoxFriendPhotoShickOShook.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.pictureBoxFriendPhotoShickOShook.Name = "pictureBoxFriendPhotoShickOShook";
-            this.pictureBoxFriendPhotoShickOShook.Size = new System.Drawing.Size(176, 202);
-            this.pictureBoxFriendPhotoShickOShook.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBoxFriendPhotoShickOShook.TabIndex = 3;
-            this.pictureBoxFriendPhotoShickOShook.TabStop = false;
-            this.pictureBoxFriendPhotoShickOShook.Click += new System.EventHandler(this.pictureBoxFriendPhotoShickOShook_Click);
-            // 
             // buttonActivateShickOShook
             // 
-            this.buttonActivateShickOShook.Location = new System.Drawing.Point(22, 92);
+            this.buttonActivateShickOShook.Location = new System.Drawing.Point(7, 71);
             this.buttonActivateShickOShook.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonActivateShickOShook.Name = "buttonActivateShickOShook";
             this.buttonActivateShickOShook.Size = new System.Drawing.Size(150, 42);
@@ -639,20 +646,21 @@
             this.labelShickOShookFeatureDescription.AutoSize = true;
             this.labelShickOShookFeatureDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.labelShickOShookFeatureDescription.ForeColor = System.Drawing.Color.White;
-            this.labelShickOShookFeatureDescription.Location = new System.Drawing.Point(318, 58);
+            this.labelShickOShookFeatureDescription.Location = new System.Drawing.Point(383, 19);
             this.labelShickOShookFeatureDescription.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelShickOShookFeatureDescription.Name = "labelShickOShookFeatureDescription";
-            this.labelShickOShookFeatureDescription.Size = new System.Drawing.Size(252, 51);
+            this.labelShickOShookFeatureDescription.Size = new System.Drawing.Size(271, 102);
             this.labelShickOShookFeatureDescription.TabIndex = 1;
             this.labelShickOShookFeatureDescription.Text = "Get a random friend from your list,\r\nand rate their appearance!\r\nClicking will ma" +
-    "ke a post by your name!";
+    "ke a post by your name!\r\n\r\nIf you want to browse your friend pictures,\r\nJust cli" +
+    "ck on the picture and it will change!";
             // 
             // labelShickOShookTitle
             // 
             this.labelShickOShookTitle.AutoSize = true;
             this.labelShickOShookTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.labelShickOShookTitle.ForeColor = System.Drawing.Color.White;
-            this.labelShickOShookTitle.Location = new System.Drawing.Point(190, 15);
+            this.labelShickOShookTitle.Location = new System.Drawing.Point(3, 12);
             this.labelShickOShookTitle.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelShickOShookTitle.Name = "labelShickOShookTitle";
             this.labelShickOShookTitle.Size = new System.Drawing.Size(185, 29);
@@ -665,7 +673,7 @@
             this.panel5.Controls.Add(this.pictureBoxMostActiveUser);
             this.panel5.Controls.Add(this.labelMostActiveUser);
             this.panel5.Controls.Add(this.labelMostActive);
-            this.panel5.Location = new System.Drawing.Point(802, 346);
+            this.panel5.Location = new System.Drawing.Point(861, 342);
             this.panel5.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(240, 196);
@@ -728,7 +736,7 @@
             this.panel4.Controls.Add(this.labelMostFriends);
             this.panel4.Controls.Add(this.labelLeastFriends);
             this.panel4.Controls.Add(this.label6);
-            this.panel4.Location = new System.Drawing.Point(1058, 30);
+            this.panel4.Location = new System.Drawing.Point(1117, 26);
             this.panel4.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(240, 312);
@@ -846,7 +854,7 @@
             this.panel3.Controls.Add(this.labelLowestAgeRange);
             this.panel3.Controls.Add(this.labelMediumAgeRange);
             this.panel3.Controls.Add(this.labelAgeRange);
-            this.panel3.Location = new System.Drawing.Point(802, 30);
+            this.panel3.Location = new System.Drawing.Point(861, 26);
             this.panel3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(240, 310);
@@ -926,7 +934,7 @@
             // 
             // buttonCalcStats
             // 
-            this.buttonCalcStats.Location = new System.Drawing.Point(654, 69);
+            this.buttonCalcStats.Location = new System.Drawing.Point(713, 65);
             this.buttonCalcStats.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonCalcStats.Name = "buttonCalcStats";
             this.buttonCalcStats.Size = new System.Drawing.Size(142, 31);
@@ -941,7 +949,7 @@
             this.panel2.Controls.Add(this.labelWomen);
             this.panel2.Controls.Add(this.labelMen);
             this.panel2.Controls.Add(this.labelGender);
-            this.panel2.Location = new System.Drawing.Point(1058, 348);
+            this.panel2.Location = new System.Drawing.Point(1117, 344);
             this.panel2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(240, 196);
@@ -1005,7 +1013,7 @@
             this.tabPageAutomate.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.tabPageAutomate.Name = "tabPageAutomate";
             this.tabPageAutomate.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.tabPageAutomate.Size = new System.Drawing.Size(1318, 607);
+            this.tabPageAutomate.Size = new System.Drawing.Size(1369, 607);
             this.tabPageAutomate.TabIndex = 2;
             this.tabPageAutomate.Text = "Automate Facebook Tasks";
             // 
@@ -1044,12 +1052,148 @@
             this.buttonAddNewAction.UseVisualStyleBackColor = true;
             this.buttonAddNewAction.Click += new System.EventHandler(this.buttonAddNewCommand_Click);
             // 
+            // pictureBoxFriendPhotoShickOShook
+            // 
+            this.pictureBoxFriendPhotoShickOShook.Location = new System.Drawing.Point(8, 225);
+            this.pictureBoxFriendPhotoShickOShook.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.pictureBoxFriendPhotoShickOShook.Name = "pictureBoxFriendPhotoShickOShook";
+            this.pictureBoxFriendPhotoShickOShook.Size = new System.Drawing.Size(251, 215);
+            this.pictureBoxFriendPhotoShickOShook.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBoxFriendPhotoShickOShook.TabIndex = 3;
+            this.pictureBoxFriendPhotoShickOShook.TabStop = false;
+            this.pictureBoxFriendPhotoShickOShook.Click += new System.EventHandler(this.pictureBoxFriendPhotoShickOShook_Click);
+            // 
+            // userBindingSource
+            // 
+            this.userBindingSource.DataSource = typeof(FacebookWrapper.ObjectModel.User);
+            // 
+            // aboutLabel
+            // 
+            aboutLabel.AutoSize = true;
+            aboutLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            aboutLabel.Location = new System.Drawing.Point(3, 578);
+            aboutLabel.Name = "aboutLabel";
+            aboutLabel.Size = new System.Drawing.Size(63, 20);
+            aboutLabel.TabIndex = 24;
+            aboutLabel.Text = "About:";
+            // 
+            // aboutTextBox
+            // 
+            this.aboutTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "About", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, "[No About]"));
+            this.aboutTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.aboutTextBox.Location = new System.Drawing.Point(92, 578);
+            this.aboutTextBox.Multiline = true;
+            this.aboutTextBox.Name = "aboutTextBox";
+            this.aboutTextBox.Size = new System.Drawing.Size(498, 42);
+            this.aboutTextBox.TabIndex = 25;
+            // 
+            // emailLabel
+            // 
+            emailLabel.AutoSize = true;
+            emailLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            emailLabel.Location = new System.Drawing.Point(326, 512);
+            emailLabel.Name = "emailLabel";
+            emailLabel.Size = new System.Drawing.Size(62, 20);
+            emailLabel.TabIndex = 26;
+            emailLabel.Text = "Email:";
+            // 
+            // emailLinkLabel
+            // 
+            this.emailLinkLabel.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Email", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, "[No Email]"));
+            this.emailLinkLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.emailLinkLabel.Location = new System.Drawing.Point(417, 514);
+            this.emailLinkLabel.Name = "emailLinkLabel";
+            this.emailLinkLabel.Size = new System.Drawing.Size(126, 20);
+            this.emailLinkLabel.TabIndex = 27;
+            this.emailLinkLabel.TabStop = true;
+            this.emailLinkLabel.Text = "linkLabel1";
+            // 
+            // nameLabel2
+            // 
+            nameLabel2.AutoSize = true;
+            nameLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            nameLabel2.Location = new System.Drawing.Point(4, 483);
+            nameLabel2.Name = "nameLabel2";
+            nameLabel2.Size = new System.Drawing.Size(63, 20);
+            nameLabel2.TabIndex = 30;
+            nameLabel2.Text = "Name:";
+            // 
+            // nameLabel3
+            // 
+            this.nameLabel3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Name", true));
+            this.nameLabel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.nameLabel3.Location = new System.Drawing.Point(89, 483);
+            this.nameLabel3.Name = "nameLabel3";
+            this.nameLabel3.Size = new System.Drawing.Size(231, 33);
+            this.nameLabel3.TabIndex = 31;
+            this.nameLabel3.Text = "label1";
+            // 
+            // religionLabel
+            // 
+            religionLabel.AutoSize = true;
+            religionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            religionLabel.Location = new System.Drawing.Point(4, 516);
+            religionLabel.Name = "religionLabel";
+            religionLabel.Size = new System.Drawing.Size(83, 20);
+            religionLabel.TabIndex = 32;
+            religionLabel.Text = "Religion:";
+            // 
+            // religionLabel1
+            // 
+            this.religionLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Religion", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, "[No Religion]"));
+            this.religionLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.religionLabel1.Location = new System.Drawing.Point(88, 516);
+            this.religionLabel1.Name = "religionLabel1";
+            this.religionLabel1.Size = new System.Drawing.Size(139, 30);
+            this.religionLabel1.TabIndex = 33;
+            this.religionLabel1.Text = "label1";
+            // 
+            // birthdayLabel
+            // 
+            birthdayLabel.AutoSize = true;
+            birthdayLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            birthdayLabel.Location = new System.Drawing.Point(326, 483);
+            birthdayLabel.Name = "birthdayLabel";
+            birthdayLabel.Size = new System.Drawing.Size(85, 20);
+            birthdayLabel.TabIndex = 33;
+            birthdayLabel.Text = "Birthday:";
+            // 
+            // birthdayLabel1
+            // 
+            this.birthdayLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Birthday", true, System.Windows.Forms.DataSourceUpdateMode.OnValidation, "[No Birthday]"));
+            this.birthdayLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.birthdayLabel1.Location = new System.Drawing.Point(417, 483);
+            this.birthdayLabel1.Name = "birthdayLabel1";
+            this.birthdayLabel1.Size = new System.Drawing.Size(176, 26);
+            this.birthdayLabel1.TabIndex = 34;
+            this.birthdayLabel1.Text = "label1";
+            // 
+            // quotesLabel
+            // 
+            quotesLabel.AutoSize = true;
+            quotesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            quotesLabel.Location = new System.Drawing.Point(4, 546);
+            quotesLabel.Name = "quotesLabel";
+            quotesLabel.Size = new System.Drawing.Size(75, 20);
+            quotesLabel.TabIndex = 34;
+            quotesLabel.Text = "Quotes:";
+            // 
+            // quotesLabel1
+            // 
+            this.quotesLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.userBindingSource, "Quotes", true));
+            this.quotesLabel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.quotesLabel1.Location = new System.Drawing.Point(89, 546);
+            this.quotesLabel1.Name = "quotesLabel1";
+            this.quotesLabel1.Size = new System.Drawing.Size(501, 23);
+            this.quotesLabel1.TabIndex = 35;
+            this.quotesLabel1.Text = "label1";
+            // 
             // FormFacebookApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1382, 638);
+            this.ClientSize = new System.Drawing.Size(1382, 670);
             this.Controls.Add(this.tabControl);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -1070,7 +1214,6 @@
             this.tabPageStatsAndShook.PerformLayout();
             this.panelShickOShook.ResumeLayout(false);
             this.panelShickOShook.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendPhotoShickOShook)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxMostActiveUser)).EndInit();
@@ -1083,6 +1226,8 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tabPageAutomate.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendPhotoShickOShook)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1152,19 +1297,25 @@
         private System.Windows.Forms.Label labelShickOShookTitle;
         private System.Windows.Forms.Button buttonActivateShickOShook;
         private System.Windows.Forms.Label labelTellYourFriends;
-        private System.Windows.Forms.PictureBox pictureBoxFriendPhotoShickOShook;
         private System.Windows.Forms.Button buttonShook;
         private System.Windows.Forms.Button buttonShik;
         private System.Windows.Forms.Label labelUploadLink;
         private System.Windows.Forms.Label labelUploadPhoto;
         private System.Windows.Forms.Label labelGetStatistics;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.BindingSource groupBindingSource;
         private System.Windows.Forms.TextBox descriptionTextBox;
         private System.Windows.Forms.PictureBox imageSquarePictureBox;
         private System.Windows.Forms.LinkLabel linkLinkLabel;
         private System.Windows.Forms.Label nameLabel1;
+        private System.Windows.Forms.TextBox aboutTextBox;
+        private System.Windows.Forms.BindingSource userBindingSource;
+        private System.Windows.Forms.LinkLabel emailLinkLabel;
+        private System.Windows.Forms.Label nameLabel3;
+        private System.Windows.Forms.Label religionLabel1;
+        private System.Windows.Forms.PictureBox pictureBoxFriendPhotoShickOShook;
+        private System.Windows.Forms.Label birthdayLabel1;
+        private System.Windows.Forms.Label quotesLabel1;
     }
 }
 
