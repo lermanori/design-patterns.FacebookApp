@@ -10,6 +10,7 @@ namespace Ex01.FacebookAppWinformsUI
     public class FormPostLinkProxy : IProxyForm, IfbAutomatable
     {
         private FormPostLink m_FormPostLink = null;
+        private object m_PostLinkLock = new object();
 
         private FormPostLinkProxy()
         {
@@ -19,7 +20,13 @@ namespace Ex01.FacebookAppWinformsUI
         {
             if (m_FormPostLink == null)
             {
-                m_FormPostLink = new FormPostLink();
+                lock (m_PostLinkLock)
+                {
+                    if (m_FormPostLink == null)
+                    {
+                        m_FormPostLink = new FormPostLink();
+                    }
+                }
             }
         }
 

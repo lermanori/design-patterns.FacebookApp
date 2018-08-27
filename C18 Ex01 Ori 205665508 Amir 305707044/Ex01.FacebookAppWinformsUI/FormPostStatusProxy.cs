@@ -11,6 +11,8 @@ namespace Ex01.FacebookAppWinformsUI
     {
         private FormPostStatus m_formPostStatus = null;
 
+        private object m_PostStatusLock = new object();
+
         private FormPostStatusProxy()
         {
         }
@@ -19,7 +21,13 @@ namespace Ex01.FacebookAppWinformsUI
         {
             if (m_formPostStatus == null)
             {
-                m_formPostStatus = new FormPostStatus();
+                lock (m_PostStatusLock)
+                {
+                    if (m_formPostStatus == null)
+                    {
+                        m_formPostStatus = new FormPostStatus();
+                    }
+                }
             }
         }
 

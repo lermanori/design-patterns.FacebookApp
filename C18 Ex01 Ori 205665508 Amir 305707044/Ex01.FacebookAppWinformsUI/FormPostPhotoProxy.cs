@@ -10,6 +10,7 @@ namespace Ex01.FacebookAppWinformsUI
     public class FormPostPhotoProxy : IProxyForm, IfbAutomatable
     {
         private FormPostPhoto m_FormPostPhoto = null;
+        private object m_PostPhotoLock = new object();
 
         private FormPostPhotoProxy()
         {
@@ -19,7 +20,13 @@ namespace Ex01.FacebookAppWinformsUI
         {
             if (m_FormPostPhoto == null)
             {
-                m_FormPostPhoto = new FormPostPhoto();
+                lock (m_PostPhotoLock)
+                {
+                    if (m_FormPostPhoto == null)
+                    {
+                        m_FormPostPhoto = new FormPostPhoto();
+                    }
+                }
             }
         }
 

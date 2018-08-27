@@ -10,6 +10,8 @@ namespace Ex01.FacebookAppLogic
     {
         public bool Invoked { get; private set; }
 
+        private readonly object r_TimedComponentLock = new object();
+
         public FbEventArgs FbEventArgs { get; set; }
 
         public Timer Timer { get; set; }
@@ -42,18 +44,24 @@ namespace Ex01.FacebookAppLogic
         {
             if (!Invoked)
             {
-                Invoked = true;
-                try
+                lock (r_TimedComponentLock)
                 {
-                    ActionObject.RaiseEvent(FbEventArgs);
-                }
-                catch
-                {
-                    ActionObject.RaiseErrorEvent();
-                }
+                    if (!Invoked)
+                    {
+                        Invoked = true;
+                        try
+                        {
+                            ActionObject.RaiseEvent(FbEventArgs);
+                        }
+                        catch
+                        {
+                            ActionObject.RaiseErrorEvent();
+                        }
 
-                Timer.Enabled = false;
-                Timer.Elapsed -= OnElapsed;
+                        Timer.Enabled = false;
+                        Timer.Elapsed -= OnElapsed;
+                    }
+                }
             }
         }
 

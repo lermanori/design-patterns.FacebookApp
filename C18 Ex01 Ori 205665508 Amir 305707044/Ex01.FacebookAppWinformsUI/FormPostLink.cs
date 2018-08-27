@@ -98,11 +98,17 @@ namespace Ex01.FacebookAppWinformsUI
         {
             if (m_FacebookSettings.ComboBoxWebBrowserItems.Count != 0)
             {
-                foreach (string s in m_FacebookSettings.ComboBoxWebBrowserItems)
+                foreach (string url in m_FacebookSettings.ComboBoxWebBrowserItems)
                 {
-                    if (!comboBoxWebBrowser.Items.Contains(s))
+                    if (!comboBoxWebBrowser.Items.Contains(url))
                     {
-                        comboBoxWebBrowser.Items.Add(s);
+                        lock (FormFacebookApp.sr_URLComboBoxLock)
+                        {
+                            if (!comboBoxWebBrowser.Items.Contains(url))
+                            {
+                                comboBoxWebBrowser.Items.Add(url);
+                            }
+                        }
                     }
                 }
             }

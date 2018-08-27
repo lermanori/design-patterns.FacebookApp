@@ -18,6 +18,10 @@ namespace Ex01.FacebookAppLogic
 
         public List<string> ComboBoxWebBrowserItems { get; set; }
 
+        private static FacebookAppSettings s_Instance = null;
+
+        private static object s_Lock = new object();
+
         private FacebookAppSettings()
         {
             RememberUser = false;
@@ -27,17 +31,25 @@ namespace Ex01.FacebookAppLogic
 
         public static FacebookAppSettings LoadFromFile()
         {
-            FacebookAppSettings settings;
-            try
+            if (s_Instance == null)
             {
-                settings = FileUtils.LoadFromFile<FacebookAppSettings>(r_SettingsFilePath);
-            }
-            catch
-            {
-                settings = new FacebookAppSettings();
+                lock (s_Lock)
+                {
+                    if (s_Instance == null)
+                    {
+                        try
+                        {
+                            s_Instance = FileUtils.LoadFromFile<FacebookAppSettings>(r_SettingsFilePath);
+                        }
+                        catch
+                        {
+                            s_Instance = new FacebookAppSettings();
+                        }
+                    }
+                }
             }
 
-            return settings;
+            return s_Instance;
         }
 
         public void SaveToFile()
@@ -48,6 +60,7 @@ namespace Ex01.FacebookAppLogic
         public void DeleteFile()
         {
             FileUtils.DeleteFile(r_SettingsFilePath);
+            s_Instance = null;
         }
     }
 }

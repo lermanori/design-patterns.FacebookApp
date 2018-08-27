@@ -43,6 +43,7 @@ namespace Ex01.FacebookAppWinformsUI
 
         private FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
         private FacebookAppSettings m_LastSettings = null;
+        public static readonly object sr_URLComboBoxLock = new object();
 
         private List<Control> m_ControlsToEnableOrDisable = new List<Control>();
         private string m_PhotoPath = string.Empty;
@@ -95,11 +96,17 @@ namespace Ex01.FacebookAppWinformsUI
             pictureBoxProfilePicture.LoadAsync(m_FacebookApp.UserProfilePictureURL);
             if (m_LastSettings.ComboBoxWebBrowserItems.Count != 0)
             {
-                foreach (string s in m_LastSettings.ComboBoxWebBrowserItems)
+                foreach (string url in m_LastSettings.ComboBoxWebBrowserItems)
                 {
-                    if (!comboBoxWebBrowser.Items.Contains(s))
+                    if (!comboBoxWebBrowser.Items.Contains(url))
                     {
-                        comboBoxWebBrowser.Items.Add(s);
+                        lock (sr_URLComboBoxLock)
+                        {
+                            if (!comboBoxWebBrowser.Items.Contains(url))
+                            {
+                                comboBoxWebBrowser.Items.Add(url);
+                            }
+                        }
                     }
                 }
             }
@@ -148,11 +155,17 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
                 m_LastSettings.LastAccessToken = m_FacebookApp.GetAccessToken();
-                foreach (string s in comboBoxWebBrowser.Items)
+                foreach (string url in comboBoxWebBrowser.Items)
                 {
-                    if (!m_LastSettings.ComboBoxWebBrowserItems.Contains(s))
+                    if (!m_LastSettings.ComboBoxWebBrowserItems.Contains(url))
                     {
-                        m_LastSettings.ComboBoxWebBrowserItems.Add(s);
+                        lock (sr_URLComboBoxLock)
+                        {
+                            if (!m_LastSettings.ComboBoxWebBrowserItems.Contains(url))
+                            {
+                                m_LastSettings.ComboBoxWebBrowserItems.Add(url);
+                            }
+                        }
                     }
                 }
 
@@ -216,7 +229,6 @@ namespace Ex01.FacebookAppWinformsUI
         private void resetUI()
         {
             pictureBoxProfilePicture.Image = null;
-            listBoxGroups.Items.Clear();
             textBoxUploadPost.Text = string.Empty;
             resetPictureButtons();
             pictureBoxFriendPhotoShickOShook.Image = null;
@@ -375,7 +387,16 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 webBrowser.Url = uriResult;
                 comboBoxWebBrowser.Text = uriResult.ToString();
-                comboBoxWebBrowser.Items.Add(comboBoxWebBrowser.Text);
+                if (!comboBoxWebBrowser.Items.Contains(comboBoxWebBrowser.Text))
+                {
+                    lock (sr_URLComboBoxLock)
+                    {
+                        if (!comboBoxWebBrowser.Items.Contains(comboBoxWebBrowser.Text))
+                        {
+                            comboBoxWebBrowser.Items.Add(comboBoxWebBrowser.Text);
+                        }
+                    }
+                }
             }
             else
             {
