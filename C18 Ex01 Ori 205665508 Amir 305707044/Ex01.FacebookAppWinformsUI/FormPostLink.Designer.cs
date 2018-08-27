@@ -39,10 +39,10 @@
             // 
             // buttonSubmitUrl
             // 
-            this.buttonSubmitUrl.Location = new System.Drawing.Point(1122, 133);
-            this.buttonSubmitUrl.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSubmitUrl.Location = new System.Drawing.Point(561, 69);
+            this.buttonSubmitUrl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonSubmitUrl.Name = "buttonSubmitUrl";
-            this.buttonSubmitUrl.Size = new System.Drawing.Size(443, 39);
+            this.buttonSubmitUrl.Size = new System.Drawing.Size(222, 25);
             this.buttonSubmitUrl.TabIndex = 26;
             this.buttonSubmitUrl.Text = "Submit URL";
             this.buttonSubmitUrl.UseVisualStyleBackColor = true;
@@ -57,10 +57,10 @@
             "http://www.youtube.com/",
             "http://www.giphy.com/",
             "http://www.soundcloud.com/"});
-            this.comboBoxWebBrowser.Location = new System.Drawing.Point(74, 133);
-            this.comboBoxWebBrowser.Margin = new System.Windows.Forms.Padding(4);
+            this.comboBoxWebBrowser.Location = new System.Drawing.Point(37, 69);
+            this.comboBoxWebBrowser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBoxWebBrowser.Name = "comboBoxWebBrowser";
-            this.comboBoxWebBrowser.Size = new System.Drawing.Size(1036, 39);
+            this.comboBoxWebBrowser.Size = new System.Drawing.Size(520, 24);
             this.comboBoxWebBrowser.TabIndex = 25;
             this.comboBoxWebBrowser.Text = "choose from list or enter your own";
             this.comboBoxWebBrowser.SelectedIndexChanged += new System.EventHandler(this.comboBoxWebBrowser_SelectedIndexChanged);
@@ -68,11 +68,11 @@
             // 
             // webBrowser
             // 
-            this.webBrowser.Location = new System.Drawing.Point(74, 192);
-            this.webBrowser.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-            this.webBrowser.MinimumSize = new System.Drawing.Size(40, 38);
+            this.webBrowser.Location = new System.Drawing.Point(37, 99);
+            this.webBrowser.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser.Name = "webBrowser";
-            this.webBrowser.Size = new System.Drawing.Size(1491, 511);
+            this.webBrowser.Size = new System.Drawing.Size(746, 264);
             this.webBrowser.TabIndex = 24;
             this.webBrowser.Url = new System.Uri("", System.UriKind.Relative);
             // 
@@ -81,19 +81,19 @@
             this.labelUploadPhoto.AutoSize = true;
             this.labelUploadPhoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.labelUploadPhoto.ForeColor = System.Drawing.Color.Black;
-            this.labelUploadPhoto.Location = new System.Drawing.Point(420, 30);
-            this.labelUploadPhoto.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.labelUploadPhoto.Location = new System.Drawing.Point(210, 15);
+            this.labelUploadPhoto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelUploadPhoto.Name = "labelUploadPhoto";
-            this.labelUploadPhoto.Size = new System.Drawing.Size(676, 39);
+            this.labelUploadPhoto.Size = new System.Drawing.Size(353, 20);
             this.labelUploadPhoto.TabIndex = 28;
             this.labelUploadPhoto.Text = "Choose A Link and choose time and date";
             // 
             // buttonSubmit
             // 
-            this.buttonSubmit.Location = new System.Drawing.Point(74, 800);
-            this.buttonSubmit.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonSubmit.Location = new System.Drawing.Point(37, 413);
+            this.buttonSubmit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonSubmit.Name = "buttonSubmit";
-            this.buttonSubmit.Size = new System.Drawing.Size(1491, 97);
+            this.buttonSubmit.Size = new System.Drawing.Size(746, 50);
             this.buttonSubmit.TabIndex = 32;
             this.buttonSubmit.Text = "submit";
             this.buttonSubmit.UseVisualStyleBackColor = true;
@@ -104,27 +104,27 @@
             this.dateTimePickerPost.Cursor = System.Windows.Forms.Cursors.No;
             this.dateTimePickerPost.CustomFormat = "dd/MM/yyyy HH:mm";
             this.dateTimePickerPost.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePickerPost.Location = new System.Drawing.Point(798, 732);
-            this.dateTimePickerPost.Margin = new System.Windows.Forms.Padding(4);
+            this.dateTimePickerPost.Location = new System.Drawing.Point(399, 378);
+            this.dateTimePickerPost.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dateTimePickerPost.Name = "dateTimePickerPost";
-            this.dateTimePickerPost.Size = new System.Drawing.Size(767, 38);
+            this.dateTimePickerPost.Size = new System.Drawing.Size(386, 22);
             this.dateTimePickerPost.TabIndex = 31;
             // 
             // textBoxTitle
             // 
-            this.textBoxTitle.Location = new System.Drawing.Point(74, 732);
-            this.textBoxTitle.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
+            this.textBoxTitle.Location = new System.Drawing.Point(37, 378);
+            this.textBoxTitle.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.textBoxTitle.Name = "textBoxTitle";
-            this.textBoxTitle.Size = new System.Drawing.Size(692, 38);
+            this.textBoxTitle.Size = new System.Drawing.Size(348, 22);
             this.textBoxTitle.TabIndex = 30;
             this.textBoxTitle.Text = "Enter Title";
             this.textBoxTitle.Click += new System.EventHandler(this.textBoxTitle_Click);
             // 
             // FormPostLink
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1642, 953);
+            this.ClientSize = new System.Drawing.Size(821, 492);
             this.Controls.Add(this.buttonSubmit);
             this.Controls.Add(this.dateTimePickerPost);
             this.Controls.Add(this.textBoxTitle);
@@ -132,6 +132,7 @@
             this.Controls.Add(this.buttonSubmitUrl);
             this.Controls.Add(this.comboBoxWebBrowser);
             this.Controls.Add(this.webBrowser);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormPostLink";
             this.Text = "Post Link";
             this.Load += new System.EventHandler(this.FormPostLink_Load);
