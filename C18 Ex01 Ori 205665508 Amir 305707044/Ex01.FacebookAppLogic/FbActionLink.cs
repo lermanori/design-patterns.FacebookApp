@@ -5,10 +5,11 @@ using System.Text;
 
 namespace Ex01.FacebookAppLogic
 {
-    class FbActionLink : FbAction
+    public class FbActionLink : FbAction
     {
-
-        private FbActionLink() { }
+        private FbActionLink()
+        {
+        }
 
         public static FbActionLink Create(FacebookAppEngine i_Engine)
         {
@@ -22,7 +23,7 @@ namespace Ex01.FacebookAppLogic
 
         private void postLinkAction(object sender, FbEventArgs e)
         {
-            m_Engine.PostChosenLink(e.link,e.StatusBody);
+            m_Engine.PostChosenLink(e.Link, e.StatusBody);
         }
 
         public override string GetName()

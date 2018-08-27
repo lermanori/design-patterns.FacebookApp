@@ -8,22 +8,22 @@ namespace Ex01.FacebookAppWinformsUI
 {
     public static class FormPostProxyFactory
     {
-
-        public static IProxyForm Create(TasksType i_taskToAutomate)
+        public static IProxyForm Create(eTasksType i_TaskToAutomate)
         {
             IProxyForm res = null;
-            switch (i_taskToAutomate)
+            switch (i_TaskToAutomate)
             {
-                case TasksType.status:
+                case eTasksType.Status:
                     res = FormPostStatusProxy.Create();
                     break;
-                case TasksType.photo:
+                case eTasksType.Photo:
                     res = FormPostPhotoProxy.Create();
                     break;
-                case TasksType.link:
+                case eTasksType.Link:
                     res = FormPostLinkProxy.Create();
                     break;
             }
+
             return res;
         }
     }

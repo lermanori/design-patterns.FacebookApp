@@ -77,10 +77,10 @@ namespace Ex01.FacebookAppLogic
                     friend.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
                     try
                     {
-                    countMenWomen(friend);
-                    calculateAgeRange(friend, currentDatetime);
-                    calculateMostSocialized(friend);
-                    calculateMostActiveFriend(friend);
+                        countMenWomen(friend);
+                        calculateAgeRange(friend, currentDatetime);
+                        calculateMostSocialized(friend);
+                        calculateMostActiveFriend(friend);
                     }
                     catch (Exception ex)
                     {
@@ -90,7 +90,7 @@ namespace Ex01.FacebookAppLogic
 
                 calculateAllRatios();
             }
-            else if(friendList.Count == 0 )
+            else if (friendList.Count == 0)
             {
                 throw new Exception(k_EmptyListMessage);
             }
@@ -99,7 +99,7 @@ namespace Ex01.FacebookAppLogic
                 throw new Exception(k_NullListMessage);
             }
         }
-        
+
         private void calculateMostActiveFriend(User i_Friend)
         {
             if (i_Friend.Statuses.Count > MostActiveUser.Statuses.Count)
@@ -108,16 +108,16 @@ namespace Ex01.FacebookAppLogic
             }
         }
 
-        private void calculateMostSocialized(User friend)
+        private void calculateMostSocialized(User i_Friend)
         {
-            if (friend.Friends.Count > MostFriendsUser.Friends.Count)
+            if (i_Friend.Friends.Count > MostFriendsUser.Friends.Count)
             {
-                MostFriendsUser = friend;
+                MostFriendsUser = i_Friend;
             }
 
-            if (friend.Friends.Count < LeastFriendsUser.Friends.Count)
+            if (i_Friend.Friends.Count < LeastFriendsUser.Friends.Count)
             {
-                LeastFriendsUser = friend;
+                LeastFriendsUser = i_Friend;
             }
         }
 

@@ -218,7 +218,7 @@
             // descriptionLabel
             // 
             descriptionLabel.AutoSize = true;
-            descriptionLabel.Location = new System.Drawing.Point(3, 65);
+            descriptionLabel.Location = new System.Drawing.Point(3, 62);
             descriptionLabel.Name = "descriptionLabel";
             descriptionLabel.Size = new System.Drawing.Size(83, 17);
             descriptionLabel.TabIndex = 0;

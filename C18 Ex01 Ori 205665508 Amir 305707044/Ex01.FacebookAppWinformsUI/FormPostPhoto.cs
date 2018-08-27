@@ -10,7 +10,7 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public partial class FormPostPhoto : Form ,IfbAutomatable,IProxyForm
+    public partial class FormPostPhoto : Form, IfbAutomatable, IProxyForm
     {
         public const string k_EnterTitleMsg = "Enter Title";
 
@@ -24,6 +24,7 @@ namespace Ex01.FacebookAppWinformsUI
         {
             InitializeComponent();
         }
+
         private void buttonSubmit_Click(object sender, EventArgs e)
         {
             TimeToExecute = dateTimePickerPost.Value;
@@ -40,6 +41,7 @@ namespace Ex01.FacebookAppWinformsUI
             textBoxTitle.Text = k_EnterTitleMsg;
             buttonSubmit.Enabled = false;
         }
+
         private void buttonChoosePhoto_Click(object sender, EventArgs e)
         {
             chooseAndLoadPhoto();
@@ -51,8 +53,6 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 PathToImage = openFileDialog1.FileName;
             }
-
-            //insert here checking for image file
 
             if (!string.IsNullOrEmpty(PathToImage))
             {
@@ -66,14 +66,15 @@ namespace Ex01.FacebookAppWinformsUI
             textBoxTitle.Text = string.Empty;
         }
 
-        public FbEventArgs collectData()
+        public FbEventArgs CollectData()
         {
-            FbEventArgs result = new FbEventArgs { StatusBody = StatusBody, time = TimeToExecute, PathToImage = PathToImage };
+            FbEventArgs result = new FbEventArgs { StatusBody = StatusBody, Time = TimeToExecute, PathToImage = PathToImage };
             return result;
         }
-        public TasksType GetTaskType()
+
+        public eTasksType GetTaskType()
         {
-            return TasksType.photo;
+            return eTasksType.Photo;
         }
 
         private void checkTitleAndReset()
@@ -86,8 +87,5 @@ namespace Ex01.FacebookAppWinformsUI
 
             resetPictureButtons();
         }
-
-
     }
 }
-

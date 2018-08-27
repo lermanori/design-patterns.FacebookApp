@@ -12,18 +12,19 @@ namespace Ex01.FacebookAppLogic
         public abstract void LoadAction();
 
         public event EventHandler<FbEventArgs> DoWhenFinished;
+
         public event EventHandler DoWhenFinishedError;
 
-        public void raiseEvent(FbEventArgs e)
+        public void RaiseEvent(FbEventArgs e)
         {
             DoWhenFinished?.Invoke(this, e);
         }
-        public void raiseErrorEvent()
-        {
-            DoWhenFinishedError?.Invoke(this,new EventArgs());
-        }
-        public abstract string GetName();
 
-        
+        public void RaiseErrorEvent()
+        {
+            DoWhenFinishedError?.Invoke(this, new EventArgs());
+        }
+
+        public abstract string GetName();
     }
 }

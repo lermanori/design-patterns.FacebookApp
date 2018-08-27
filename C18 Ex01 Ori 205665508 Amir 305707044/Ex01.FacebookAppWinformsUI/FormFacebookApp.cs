@@ -43,8 +43,6 @@ namespace Ex01.FacebookAppWinformsUI
 
         private FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
         private FacebookAppSettings m_LastSettings = null;
-        //private FriendsStatistics m_StatsAboutMyFriends = new FriendsStatistics();
-        //private ShickOShook m_ShickOShook = new ShickOShook();
 
         private List<Control> m_ControlsToEnableOrDisable = new List<Control>();
         private string m_PhotoPath = string.Empty;
@@ -79,7 +77,7 @@ namespace Ex01.FacebookAppWinformsUI
                 }
                 catch (Exception ex)
                 {
-                    FacebookAppSettings.DeleteFile();
+                    m_LastSettings.DeleteFile();
                     MessageBox.Show(string.Format(k_FailedAutoConnectMessage, Environment.NewLine, ex.Message));
                 }
             }
@@ -135,7 +133,6 @@ namespace Ex01.FacebookAppWinformsUI
             m_ControlsToEnableOrDisable.Add(buttonAddNewAction);
             m_ControlsToEnableOrDisable.Add(pictureBoxFriendPhotoShickOShook);
 
-
             disableLoggedInFeatures();
         }
 
@@ -183,7 +180,6 @@ namespace Ex01.FacebookAppWinformsUI
             if (m_FacebookApp.IsLoggedIn())
             {
                 enableLoggedInFeatures();
-
             }
         }
 
@@ -215,7 +211,6 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 ctr.Enabled = false;
             }
-
         }
 
         private void resetUI()
@@ -279,28 +274,7 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void populateListBoxGroups()
         {
-
             groupBindingSource.DataSource = m_FacebookApp.CurrentUser.Groups;
-            //listBoxGroups.Items.Clear();
-            //listBoxGroups.DisplayMember = "Name";
-            //try
-            //{
-            //    FacebookObjectCollection<Group> userGroupCollection = m_FacebookApp.FetchUserGroups();
-
-            //    foreach (Group group in userGroupCollection)
-            //    {
-            //        listBoxGroups.Items.Add(group);
-            //    }
-
-            //    if (listBoxGroups.Items.Count == 0)
-            //    {
-            //        listBoxGroups.Items.Add(k_EmptyListMessage);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
         }
 
         private void resetPictureButtons()
@@ -427,9 +401,9 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void populateListboxWithTimeableActions()
         {
-            listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.status));
-            listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.photo));
-            listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.link));
+            listBoxActions.Items.Add(FormPostProxyFactory.Create(eTasksType.Status));
+            listBoxActions.Items.Add(FormPostProxyFactory.Create(eTasksType.Photo));
+            listBoxActions.Items.Add(FormPostProxyFactory.Create(eTasksType.Link));
         }
 
         private void buttonAddNewCommand_Click(object sender, EventArgs e)
@@ -446,11 +420,10 @@ namespace Ex01.FacebookAppWinformsUI
                 if (dialogResult == DialogResult.OK)
                 {
                     IfbAutomatable fbTaskToAutomate = CommandForm as IfbAutomatable;
-                    FbEventArgs args = (fbTaskToAutomate)?.collectData();
-                    TasksType taskType = (TasksType)(fbTaskToAutomate)?.GetTaskType();
-                    //TimedComponent timedComponent = TimedComponent.Create(args, m_FacebookApp, taskType); ---> Needs To Be Erased, moved it into the facade
+                    FbEventArgs args = fbTaskToAutomate?.CollectData();
+                    eTasksType taskType = (eTasksType)fbTaskToAutomate?.GetTaskType();
                     TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
-                    timedComponent.ActionObject.DoWhenFinishedError += (i_object, i_e) => MessageBox.Show("there was a probloem during invoking the action");
+                    timedComponent.ActionObject.DoWhenFinishedError += (i_object, i_e) => MessageBox.Show(string.Format("there was a probloem during invoking the {0} action", timedComponent.ActionObject.GetName()));
                     timedComponent.Timer.Elapsed += Timer_Elapsed;
 
                     listBoxTasks.Items.Add(timedComponent);
@@ -472,6 +445,7 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 listBoxTasks.Items[i] = listBoxTasks.Items[i];
             }
+
             listBoxTasks.ResumeLayout();
         }
 
@@ -527,7 +501,6 @@ namespace Ex01.FacebookAppWinformsUI
                     pictureBoxFriendPhotoShickOShook.LoadAsync(m_FacebookApp.ShickOShookFeature.CurrentPhotoURL);
                     labelTellYourFriends.Text = string.Format(k_ShickOShookLabelText, m_FacebookApp.ShickOShookFeature.CurrentFriendFirstName);
                     labelTellYourFriends.Visible = true;
-                   
                 }
                 else
                 {
@@ -571,7 +544,5 @@ namespace Ex01.FacebookAppWinformsUI
                 MessageBox.Show(ex.Message);
             }
         }
-
-
     }
 }

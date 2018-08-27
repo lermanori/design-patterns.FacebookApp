@@ -10,23 +10,25 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public partial class FormPostLink : Form ,IfbAutomatable,IProxyForm
+    public partial class FormPostLink : Form, IfbAutomatable, IProxyForm
     {
         public const string k_EnterTitleMsg = "Enter Title";
-        public const string k_httpOpening = @"http://www.";
+        public const string k_HttpOpening = @"http://www.";
         private readonly string r_EnterValidURLMessage = "Insert a valid http format url." + Environment.NewLine + @"example:http://www.google.com";
 
         public string LinkUrl { get; set; }
+
         public DateTime TimeToExecute { get; set; }
+
         public string StatusBody { get; set; }
 
-        private FacebookAppSettings m_FacebookSettings = FacebookAppSettings.LoadFromFile(); 
-
+        private FacebookAppSettings m_FacebookSettings = FacebookAppSettings.LoadFromFile();
 
         public FormPostLink()
         {
             InitializeComponent();
         }
+
         private void buttonSubmit_Click(object sender, EventArgs e)
         {
             TimeToExecute = dateTimePickerPost.Value;
@@ -36,10 +38,12 @@ namespace Ex01.FacebookAppWinformsUI
             this.DialogResult = DialogResult.OK;
             Close();
         }
+
         private void textBoxTitle_Click(object sender, EventArgs e)
         {
             textBoxTitle.Text = string.Empty;
         }
+
         private void comboBoxWebBrowser_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
@@ -53,6 +57,7 @@ namespace Ex01.FacebookAppWinformsUI
                 webBrowser.Url = new System.Uri(i_ComboBox.SelectedItem as string);
             }
         }
+
         private void submitUserUrlChoice()
         {
             string urlToShow = comboBoxWebBrowser.Text;
@@ -70,12 +75,13 @@ namespace Ex01.FacebookAppWinformsUI
             else
             {
                 MessageBox.Show(r_EnterValidURLMessage);
-                comboBoxWebBrowser.Text = k_httpOpening;
+                comboBoxWebBrowser.Text = k_HttpOpening;
             }
         }
+
         private void comboBoxWebBrowser_Click(object sender, EventArgs e)
         {
-            comboBoxWebBrowser.Text = k_httpOpening;
+            comboBoxWebBrowser.Text = k_HttpOpening;
         }
 
         private void buttonSubmitUrl_onClick(object sender, EventArgs e)
@@ -102,16 +108,15 @@ namespace Ex01.FacebookAppWinformsUI
             }
         }
 
-        public FbEventArgs collectData()
+        public FbEventArgs CollectData()
         {
-            FbEventArgs result = new FbEventArgs { StatusBody = StatusBody, time = TimeToExecute, link = LinkUrl };
+            FbEventArgs result = new FbEventArgs { StatusBody = StatusBody, Time = TimeToExecute, Link = LinkUrl };
             return result;
         }
-        public TasksType GetTaskType()
+
+        public eTasksType GetTaskType()
         {
-            return TasksType.link;
+            return eTasksType.Link;
         }
-
     }
-
 }

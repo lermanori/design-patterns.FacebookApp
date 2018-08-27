@@ -37,7 +37,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="FacebookAppEngine.cs" />
+    <Compile Include="FacebookAppEngine.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="FacebookAppSettings.cs" />
     <Compile Include="FbAction.cs" />
     <Compile Include="FbActionFactory.cs" />
@@ -50,7 +52,9 @@
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="ShickOShook.cs" />
-    <Compile Include="TimedComponent.cs" />
+    <Compile Include="TimedComponent.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Facebook">

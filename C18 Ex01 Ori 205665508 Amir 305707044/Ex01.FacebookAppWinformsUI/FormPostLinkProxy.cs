@@ -7,11 +7,13 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    class FormPostLinkProxy : IProxyForm , IfbAutomatable
+    public class FormPostLinkProxy : IProxyForm, IfbAutomatable
     {
         private FormPostLink m_FormPostLink = null;
 
-        private FormPostLinkProxy() { }
+        private FormPostLinkProxy()
+        {
+        }
 
         private void initializeIfNull()
         {
@@ -27,13 +29,13 @@ namespace Ex01.FacebookAppWinformsUI
             return m_FormPostLink.ShowDialog();
         }
 
-        public FbEventArgs collectData()
+        public FbEventArgs CollectData()
         {
             initializeIfNull();
-            return m_FormPostLink.collectData();
+            return m_FormPostLink.CollectData();
         }
 
-        public TasksType GetTaskType()
+        public eTasksType GetTaskType()
         {
             initializeIfNull();
             return m_FormPostLink.GetTaskType();
@@ -44,11 +46,9 @@ namespace Ex01.FacebookAppWinformsUI
             return "Post Link";
         }
 
-        internal static IProxyForm Create()
+        internal static FormPostLinkProxy Create()
         {
             return new FormPostLinkProxy();
         }
-
-        
     }
 }

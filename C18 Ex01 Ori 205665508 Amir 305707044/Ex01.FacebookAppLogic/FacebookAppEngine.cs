@@ -26,16 +26,18 @@ namespace Ex01.FacebookAppLogic
 
         public User CurrentUser { get; private set; }
 
-        public FriendsStatistics FriendStatisticsFeature { get; }
-        
-        public ShickOShook ShickOShookFeature { get; }
+        public FriendsStatistics FriendStatisticsFeature { get; } = new FriendsStatistics();
+
+        public ShickOShook ShickOShookFeature { get; } = new ShickOShook();
 
         public string UserProfilePictureURL { get; private set; }
 
-        public FacebookAppEngine()
+        public static bool CreateURL(string i_UrlToShow, out Uri o_UriResult)
         {
-            FriendStatisticsFeature = new FriendsStatistics();
-            ShickOShookFeature = new ShickOShook();
+            bool result = Uri.TryCreate(i_UrlToShow, UriKind.Absolute, out o_UriResult)
+                && o_UriResult.Scheme == Uri.UriSchemeHttp;
+
+            return result;
         }
 
         public void Login()
@@ -158,7 +160,7 @@ namespace Ex01.FacebookAppLogic
         {
             try
             {
-                CurrentUser.PostPhoto(i_PhotoPath, i_PhotoTitle,string.Empty);
+                CurrentUser.PostPhoto(i_PhotoPath, i_PhotoTitle, string.Empty);
             }
             catch (Exception ex)
             {
@@ -166,24 +168,16 @@ namespace Ex01.FacebookAppLogic
             }
         }
 
-        public void PostChosenLink(string i_LinkToPost,string i_statusBody)
+        public void PostChosenLink(string i_LinkToPost, string i_statusBody)
         {
             try
             {
-                CurrentUser.PostLink(i_LinkToPost,i_statusBody);
+                CurrentUser.PostLink(i_LinkToPost, i_statusBody);
             }
             catch (Exception ex)
             {
                 throw new Exception(k_FailedToUpload, ex);
             }
-        }
-
-        public static bool CreateURL(string i_UrlToShow, out Uri o_UriResult)
-        {
-            bool result = Uri.TryCreate(i_UrlToShow, UriKind.Absolute, out o_UriResult)
-                && o_UriResult.Scheme == Uri.UriSchemeHttp;
-
-            return result;
         }
 
         public User FetchRandomFriend()
@@ -196,7 +190,7 @@ namespace Ex01.FacebookAppLogic
             return randomFriend;
         }
 
-        public TimedComponent CreateTimedComponent(FbEventArgs args, TasksType taskType)
+        public TimedComponent CreateTimedComponent(FbEventArgs args, eTasksType taskType)
         {
             return TimedComponent.Create(args, this, taskType);
         }

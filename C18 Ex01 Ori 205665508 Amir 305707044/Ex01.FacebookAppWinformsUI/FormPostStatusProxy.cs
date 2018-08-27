@@ -7,37 +7,40 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    class FormPostStatusProxy : IProxyForm , IfbAutomatable
+    public class FormPostStatusProxy : IProxyForm, IfbAutomatable
     {
-       private FormPostStatus m_formPostStatus = null;
+        private FormPostStatus m_formPostStatus = null;
 
-        private FormPostStatusProxy() { }
+        private FormPostStatusProxy()
+        {
+        }
 
         private void initializeIfNull()
         {
-            if(m_formPostStatus == null)
+            if (m_formPostStatus == null)
             {
                 m_formPostStatus = new FormPostStatus();
             }
         }
+
         public DialogResult ShowDialog()
         {
             initializeIfNull();
             return m_formPostStatus.ShowDialog();
         }
 
-        internal static IProxyForm Create()
+        internal static FormPostStatusProxy Create()
         {
             return new FormPostStatusProxy();
         }
 
-        public FbEventArgs collectData()
+        public FbEventArgs CollectData()
         {
             initializeIfNull();
-            return m_formPostStatus.collectData();
+            return m_formPostStatus.CollectData();
         }
 
-        public TasksType GetTaskType()
+        public eTasksType GetTaskType()
         {
             initializeIfNull();
             return m_formPostStatus.GetTaskType();

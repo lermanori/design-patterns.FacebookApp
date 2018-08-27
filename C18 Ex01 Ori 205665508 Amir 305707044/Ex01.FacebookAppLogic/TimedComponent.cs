@@ -16,51 +16,51 @@ namespace Ex01.FacebookAppLogic
 
         public FbAction ActionObject { get; set; }
 
-
-        public static TimedComponent Create(FbEventArgs i_Args, FacebookAppEngine i_Engine, TasksType i_ChosenTask)
+        public static TimedComponent Create(FbEventArgs i_Args, FacebookAppEngine i_Engine, eTasksType i_ChosenTask)
         {
-            //need to switch fbactionpost.create to factory wholl get an enum
-
             TimedComponent timedComponent = new TimedComponent { FbEventArgs = i_Args, ActionObject = FbActionFactory.Create(i_Engine, i_ChosenTask), Timer = new System.Timers.Timer(), Invoked = false };
 
             timedComponent.ActionObject.LoadAction();
 
             timedComponent.Timer.Enabled = false;
-            timedComponent.Timer.Elapsed += new System.Timers.ElapsedEventHandler(timedComponent.on_elapsed);
+            timedComponent.Timer.Elapsed += new System.Timers.ElapsedEventHandler(timedComponent.OnElapsed);
 
-            if ((timedComponent.FbEventArgs.time - DateTime.Now).TotalMilliseconds > 0)
+            if ((timedComponent.FbEventArgs.Time - DateTime.Now).TotalMilliseconds > 0)
             {
-                timedComponent.Timer.Interval = (timedComponent.FbEventArgs.time - DateTime.Now).TotalMilliseconds;
+                timedComponent.Timer.Interval = (timedComponent.FbEventArgs.Time - DateTime.Now).TotalMilliseconds;
             }
             else
             {
-                timedComponent.Timer.Interval = 1000 * 5;//if the time already passed the user wants it instantaniasly so well post it in 5 seconds
+                // if the time already passed, we commit the action immediately
+                timedComponent.Timer.Interval = 0.1;
             }
+
             return timedComponent;
         }
 
-        private void on_elapsed(object source, System.Timers.ElapsedEventArgs e)
+        private void OnElapsed(object source, System.Timers.ElapsedEventArgs e)
         {
             if (!Invoked)
             {
                 Invoked = true;
                 try
                 {
-                    ActionObject.raiseEvent(FbEventArgs);
+                    ActionObject.RaiseEvent(FbEventArgs);
                 }
-                catch 
+                catch
                 {
-                    ActionObject.raiseErrorEvent();
+                    ActionObject.RaiseErrorEvent();
                 }
+
                 Timer.Enabled = false;
-                Timer.Elapsed -= on_elapsed;
+                Timer.Elapsed -= OnElapsed;
             }
         }
 
         public override string ToString()
         {
             string ActionName = ActionObject.GetName();
-            string timeToPresent = FbEventArgs.time - DateTime.Now > TimeSpan.Zero ? (FbEventArgs.time - DateTime.Now).TotalSeconds.ToString() : "this moment";
+            string timeToPresent = FbEventArgs.Time - DateTime.Now > TimeSpan.Zero ? (FbEventArgs.Time - DateTime.Now).TotalSeconds.ToString() : "this moment";
             if (!Invoked)
             {
                 return string.Format("Task {0} at {1} seconds to be procesed", ActionName, timeToPresent);
