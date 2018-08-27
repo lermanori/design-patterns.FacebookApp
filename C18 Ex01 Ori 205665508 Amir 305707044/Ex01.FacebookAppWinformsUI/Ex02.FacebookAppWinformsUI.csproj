@@ -130,9 +130,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ex01.FacebookAppLogic\Ex01.FacebookAppLogic.csproj">
+    <ProjectReference Include="..\Ex01.FacebookAppLogic\Ex02.FacebookAppLogic.csproj">
       <Project>{3c3f0768-d39b-4f63-b6a6-3fbb17d05b4c}</Project>
-      <Name>Ex01.FacebookAppLogic</Name>
+      <Name>Ex02.FacebookAppLogic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
