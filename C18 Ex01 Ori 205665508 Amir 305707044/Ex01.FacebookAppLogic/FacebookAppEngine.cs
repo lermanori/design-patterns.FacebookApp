@@ -28,6 +28,7 @@ namespace Ex01.FacebookAppLogic
 
         public FriendsStatistics FriendStatisticsFeature { get; } = new FriendsStatistics();
 
+
         public ShickOShook ShickOShookFeature { get; } = new ShickOShook();
 
         public string UserProfilePictureURL { get; private set; }

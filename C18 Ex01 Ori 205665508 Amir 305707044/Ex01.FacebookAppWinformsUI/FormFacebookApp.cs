@@ -447,7 +447,9 @@ namespace Ex01.FacebookAppWinformsUI
                     timedComponent.ActionObject.DoWhenFinishedError += (i_object, i_e) => MessageBox.Show(string.Format("there was a probloem during invoking the {0} action", timedComponent.ActionObject.GetName()));
                     timedComponent.Timer.Elapsed += Timer_Elapsed;
 
-                    listBoxTasks.Items.Add(timedComponent);
+                    IDecoratedTimedComponent s = new CheckBoxedTimedComponent(timedComponent);
+                    
+                    listBoxTasks.Items.Add(s);
                     timedComponent.Timer.Start();
                 }
             }
@@ -477,6 +479,7 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void activateCalcStatisticsFeature()
         {
+
             m_FacebookApp.FriendStatisticsFeature.CalculateStatisticsAboutFriends(m_FacebookApp);
             updateUIAccordingToStatistics();
         }
@@ -566,4 +569,49 @@ namespace Ex01.FacebookAppWinformsUI
             }
         }
     }
+
+    public interface IDecoratedTimedComponent
+    {
+        void Start();
+        Control CreateControl();
+
+    }
+    public abstract class DecoratedTimedComponent : IDecoratedTimedComponent
+    {
+        private TimedComponent m_Component;
+
+        public void Start()
+        {
+            m_Component.Timer.Start();
+        }
+        public DecoratedTimedComponent(TimedComponent i_Component)
+        {
+            m_Component = i_Component;
+        }
+
+
+    }
+
+    public class CheckBoxedTimedComponent : DecoratedTimedComponent
+    {
+
+        Control controlSOmething = new Button();
+        Control xPanel = new Panel();
+        public CheckBoxedTimedComponent(TimedComponent i_Component) : base(i_Component)
+        {
+           
+        }
+
+        public Control CreateControl()
+        {
+            xPanel.Controls.Add(controlSOmething);
+
+
+            return xPanel();
+
+        }
+
+
+    }
+
 }

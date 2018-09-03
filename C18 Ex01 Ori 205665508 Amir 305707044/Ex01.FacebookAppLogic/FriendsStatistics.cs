@@ -19,58 +19,68 @@ namespace Ex01.FacebookAppLogic
 
         public const float r_Base = 100f;
 
-        public int Men { get; private set; } = 0;
+        public int Men { get; set; } = 0;
 
-        public float MenRatio { get; private set; } = 0f;
+        public float MenRatio { get; set; } = 0f;
 
-        public int Women { get; private set; } = 0;
+        public int Women { get; set; } = 0;
 
-        public float WomenRatio { get; private set; } = 0f;
+        public float WomenRatio { get; set; } = 0f;
 
-        public int GenderLess { get; private set; } = 0;
+        public int GenderLess { get; set; } = 0;
 
-        public float GenderLessRatio { get; private set; } = 0f;
+        public float GenderLessRatio { get; set; } = 0f;
 
-        public int TotalFriends { get; private set; } = 0;
+        public int TotalFriends { get; set; } = 0;
 
-        public int UntilTwentyYearsOld { get; private set; } = 0;
+        public int UntilTwentyYearsOld { get; set; } = 0;
 
-        public int TwentyOneToFourty { get; private set; } = 0;
+        public int TwentyOneToFourty { get; set; } = 0;
 
-        public int FourtyOneToSixty { get; private set; } = 0;
+        public int FourtyOneToSixty { get; set; } = 0;
 
-        public int AboveSixty { get; private set; } = 0;
+        public int AboveSixty { get; set; } = 0;
 
-        public int DidntEnterBirthday { get; private set; } = 0;
+        public int DidntEnterBirthday { get; set; } = 0;
 
-        public float UntilTwentyYearsOldRatio { get; private set; } = 0f;
+        public float UntilTwentyYearsOldRatio { get; set; } = 0f;
 
-        public float TwentyOneToFourtyRatio { get; private set; } = 0f;
+        public float TwentyOneToFourtyRatio { get; set; } = 0f;
 
-        public float FourtyOneToSixtyRatio { get; private set; } = 0f;
+        public float FourtyOneToSixtyRatio { get; set; } = 0f;
 
-        public float AboveSixtyRatio { get; private set; } = 0f;
+        public float AboveSixtyRatio { get; set; } = 0f;
 
-        public float DidntEnterBirthdayRatio { get; private set; } = 0f;
+        public float DidntEnterBirthdayRatio { get; set; } = 0f;
 
-        public User MostFriendsUser { get; private set; } = null;
+        public User MostFriendsUser { get; set; } = null;
 
-        public User LeastFriendsUser { get; private set; } = null;
+        public User LeastFriendsUser { get; set; } = null;
 
-        public User MostActiveUser { get; private set; } = null;
+        public User MostActiveUser { get; set; } = null;
+
+
+    }
+
+
+    abstract class AlgorithmTemplateMethod
+    {
+        private FriendsStatistics m_StatsProperties;
 
         public void CalculateStatisticsAboutFriends(FacebookAppEngine i_App)
         {
             DateTime currentDatetime = DateTime.Today;
             FacebookObjectCollection<User> friendList = i_App?.FetchUserFriends();
 
+            //here comes some manipulation on friendList -- > 
+
             if (friendList != null && friendList.Count > 0)
             {
-                TotalFriends = friendList.Count;
+                m_StatsProperties.TotalFriends = friendList.Count;
 
-                MostFriendsUser = friendList[0];
-                MostActiveUser = friendList[0];
-                LeastFriendsUser = friendList[0];
+                m_StatsProperties.MostFriendsUser = friendList[0];
+                m_StatsProperties.MostActiveUser = friendList[0];
+                m_StatsProperties.LeastFriendsUser = friendList[0];
 
                 foreach (User friend in friendList)
                 {
@@ -84,7 +94,7 @@ namespace Ex01.FacebookAppLogic
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception(k_MissingFriendInfo, ex);
+                        throw new Exception(FriendsStatistics.k_MissingFriendInfo, ex);
                     }
                 }
 
@@ -92,32 +102,32 @@ namespace Ex01.FacebookAppLogic
             }
             else if (friendList.Count == 0)
             {
-                throw new Exception(k_EmptyListMessage);
+                throw new Exception(FriendsStatistics.k_EmptyListMessage);
             }
             else
             {
-                throw new Exception(k_NullListMessage);
+                throw new Exception(FriendsStatistics.k_NullListMessage);
             }
         }
 
         private void calculateMostActiveFriend(User i_Friend)
         {
-            if (i_Friend.Statuses.Count > MostActiveUser.Statuses.Count)
+            if (i_Friend.Statuses.Count > m_StatsProperties.MostActiveUser.Statuses.Count)
             {
-                MostActiveUser = i_Friend;
+                m_StatsProperties.MostActiveUser = i_Friend;
             }
         }
 
         private void calculateMostSocialized(User i_Friend)
         {
-            if (i_Friend.Friends.Count > MostFriendsUser.Friends.Count)
+            if (i_Friend.Friends.Count > m_StatsProperties.MostFriendsUser.Friends.Count)
             {
-                MostFriendsUser = i_Friend;
+                m_StatsProperties.MostFriendsUser = i_Friend;
             }
 
-            if (i_Friend.Friends.Count < LeastFriendsUser.Friends.Count)
+            if (i_Friend.Friends.Count < m_StatsProperties.LeastFriendsUser.Friends.Count)
             {
-                LeastFriendsUser = i_Friend;
+                m_StatsProperties.LeastFriendsUser = i_Friend;
             }
         }
 
@@ -126,63 +136,63 @@ namespace Ex01.FacebookAppLogic
             DateTime friendBirthday = DateTime.ParseExact(i_Friend.Birthday, "dd/mm/yyyy", null);
             if (friendBirthday == null)
             {
-                DidntEnterBirthday++;
+                m_StatsProperties.DidntEnterBirthday++;
             }
             else
             {
                 TimeSpan exactAge = i_TodaysDate - friendBirthday;
-                float age = (float)exactAge.Days / k_DaysInYear;
-                if (age <= k_YoungestAgeLimit)
+                float age = (float)exactAge.Days / FriendsStatistics.k_DaysInYear;
+                if (age <= FriendsStatistics.k_YoungestAgeLimit)
                 {
-                    UntilTwentyYearsOld++;
+                    m_StatsProperties.UntilTwentyYearsOld++;
                 }
                 else if (age <= 40)
                 {
-                    TwentyOneToFourty++;
+                    m_StatsProperties.TwentyOneToFourty++;
                 }
                 else if (age <= 60)
                 {
-                    FourtyOneToSixty++;
+                    m_StatsProperties.FourtyOneToSixty++;
                 }
                 else
                 {
-                    AboveSixty++;
+                    m_StatsProperties.AboveSixty++;
                 }
             }
         }
 
         private void calculateAllRatios()
         {
-            MenRatio = calculateRatio(Men);
-            WomenRatio = calculateRatio(Women);
-            GenderLessRatio = calculateRatio(GenderLess);
-
-            UntilTwentyYearsOldRatio = calculateRatio(UntilTwentyYearsOld);
-            TwentyOneToFourtyRatio = calculateRatio(TwentyOneToFourty);
-            FourtyOneToSixtyRatio = calculateRatio(FourtyOneToSixty);
-            AboveSixtyRatio = calculateRatio(AboveSixty);
-            DidntEnterBirthdayRatio = calculateRatio(DidntEnterBirthday);
+            m_StatsProperties.MenRatio = calculateRatio(m_StatsProperties.Men);
+            m_StatsProperties.WomenRatio = calculateRatio(m_StatsProperties.Women);
+            m_StatsProperties.GenderLessRatio = calculateRatio(m_StatsProperties.GenderLess);
+            
+            m_StatsProperties.UntilTwentyYearsOldRatio = calculateRatio(m_StatsProperties.UntilTwentyYearsOld);
+            m_StatsProperties.TwentyOneToFourtyRatio = calculateRatio(m_StatsProperties.TwentyOneToFourty);
+            m_StatsProperties.FourtyOneToSixtyRatio = calculateRatio(m_StatsProperties.FourtyOneToSixty);
+            m_StatsProperties.AboveSixtyRatio = calculateRatio(m_StatsProperties.AboveSixty);
+            m_StatsProperties.DidntEnterBirthdayRatio = calculateRatio(m_StatsProperties.DidntEnterBirthday);
         }
 
         private void countMenWomen(User i_Friend)
         {
             if (i_Friend.Gender == User.eGender.male)
             {
-                Men++;
+                m_StatsProperties.Men++;
             }
             else if (i_Friend.Gender == User.eGender.female)
             {
-                Women++;
+                m_StatsProperties.Women++;
             }
             else
             {
-                GenderLess++;
+                m_StatsProperties.GenderLess++;
             }
         }
 
         private float calculateRatio(int i_ParameterToCalculate)
         {
-            return (float)i_ParameterToCalculate / TotalFriends * r_Base;
+            return (float)i_ParameterToCalculate / m_StatsProperties.TotalFriends * FriendsStatistics.r_Base;
         }
     }
 }
