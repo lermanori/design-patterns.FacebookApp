@@ -43,6 +43,8 @@ namespace Ex01.FacebookAppWinformsUI
 
         private FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
         private FacebookAppSettings m_LastSettings = null;
+        private eFilterOptions m_UserFilterChoice = eFilterOptions.NoFilter; // default
+
         public static readonly object sr_URLComboBoxLock = new object();
 
         private List<Control> m_ControlsToEnableOrDisable = new List<Control>();
@@ -139,7 +141,10 @@ namespace Ex01.FacebookAppWinformsUI
             m_ControlsToEnableOrDisable.Add(buttonCalcStats);
             m_ControlsToEnableOrDisable.Add(buttonAddNewAction);
             m_ControlsToEnableOrDisable.Add(pictureBoxFriendPhotoShickOShook);
-
+            m_ControlsToEnableOrDisable.Add(radioButton1);
+            m_ControlsToEnableOrDisable.Add(radioButton2);
+            m_ControlsToEnableOrDisable.Add(radioButton3);
+            m_ControlsToEnableOrDisable.Add(radioButton4);
             disableLoggedInFeatures();
         }
 
@@ -477,32 +482,35 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void activateCalcStatisticsFeature()
         {
+            m_FacebookApp.CreateFriendStats(m_UserFilterChoice);
             m_FacebookApp.FriendStatisticsFeature.CalculateStatisticsAboutFriends(m_FacebookApp);
             updateUIAccordingToStatistics();
         }
 
         private void updateUIAccordingToStatistics()
         {
-            labelMen.Text = string.Format(k_GeneralStatsLabelText, k_Men, m_FacebookApp.FriendStatisticsFeature.Men, m_FacebookApp.FriendStatisticsFeature.MenRatio.ToString());
-            labelWomen.Text = string.Format(k_GeneralStatsLabelText, k_Women, m_FacebookApp.FriendStatisticsFeature.Women, m_FacebookApp.FriendStatisticsFeature.WomenRatio.ToString());
-            labelGenderLess.Text = string.Format(k_GeneralStatsLabelText, k_GenderLess, m_FacebookApp.FriendStatisticsFeature.GenderLess, m_FacebookApp.FriendStatisticsFeature.GenderLessRatio.ToString());
+            labelMen.Text = m_FacebookApp.FriendStatisticsFeature.GetGenderDataStrings(eGenders.Men);
+            labelWomen.Text = m_FacebookApp.FriendStatisticsFeature.GetGenderDataStrings(eGenders.Women);
+            labelGenderLess.Text = m_FacebookApp.FriendStatisticsFeature.GetGenderDataStrings(eGenders.None); ;
 
-            labelLowestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_UntilTwenty, m_FacebookApp.FriendStatisticsFeature.UntilTwentyYearsOld, m_FacebookApp.FriendStatisticsFeature.UntilTwentyYearsOldRatio);
-            labelMediumAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_TwentyOneToFourty, m_FacebookApp.FriendStatisticsFeature.TwentyOneToFourty, m_FacebookApp.FriendStatisticsFeature.TwentyOneToFourtyRatio);
-            labelAdultAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_FourtyOneToSixty, m_FacebookApp.FriendStatisticsFeature.FourtyOneToSixty, m_FacebookApp.FriendStatisticsFeature.FourtyOneToSixtyRatio);
-            labelOldestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_AboveSixty, m_FacebookApp.FriendStatisticsFeature.AboveSixty, m_FacebookApp.FriendStatisticsFeature.AboveSixtyRatio);
-            labelDidntEnterBirthday.Text = string.Format(k_GeneralStatsLabelText, k_BirthdatyLess, m_FacebookApp.FriendStatisticsFeature.DidntEnterBirthday, m_FacebookApp.FriendStatisticsFeature.DidntEnterBirthdayRatio);
+            labelLowestAgeRange.Text = m_FacebookApp.FriendStatisticsFeature.GetAgeDataStrings(eAgeRange.UntilTwenty);
+            labelMediumAgeRange.Text = m_FacebookApp.FriendStatisticsFeature.GetAgeDataStrings(eAgeRange.TwentyOneToFourty);
+            labelAdultAgeRange.Text = m_FacebookApp.FriendStatisticsFeature.GetAgeDataStrings(eAgeRange.FourtyOneToSixty);
+            labelOldestAgeRange.Text = m_FacebookApp.FriendStatisticsFeature.GetAgeDataStrings(eAgeRange.AboveSixty);
+            labelDidntEnterBirthday.Text = m_FacebookApp.FriendStatisticsFeature.GetAgeDataStrings(eAgeRange.None);
 
-            labelMostFriendsUser.Text = m_FacebookApp.FriendStatisticsFeature.MostFriendsUser.Name;
-            labelFriendCountMost.Text = string.Format(k_FriendsCountMessage, m_FacebookApp.FriendStatisticsFeature.MostFriendsUser.Friends.Count);
-            pictureBoxMostFriends.LoadAsync(m_FacebookApp.FriendStatisticsFeature.MostFriendsUser.PictureNormalURL);
-            labelLeastFriendsUser.Text = m_FacebookApp.FriendStatisticsFeature.LeastFriendsUser.Name;
-            labelFriendCountLeast.Text = string.Format(k_FriendsCountMessage, m_FacebookApp.FriendStatisticsFeature.LeastFriendsUser.Friends.Count);
-            pictureBoxLeastFriends.LoadAsync(m_FacebookApp.FriendStatisticsFeature.LeastFriendsUser.PictureNormalURL);
+            labelMostFriendsUser.Text = m_FacebookApp.FriendStatisticsFeature.GetFriendName(eUserSocializeState.MostFriends);
+            labelFriendCountMost.Text = m_FacebookApp.FriendStatisticsFeature.GetUserFriendCount(eUserSocializeState.MostFriends);
+            pictureBoxMostFriends.LoadAsync(m_FacebookApp.FriendStatisticsFeature.GetUserPicURL(eUserSocializeState.MostFriends));
 
-            labelMostActiveUser.Text = m_FacebookApp.FriendStatisticsFeature.MostActiveUser.Name;
-            labelNumStatuses.Text = string.Format(k_NumStatusesMessage, m_FacebookApp.FriendStatisticsFeature.MostActiveUser.Statuses.Count);
-            pictureBoxMostActiveUser.LoadAsync(m_FacebookApp.FriendStatisticsFeature.MostActiveUser.PictureNormalURL);
+            labelLeastFriendsUser.Text = m_FacebookApp.FriendStatisticsFeature.GetFriendName(eUserSocializeState.LeastFriends);
+            labelFriendCountLeast.Text = m_FacebookApp.FriendStatisticsFeature.GetUserFriendCount(eUserSocializeState.LeastFriends);
+            pictureBoxMostFriends.LoadAsync(m_FacebookApp.FriendStatisticsFeature.GetUserPicURL(eUserSocializeState.LeastFriends));
+
+            labelMostActiveUser.Text = m_FacebookApp.FriendStatisticsFeature.GetFriendName(eUserSocializeState.MostActive);
+            labelNumStatuses.Text = m_FacebookApp.FriendStatisticsFeature.GetMostActiveUserStatusCount();
+            pictureBoxMostActiveUser.LoadAsync(m_FacebookApp.FriendStatisticsFeature.GetUserPicURL(eUserSocializeState.MostActive));
+            
         }
 
         private void buttonActivateShikOShook_Click(object sender, EventArgs e)
@@ -564,6 +572,27 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            m_UserFilterChoice = eFilterOptions.NoFilter;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            m_UserFilterChoice = eFilterOptions.OnlyMen;
+
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            m_UserFilterChoice = eFilterOptions.OnlyWomen;
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+            m_UserFilterChoice = eFilterOptions.OnlyEnteredBirthday;
         }
     }
 }

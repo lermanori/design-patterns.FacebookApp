@@ -116,6 +116,11 @@
             this.buttonPostPhoto = new System.Windows.Forms.Button();
             this.buttonFetchGroups = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
             religionLabel = new System.Windows.Forms.Label();
             nameLabel2 = new System.Windows.Forms.Label();
             emailLabel = new System.Windows.Forms.Label();
@@ -298,6 +303,11 @@
             // 
             this.tabPageStatsAndShook.AutoScroll = true;
             this.tabPageStatsAndShook.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(139)))), ((int)(((byte)(71)))), ((int)(((byte)(93)))));
+            this.tabPageStatsAndShook.Controls.Add(this.label1);
+            this.tabPageStatsAndShook.Controls.Add(this.radioButton4);
+            this.tabPageStatsAndShook.Controls.Add(this.radioButton3);
+            this.tabPageStatsAndShook.Controls.Add(this.radioButton2);
+            this.tabPageStatsAndShook.Controls.Add(this.radioButton1);
             this.tabPageStatsAndShook.Controls.Add(this.labelGetStatistics);
             this.tabPageStatsAndShook.Controls.Add(this.panelShickOShook);
             this.tabPageStatsAndShook.Controls.Add(this.panel5);
@@ -318,7 +328,7 @@
             this.labelGetStatistics.AutoSize = true;
             this.labelGetStatistics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.labelGetStatistics.ForeColor = System.Drawing.Color.White;
-            this.labelGetStatistics.Location = new System.Drawing.Point(711, 26);
+            this.labelGetStatistics.Location = new System.Drawing.Point(679, 29);
             this.labelGetStatistics.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGetStatistics.Name = "labelGetStatistics";
             this.labelGetStatistics.Size = new System.Drawing.Size(144, 36);
@@ -482,7 +492,7 @@
             this.labelShickOShookFeatureDescription.AutoSize = true;
             this.labelShickOShookFeatureDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
             this.labelShickOShookFeatureDescription.ForeColor = System.Drawing.Color.White;
-            this.labelShickOShookFeatureDescription.Location = new System.Drawing.Point(383, 19);
+            this.labelShickOShookFeatureDescription.Location = new System.Drawing.Point(300, 12);
             this.labelShickOShookFeatureDescription.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelShickOShookFeatureDescription.Name = "labelShickOShookFeatureDescription";
             this.labelShickOShookFeatureDescription.Size = new System.Drawing.Size(271, 102);
@@ -770,10 +780,10 @@
             // 
             // buttonCalcStats
             // 
-            this.buttonCalcStats.Location = new System.Drawing.Point(713, 65);
+            this.buttonCalcStats.Location = new System.Drawing.Point(654, 312);
             this.buttonCalcStats.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.buttonCalcStats.Name = "buttonCalcStats";
-            this.buttonCalcStats.Size = new System.Drawing.Size(142, 31);
+            this.buttonCalcStats.Size = new System.Drawing.Size(195, 31);
             this.buttonCalcStats.TabIndex = 20;
             this.buttonCalcStats.Text = "Get Stats!";
             this.buttonCalcStats.UseVisualStyleBackColor = true;
@@ -1176,6 +1186,67 @@
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl.TabIndex = 21;
             // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(654, 148);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(82, 21);
+            this.radioButton1.TabIndex = 26;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "No Filter";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(654, 189);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(56, 21);
+            this.radioButton2.TabIndex = 27;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Men";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(654, 229);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(77, 21);
+            this.radioButton3.TabIndex = 28;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "Women";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Location = new System.Drawing.Point(654, 268);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(135, 38);
+            this.radioButton4.TabIndex = 29;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "Users Who\r\nEntered Birthday";
+            this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(651, 127);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(198, 18);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Choose Filtering Method:";
+            // 
             // FormFacebookApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1299,6 +1370,11 @@
         private System.Windows.Forms.Button buttonPostPhoto;
         private System.Windows.Forms.Button buttonFetchGroups;
         private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton1;
     }
 }
 

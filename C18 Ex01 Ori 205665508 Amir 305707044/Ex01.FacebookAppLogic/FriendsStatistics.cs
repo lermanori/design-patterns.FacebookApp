@@ -6,85 +6,32 @@ using FacebookWrapper.ObjectModel;
 
 namespace Ex01.FacebookAppLogic
 {
-    public class FriendsStatistics
+    public abstract class FriendsStatistics
     {
-        public const string k_EmptyListMessage = "There are no friends to show!";
-        public const string k_NullListMessage = "The friend list is null!";
-        public const string k_MissingFriendInfo = "Missing information about friends!!";
-
-        public const int k_YoungestAgeLimit = 20;
-        public const int k_MiddleAgeLimit = 40;
-        public const int k_AdultAgeLimit = 60;
-        public const int k_DaysInYear = 365;
-
-        public const float r_Base = 100f;
-
-        public int Men { get; private set; } = 0;
-
-        public float MenRatio { get; private set; } = 0f;
-
-        public int Women { get; private set; } = 0;
-
-        public float WomenRatio { get; private set; } = 0f;
-
-        public int GenderLess { get; private set; } = 0;
-
-        public float GenderLessRatio { get; private set; } = 0f;
-
-        public int TotalFriends { get; private set; } = 0;
-
-        public int UntilTwentyYearsOld { get; private set; } = 0;
-
-        public int TwentyOneToFourty { get; private set; } = 0;
-
-        public int FourtyOneToSixty { get; private set; } = 0;
-
-        public int AboveSixty { get; private set; } = 0;
-
-        public int DidntEnterBirthday { get; private set; } = 0;
-
-        public float UntilTwentyYearsOldRatio { get; private set; } = 0f;
-
-        public float TwentyOneToFourtyRatio { get; private set; } = 0f;
-
-        public float FourtyOneToSixtyRatio { get; private set; } = 0f;
-
-        public float AboveSixtyRatio { get; private set; } = 0f;
-
-        public float DidntEnterBirthdayRatio { get; private set; } = 0f;
-
-        public User MostFriendsUser { get; private set; } = null;
-
-        public User LeastFriendsUser { get; private set; } = null;
-
-        public User MostActiveUser { get; private set; } = null;
+        private FriendsStatisticsData m_StatisticData = new FriendsStatisticsData();
 
         public void CalculateStatisticsAboutFriends(FacebookAppEngine i_App)
         {
-            DateTime currentDatetime = DateTime.Today;
             FacebookObjectCollection<User> friendList = i_App?.FetchUserFriends();
 
             if (friendList != null && friendList.Count > 0)
             {
-                TotalFriends = friendList.Count;
-
-                MostFriendsUser = friendList[0];
-                MostActiveUser = friendList[0];
-                LeastFriendsUser = friendList[0];
+                friendList = filterListByChoice(friendList);
+                m_StatisticData.TotalFriends = friendList.Count;
 
                 foreach (User friend in friendList)
                 {
                     friend.ReFetch(DynamicWrapper.eLoadOptions.FullWithConnections);
                     try
                     {
-                        countMenWomen(friend);
-                        calculateAgeRange(friend, currentDatetime);
-                        calculateMostSocialized(friend);
-                        calculateMostActiveFriend(friend);
+                        m_StatisticData.m_MenAndWomenStats.UpdateGenderCountersAccordingToGivenFriend(friend);
+                        m_StatisticData.m_AgesStats.UpdateAgeRangesCountersAccordingToGivenUser(friend);
+                        m_StatisticData.m_SocializingStats.UpdateFriendSocializedRanksAccordingToGivenUser(friend);
+
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception(k_MissingFriendInfo, ex);
+                        throw new Exception(FriendsStatisticsData.k_MissingFriendInfo, ex);
                     }
                 }
 
@@ -92,97 +39,130 @@ namespace Ex01.FacebookAppLogic
             }
             else if (friendList.Count == 0)
             {
-                throw new Exception(k_EmptyListMessage);
+                throw new Exception(FriendsStatisticsData.k_EmptyListMessage);
             }
             else
             {
-                throw new Exception(k_NullListMessage);
-            }
-        }
-
-        private void calculateMostActiveFriend(User i_Friend)
-        {
-            if (i_Friend.Statuses.Count > MostActiveUser.Statuses.Count)
-            {
-                MostActiveUser = i_Friend;
-            }
-        }
-
-        private void calculateMostSocialized(User i_Friend)
-        {
-            if (i_Friend.Friends.Count > MostFriendsUser.Friends.Count)
-            {
-                MostFriendsUser = i_Friend;
-            }
-
-            if (i_Friend.Friends.Count < LeastFriendsUser.Friends.Count)
-            {
-                LeastFriendsUser = i_Friend;
-            }
-        }
-
-        private void calculateAgeRange(User i_Friend, DateTime i_TodaysDate)
-        {
-            DateTime friendBirthday = DateTime.ParseExact(i_Friend.Birthday, "dd/mm/yyyy", null);
-            if (friendBirthday == null)
-            {
-                DidntEnterBirthday++;
-            }
-            else
-            {
-                TimeSpan exactAge = i_TodaysDate - friendBirthday;
-                float age = (float)exactAge.Days / k_DaysInYear;
-                if (age <= k_YoungestAgeLimit)
-                {
-                    UntilTwentyYearsOld++;
-                }
-                else if (age <= 40)
-                {
-                    TwentyOneToFourty++;
-                }
-                else if (age <= 60)
-                {
-                    FourtyOneToSixty++;
-                }
-                else
-                {
-                    AboveSixty++;
-                }
+                throw new Exception(FriendsStatisticsData.k_NullListMessage);
             }
         }
 
         private void calculateAllRatios()
         {
-            MenRatio = calculateRatio(Men);
-            WomenRatio = calculateRatio(Women);
-            GenderLessRatio = calculateRatio(GenderLess);
-
-            UntilTwentyYearsOldRatio = calculateRatio(UntilTwentyYearsOld);
-            TwentyOneToFourtyRatio = calculateRatio(TwentyOneToFourty);
-            FourtyOneToSixtyRatio = calculateRatio(FourtyOneToSixty);
-            AboveSixtyRatio = calculateRatio(AboveSixty);
-            DidntEnterBirthdayRatio = calculateRatio(DidntEnterBirthday);
+            m_StatisticData.m_MenAndWomenStats.CalculateGenederRatios(m_StatisticData.TotalFriends);
+            m_StatisticData.m_AgesStats.CalculateAgeRangesRatio(m_StatisticData.TotalFriends);
         }
 
-        private void countMenWomen(User i_Friend)
+        protected abstract FacebookObjectCollection<User> filterListByChoice(FacebookObjectCollection<User> i_FriendList);
+
+        public string GetGenderDataStrings(eGenders i_Gender)
         {
-            if (i_Friend.Gender == User.eGender.male)
+            string res = "{0}: {1} ({2}%)";
+
+            switch (i_Gender)
             {
-                Men++;
+                case eGenders.Men:
+                    res = string.Format(res, "Men", m_StatisticData.m_MenAndWomenStats.Men, m_StatisticData.m_MenAndWomenStats.MenRatio.ToString());
+                    break;
+                case eGenders.Women:
+                    res = string.Format(res, "Women", m_StatisticData.m_MenAndWomenStats.Women, m_StatisticData.m_MenAndWomenStats.WomenRatio.ToString());
+                    break;
+                case eGenders.None:
+                    res = string.Format(res, "Genderless", m_StatisticData.m_MenAndWomenStats.GenderLess, m_StatisticData.m_MenAndWomenStats.GenderLessRatio.ToString());
+                    break;
             }
-            else if (i_Friend.Gender == User.eGender.female)
-            {
-                Women++;
-            }
-            else
-            {
-                GenderLess++;
-            }
+
+            return res;
         }
 
-        private float calculateRatio(int i_ParameterToCalculate)
+        public string GetAgeDataStrings(eAgeRange i_Range)
         {
-            return (float)i_ParameterToCalculate / TotalFriends * r_Base;
+            string res = "{0}: {1} ({2}%)";
+
+            switch (i_Range)
+            {
+                case eAgeRange.UntilTwenty:
+                    res = string.Format(res, "0 - 20", m_StatisticData.m_AgesStats.UntilTwentyYearsOld, m_StatisticData.m_AgesStats.UntilTwentyYearsOldRatio);
+                    break;
+                case eAgeRange.TwentyOneToFourty:
+                    res = string.Format(res, "21 - 40", m_StatisticData.m_AgesStats.TwentyOneToFourty, m_StatisticData.m_AgesStats.TwentyOneToFourtyRatio);
+                    break;
+                case eAgeRange.FourtyOneToSixty:
+                    res = string.Format(res, "41 - 60", m_StatisticData.m_AgesStats.FourtyOneToSixty, m_StatisticData.m_AgesStats.FourtyOneToSixtyRatio);
+                    break;
+                case eAgeRange.AboveSixty:
+                    res = string.Format(res, "60+", m_StatisticData.m_AgesStats.AboveSixty, m_StatisticData.m_AgesStats.AboveSixtyRatio);
+                    break;
+                case eAgeRange.None:
+                    res = string.Format(res, "No Birthday", m_StatisticData.m_AgesStats.DidntEnterBirthday, m_StatisticData.m_AgesStats.DidntEnterBirthdayRatio);
+                    break;
+            }
+
+            return res;
         }
+
+        public string GetFriendName(eUserSocializeState i_WhichUser)
+        {
+            string res = string.Empty;
+            switch (i_WhichUser)
+            {
+                case eUserSocializeState.MostFriends:
+                    res = m_StatisticData.m_SocializingStats.MostFriendsUser.Name;
+                    break;
+                case eUserSocializeState.LeastFriends:
+                    res = m_StatisticData.m_SocializingStats.LeastFriendsUser.Name;
+                    break;
+                case eUserSocializeState.MostActive:
+                    res = m_StatisticData.m_SocializingStats.MostActiveUser.Name;
+                    break;
+            }
+            return res;
+        }
+
+        public string GetUserFriendCount(eUserSocializeState i_WhichUser)
+        {
+            string res = "Friends with {0} people!";
+            switch (i_WhichUser)
+            {
+
+                case eUserSocializeState.MostFriends:
+                    res = string.Format(res, m_StatisticData.m_SocializingStats.MostFriendsUser.Friends.Count);
+                    break;
+                case eUserSocializeState.LeastFriends:
+                    res = string.Format(res, m_StatisticData.m_SocializingStats.LeastFriendsUser.Friends.Count);
+                    break;
+                case eUserSocializeState.MostActive:
+                    res = string.Format(res, m_StatisticData.m_SocializingStats.MostActiveUser.Friends.Count);
+                    break;
+            }
+
+            return res;
+        }
+
+        public string GetMostActiveUserStatusCount()
+        {
+            string res = "Shared {0} statuses!";
+
+            return string.Format(res, m_StatisticData.m_SocializingStats.MostActiveUser.Statuses.Count);
+        }
+
+        public string GetUserPicURL(eUserSocializeState i_WhichUser)
+        {
+            string res = string.Empty;
+            switch (i_WhichUser)
+            {
+                case eUserSocializeState.MostFriends:
+                    res = m_StatisticData.m_SocializingStats.MostFriendsUser.PictureNormalURL;
+                    break;
+                case eUserSocializeState.LeastFriends:
+                    res = m_StatisticData.m_SocializingStats.LeastFriendsUser.PictureNormalURL;
+                    break;
+                case eUserSocializeState.MostActive:
+                    res = m_StatisticData.m_SocializingStats.MostActiveUser.PictureNormalURL;
+                    break;
+            }
+            return res;
+        }
+
     }
 }
