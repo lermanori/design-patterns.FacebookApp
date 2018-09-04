@@ -233,7 +233,7 @@ namespace Ex01.FacebookAppWinformsUI
             resetPictureButtons();
             pictureBoxFriendPhotoShickOShook.Image = null;
             resetStatsFeature();
-            listBoxTasks.Items.Clear();
+            flowLayoutPanel1.Controls.Clear();
         }
 
         private void resetStatsFeature()
@@ -431,7 +431,6 @@ namespace Ex01.FacebookAppWinformsUI
         {
             addATimedCommandToCommit();
         }
-
         private void addATimedCommandToCommit()
         {
             if (listBoxActions.SelectedItem != null)
@@ -445,30 +444,19 @@ namespace Ex01.FacebookAppWinformsUI
                     eTasksType taskType = (eTasksType)fbTaskToAutomate?.GetTaskType();
                     TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
                     timedComponent.ActionObject.DoWhenFinishedError += (i_object, i_e) => MessageBox.Show(string.Format("there was a probloem during invoking the {0} action", timedComponent.ActionObject.GetName()));
-                    timedComponent.Timer.Elapsed += Timer_Elapsed;
 
-                    listBoxTasks.Items.Add(timedComponent);
+                    ICreateUIControl s = new CheckBoxedTimedComponentUIControl( new timedComponentUIController(timedComponent) );
+                    
+                    flowLayoutPanel1.Controls.Add(s.createUIControl());
+
+                    timedComponent.Timer.Elapsed += (i_object, i_e) => s.update();
+
                     timedComponent.Timer.Start();
                 }
             }
         }
 
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            listBoxTasks.Invoke(new Action(() => { RefreshListBox(); }));
-        }
-
-        private void RefreshListBox()
-        {
-            int count = listBoxTasks.Items.Count;
-            listBoxTasks.SuspendLayout();
-            for (int i = 0; i < count; i++)
-            {
-                listBoxTasks.Items[i] = listBoxTasks.Items[i];
-            }
-
-            listBoxTasks.ResumeLayout();
-        }
+        
 
         private void buttonCalcStats_Click(object sender, EventArgs e)
         {
@@ -477,7 +465,8 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void activateCalcStatisticsFeature()
         {
-            m_FacebookApp.FriendStatisticsFeature.CalculateStatisticsAboutFriends(m_FacebookApp);
+
+            //m_FacebookApp.FriendStatisticsFeature.CalculateStatisticsAboutFriends(m_FacebookApp);
             updateUIAccordingToStatistics();
         }
 
@@ -566,4 +555,77 @@ namespace Ex01.FacebookAppWinformsUI
             }
         }
     }
+
+    //public interface ICreateUIControl
+    //{
+    //    void Start();
+    //    Control createUIControl();
+    //}
+
+    //public class timedComponentUIController : ICreateUIControl
+    //{
+    //    private TimedComponent m_TimedComponent;
+    //    public timedComponentUIController(TimedComponent i_component)
+    //    {
+    //        m_TimedComponent = i_component;
+    //    }
+
+
+    //    public void Start()
+    //    {
+    //        m_TimedComponent.Timer.Start();
+    //    }
+
+    //    Control ICreateUIControl.createUIControl()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    Control createUIControl()
+    //    {
+    //        Label res = new Label();
+    //        res.Text = m_TimedComponent.ToString();
+    //        return res;
+    //    }
+    //}
+
+    //public abstract class decoratorTimedComponentUIControl : ICreateUIControl
+    //{
+    //    private ICreateUIControl m_Component;
+    //    public decoratorTimedComponentUIControl(ICreateUIControl i_Component)
+    //    {
+    //        m_Component = i_Component;
+    //    }
+    //    public virtual void Start()
+    //    {
+    //        m_Component.Start();
+    //    }
+    //    public virtual Control createUIControl()
+    //    {
+    //         return m_Component.createUIControl();
+    //    }
+    //}
+
+    //public class CheckBoxedTimedComponentUIControl : decoratorTimedComponentUIControl
+    //{
+    //    public CheckBoxedTimedComponentUIControl(ICreateUIControl i_baseComponent) : base(i_baseComponent)
+    //    {
+           
+    //    }
+
+    //    public override Control createUIControl()
+    //    {
+    //        Control orgin = base.createUIControl();
+    //        CheckBox wrapperFunctunality = new CheckBox();
+    //        Panel container = new Panel();
+    //        container.AutoSize = true;
+    //        container.MaximumSize = new Size(1000, 200);
+    //        container.Size = new Size(400,100);
+    //        container.Controls.Add(orgin);
+    //        container.Controls.Add(wrapperFunctunality);
+    //        return container;
+    //    }
+
+    //}
+
 }
