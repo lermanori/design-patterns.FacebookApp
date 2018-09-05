@@ -10,7 +10,7 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public partial class FormPostStatus : Form , IfbAutomatable, IProxyForm
+    public partial class FormPostStatus : Form, IfbAutomatable, IProxyForm
     {
         public string StatusBody { get; set; }
 
@@ -26,18 +26,19 @@ namespace Ex01.FacebookAppWinformsUI
             TimeToExecute = dateTimePickerPost.Value;
             StatusBody = textBoxPost.Text;
             this.DialogResult = DialogResult.OK;
-            
+
             Close();
         }
-        public FbEventArgs collectData()
+
+        public FbEventArgs CollectData()
         {
-            FbEventArgs result = new FbEventArgs { StatusBody=StatusBody, time = TimeToExecute };
+            FbEventArgs result = new FbEventArgs { StatusBody = StatusBody, Time = TimeToExecute };
             return result;
         }
-        public TasksType getTaskType()
+
+        public eTasksType GetTaskType()
         {
-            return TasksType.status;
+            return eTasksType.Status;
         }
-        
     }
 }

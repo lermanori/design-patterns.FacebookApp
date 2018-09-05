@@ -6,9 +6,11 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppLogic
 {
-    class FbActionPhoto : FbAction
+    public class FbActionPhoto : FbAction
     {
-        private FbActionPhoto() { }
+        private FbActionPhoto()
+        {
+        }
 
         public static FbActionPhoto Create(FacebookAppEngine i_Engine)
         {
@@ -27,7 +29,7 @@ namespace Ex01.FacebookAppLogic
 
         public override string GetName()
         {
-            return "post Photo";
+            return "Post Photo";
         }
 
     }

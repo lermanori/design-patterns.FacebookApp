@@ -91,6 +91,7 @@
     <Compile Include="IProxy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimedComponentUIControl.cs" />
     <EmbeddedResource Include="FormPostLink.resx">
       <DependentUpon>FormPostLink.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,6 +118,8 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Ex01.FacebookAppLogic.FacebookAppEngine.datasource" />
     <None Include="Properties\DataSources\Ex01.FacebookAppLogic.FacebookAppSettings.datasource" />
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.Group.datasource" />
+    <None Include="Properties\DataSources\FacebookWrapper.ObjectModel.User.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -128,9 +131,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ex01.FacebookAppLogic\Ex01.FacebookAppLogic.csproj">
+    <ProjectReference Include="..\Ex01.FacebookAppLogic\Ex02.FacebookAppLogic.csproj">
       <Project>{3c3f0768-d39b-4f63-b6a6-3fbb17d05b4c}</Project>
-      <Name>Ex01.FacebookAppLogic</Name>
+      <Name>Ex02.FacebookAppLogic</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

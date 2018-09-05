@@ -43,8 +43,7 @@ namespace Ex01.FacebookAppWinformsUI
 
         private FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
         private FacebookAppSettings m_LastSettings = null;
-        private FriendsStatistics m_StatsAboutMyFriends = new FriendsStatistics();
-        private ShickOShook m_ShickOShook = new ShickOShook();
+        public static readonly object sr_URLComboBoxLock = new object();
 
         private List<Control> m_ControlsToEnableOrDisable = new List<Control>();
         private string m_PhotoPath = string.Empty;
@@ -79,7 +78,7 @@ namespace Ex01.FacebookAppWinformsUI
                 }
                 catch (Exception ex)
                 {
-                    FacebookAppSettings.DeleteFile();
+                    m_LastSettings.DeleteFile();
                     MessageBox.Show(string.Format(k_FailedAutoConnectMessage, Environment.NewLine, ex.Message));
                 }
             }
@@ -97,11 +96,17 @@ namespace Ex01.FacebookAppWinformsUI
             pictureBoxProfilePicture.LoadAsync(m_FacebookApp.UserProfilePictureURL);
             if (m_LastSettings.ComboBoxWebBrowserItems.Count != 0)
             {
-                foreach (string s in m_LastSettings.ComboBoxWebBrowserItems)
+                foreach (string url in m_LastSettings.ComboBoxWebBrowserItems)
                 {
-                    if (!comboBoxWebBrowser.Items.Contains(s))
+                    if (!comboBoxWebBrowser.Items.Contains(url))
                     {
-                        comboBoxWebBrowser.Items.Add(s);
+                        lock (sr_URLComboBoxLock)
+                        {
+                            if (!comboBoxWebBrowser.Items.Contains(url))
+                            {
+                                comboBoxWebBrowser.Items.Add(url);
+                            }
+                        }
                     }
                 }
             }
@@ -134,8 +139,6 @@ namespace Ex01.FacebookAppWinformsUI
             m_ControlsToEnableOrDisable.Add(buttonCalcStats);
             m_ControlsToEnableOrDisable.Add(buttonAddNewAction);
             m_ControlsToEnableOrDisable.Add(pictureBoxFriendPhotoShickOShook);
-            m_ControlsToEnableOrDisable.Add(textBoxDescriptionOfGroup);
-
 
             disableLoggedInFeatures();
         }
@@ -152,11 +155,17 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 m_LastSettings.RememberUser = this.checkBoxRememberUser.Checked;
                 m_LastSettings.LastAccessToken = m_FacebookApp.GetAccessToken();
-                foreach (string s in comboBoxWebBrowser.Items)
+                foreach (string url in comboBoxWebBrowser.Items)
                 {
-                    if (!m_LastSettings.ComboBoxWebBrowserItems.Contains(s))
+                    if (!m_LastSettings.ComboBoxWebBrowserItems.Contains(url))
                     {
-                        m_LastSettings.ComboBoxWebBrowserItems.Add(s);
+                        lock (sr_URLComboBoxLock)
+                        {
+                            if (!m_LastSettings.ComboBoxWebBrowserItems.Contains(url))
+                            {
+                                m_LastSettings.ComboBoxWebBrowserItems.Add(url);
+                            }
+                        }
                     }
                 }
 
@@ -184,7 +193,6 @@ namespace Ex01.FacebookAppWinformsUI
             if (m_FacebookApp.IsLoggedIn())
             {
                 enableLoggedInFeatures();
-
             }
         }
 
@@ -216,19 +224,16 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 ctr.Enabled = false;
             }
-
         }
 
         private void resetUI()
         {
             pictureBoxProfilePicture.Image = null;
-            listBoxGroups.Items.Clear();
-            textBoxDescriptionOfGroup.Text = string.Empty;
             textBoxUploadPost.Text = string.Empty;
             resetPictureButtons();
             pictureBoxFriendPhotoShickOShook.Image = null;
             resetStatsFeature();
-            listBoxTasks.Items.Clear();
+            flowLayoutPanel1.Controls.Clear();
         }
 
         private void resetStatsFeature()
@@ -281,33 +286,7 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void populateListBoxGroups()
         {
-            listBoxGroups.Items.Clear();
-            listBoxGroups.DisplayMember = "Name";
-            try
-            {
-                FacebookObjectCollection<Group> userGroupCollection = m_FacebookApp.FetchUserGroups();
-
-                foreach (Group group in userGroupCollection)
-                {
-                    listBoxGroups.Items.Add(group);
-                }
-
-                if (listBoxGroups.Items.Count == 0)
-                {
-                    listBoxGroups.Items.Add(k_EmptyListMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void listBoxGroups_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Group selectedGroup = listBoxGroups.SelectedItem as Group;
-            string groupDescription = selectedGroup.Description;
-            textBoxDescriptionOfGroup.Text = groupDescription;
+            groupBindingSource.DataSource = m_FacebookApp.CurrentUser.Groups;
         }
 
         private void resetPictureButtons()
@@ -369,8 +348,13 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void buttonPostLink_Click(object sender, EventArgs e)
         {
+            uploadLink();
+        }
+
+        private void uploadLink()
+        {
             string linkToPost = webBrowser.Url.ToString();
-            m_FacebookApp.PostChosenLink(linkToPost,string.Empty);
+            m_FacebookApp.PostChosenLink(linkToPost, string.Empty);
         }
 
         private void comboBoxWebBrowser_SelectedIndexChanged(object sender, EventArgs e)
@@ -403,7 +387,16 @@ namespace Ex01.FacebookAppWinformsUI
             {
                 webBrowser.Url = uriResult;
                 comboBoxWebBrowser.Text = uriResult.ToString();
-                comboBoxWebBrowser.Items.Add(comboBoxWebBrowser.Text);
+                if (!comboBoxWebBrowser.Items.Contains(comboBoxWebBrowser.Text))
+                {
+                    lock (sr_URLComboBoxLock)
+                    {
+                        if (!comboBoxWebBrowser.Items.Contains(comboBoxWebBrowser.Text))
+                        {
+                            comboBoxWebBrowser.Items.Add(comboBoxWebBrowser.Text);
+                        }
+                    }
+                }
             }
             else
             {
@@ -424,12 +417,21 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void tabPageAutomate_load(object sender, EventArgs e)
         {
-            listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.status));
-            listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.photo));
-            listBoxActions.Items.Add(FormPostProxyFactory.Create(TasksType.link));
+            populateListboxWithTimeableActions();
+        }
+
+        private void populateListboxWithTimeableActions()
+        {
+            listBoxActions.Items.Add(FormPostProxyFactory.Create(eTasksType.Status));
+            listBoxActions.Items.Add(FormPostProxyFactory.Create(eTasksType.Photo));
+            listBoxActions.Items.Add(FormPostProxyFactory.Create(eTasksType.Link));
         }
 
         private void buttonAddNewCommand_Click(object sender, EventArgs e)
+        {
+            addATimedCommandToCommit();
+        }
+        private void addATimedCommandToCommit()
         {
             if (listBoxActions.SelectedItem != null)
             {
@@ -438,74 +440,76 @@ namespace Ex01.FacebookAppWinformsUI
                 if (dialogResult == DialogResult.OK)
                 {
                     IfbAutomatable fbTaskToAutomate = CommandForm as IfbAutomatable;
-                    FbEventArgs args = (fbTaskToAutomate)?.collectData();
-                    TasksType taskType = (TasksType)(fbTaskToAutomate)?.getTaskType();
-                    TimedComponent timedComponent = TimedComponent.Create(args, m_FacebookApp,taskType);
-                    timedComponent.Timer.Elapsed += Timer_Elapsed;
+                    FbEventArgs args = fbTaskToAutomate?.CollectData();
+                    eTasksType taskType = (eTasksType)fbTaskToAutomate?.GetTaskType();
+                    TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
+                    timedComponent.ActionObject.DoWhenFinishedError += (i_object, i_e) => MessageBox.Show(string.Format("there was a probloem during invoking the {0} action", timedComponent.ActionObject.GetName()));
 
-                    listBoxTasks.Items.Add(timedComponent);
+                    ICreateUIControl s = new CheckBoxedTimedComponentUIControl(new TimedComponentUIController(timedComponent));
+                    
+                    flowLayoutPanel1.Controls.Add(s.CreateUIControl());
+
+                    timedComponent.Timer.Elapsed += (i_object, i_e) => s.Update();
+
                     timedComponent.Timer.Start();
                 }
             }
         }
 
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            listBoxTasks.Invoke(new Action(() => { RefreshListBox(); }));
-
-        }
-
-        private void RefreshListBox()
-        {
-            ListBox.ObjectCollection objArr = listBoxTasks.Items;
-            listBoxTasks.Items.Clear();
-            foreach (object obj in objArr)
-            {
-                listBoxTasks.Items.Add(obj);
-            }
-            listBoxTasks.Update();
-        }
+        
 
         private void buttonCalcStats_Click(object sender, EventArgs e)
         {
-            m_StatsAboutMyFriends.CalculateStatisticsAboutFriends(m_FacebookApp);
+            activateCalcStatisticsFeature();
+        }
+
+        private void activateCalcStatisticsFeature()
+        {
+
+            //m_FacebookApp.FriendStatisticsFeature.CalculateStatisticsAboutFriends(m_FacebookApp);
             updateUIAccordingToStatistics();
         }
 
         private void updateUIAccordingToStatistics()
         {
-            labelMen.Text = string.Format(k_GeneralStatsLabelText, k_Men, m_StatsAboutMyFriends.Men, m_StatsAboutMyFriends.MenRatio.ToString());
-            labelWomen.Text = string.Format(k_GeneralStatsLabelText, k_Women, m_StatsAboutMyFriends.Women, m_StatsAboutMyFriends.WomenRatio.ToString());
-            labelGenderLess.Text = string.Format(k_GeneralStatsLabelText, k_GenderLess, m_StatsAboutMyFriends.GenderLess, m_StatsAboutMyFriends.GenderLessRatio.ToString());
+            labelMen.Text = string.Format(k_GeneralStatsLabelText, k_Men, m_FacebookApp.FriendStatisticsFeature.Men, m_FacebookApp.FriendStatisticsFeature.MenRatio.ToString());
+            labelWomen.Text = string.Format(k_GeneralStatsLabelText, k_Women, m_FacebookApp.FriendStatisticsFeature.Women, m_FacebookApp.FriendStatisticsFeature.WomenRatio.ToString());
+            labelGenderLess.Text = string.Format(k_GeneralStatsLabelText, k_GenderLess, m_FacebookApp.FriendStatisticsFeature.GenderLess, m_FacebookApp.FriendStatisticsFeature.GenderLessRatio.ToString());
 
-            labelLowestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_UntilTwenty, m_StatsAboutMyFriends.UntilTwentyYearsOld, m_StatsAboutMyFriends.UntilTwentyYearsOldRatio);
-            labelMediumAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_TwentyOneToFourty, m_StatsAboutMyFriends.TwentyOneToFourty, m_StatsAboutMyFriends.TwentyOneToFourtyRatio);
-            labelAdultAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_FourtyOneToSixty, m_StatsAboutMyFriends.FourtyOneToSixty, m_StatsAboutMyFriends.FourtyOneToSixtyRatio);
-            labelOldestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_AboveSixty, m_StatsAboutMyFriends.AboveSixty, m_StatsAboutMyFriends.AboveSixtyRatio);
-            labelDidntEnterBirthday.Text = string.Format(k_GeneralStatsLabelText, k_BirthdatyLess, m_StatsAboutMyFriends.DidntEnterBirthday, m_StatsAboutMyFriends.DidntEnterBirthdayRatio);
+            labelLowestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_UntilTwenty, m_FacebookApp.FriendStatisticsFeature.UntilTwentyYearsOld, m_FacebookApp.FriendStatisticsFeature.UntilTwentyYearsOldRatio);
+            labelMediumAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_TwentyOneToFourty, m_FacebookApp.FriendStatisticsFeature.TwentyOneToFourty, m_FacebookApp.FriendStatisticsFeature.TwentyOneToFourtyRatio);
+            labelAdultAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_FourtyOneToSixty, m_FacebookApp.FriendStatisticsFeature.FourtyOneToSixty, m_FacebookApp.FriendStatisticsFeature.FourtyOneToSixtyRatio);
+            labelOldestAgeRange.Text = string.Format(k_GeneralStatsLabelText, k_AboveSixty, m_FacebookApp.FriendStatisticsFeature.AboveSixty, m_FacebookApp.FriendStatisticsFeature.AboveSixtyRatio);
+            labelDidntEnterBirthday.Text = string.Format(k_GeneralStatsLabelText, k_BirthdatyLess, m_FacebookApp.FriendStatisticsFeature.DidntEnterBirthday, m_FacebookApp.FriendStatisticsFeature.DidntEnterBirthdayRatio);
 
-            labelMostFriendsUser.Text = m_StatsAboutMyFriends.MostFriendsUser.Name;
-            labelFriendCountMost.Text = string.Format(k_FriendsCountMessage, m_StatsAboutMyFriends.MostFriendsUser.Friends.Count);
-            pictureBoxMostFriends.LoadAsync(m_StatsAboutMyFriends.MostFriendsUser.PictureNormalURL);
-            labelLeastFriendsUser.Text = m_StatsAboutMyFriends.LeastFriendsUser.Name;
-            labelFriendCountLeast.Text = string.Format(k_FriendsCountMessage, m_StatsAboutMyFriends.LeastFriendsUser.Friends.Count);
-            pictureBoxLeastFriends.LoadAsync(m_StatsAboutMyFriends.LeastFriendsUser.PictureNormalURL);
+            labelMostFriendsUser.Text = m_FacebookApp.FriendStatisticsFeature.MostFriendsUser.Name;
+            labelFriendCountMost.Text = string.Format(k_FriendsCountMessage, m_FacebookApp.FriendStatisticsFeature.MostFriendsUser.Friends.Count);
+            pictureBoxMostFriends.LoadAsync(m_FacebookApp.FriendStatisticsFeature.MostFriendsUser.PictureNormalURL);
+            labelLeastFriendsUser.Text = m_FacebookApp.FriendStatisticsFeature.LeastFriendsUser.Name;
+            labelFriendCountLeast.Text = string.Format(k_FriendsCountMessage, m_FacebookApp.FriendStatisticsFeature.LeastFriendsUser.Friends.Count);
+            pictureBoxLeastFriends.LoadAsync(m_FacebookApp.FriendStatisticsFeature.LeastFriendsUser.PictureNormalURL);
 
-            labelMostActiveUser.Text = m_StatsAboutMyFriends.MostActiveUser.Name;
-            labelNumStatuses.Text = string.Format(k_NumStatusesMessage, m_StatsAboutMyFriends.MostActiveUser.Statuses.Count);
-            pictureBoxMostActiveUser.LoadAsync(m_StatsAboutMyFriends.MostActiveUser.PictureNormalURL);
+            labelMostActiveUser.Text = m_FacebookApp.FriendStatisticsFeature.MostActiveUser.Name;
+            labelNumStatuses.Text = string.Format(k_NumStatusesMessage, m_FacebookApp.FriendStatisticsFeature.MostActiveUser.Statuses.Count);
+            pictureBoxMostActiveUser.LoadAsync(m_FacebookApp.FriendStatisticsFeature.MostActiveUser.PictureNormalURL);
         }
 
         private void buttonActivateShikOShook_Click(object sender, EventArgs e)
         {
+            activateShickOShook();
+        }
+
+        private void activateShickOShook()
+        {
             User randomFriend = m_FacebookApp.FetchRandomFriend();
+            userBindingSource.DataSource = randomFriend;
             try
             {
-                m_ShickOShook.GetFriendPhotoURLArray(randomFriend);
-                if (m_ShickOShook.friendPhotoURLCollection != null)
+                m_FacebookApp.ShickOShookFeature.GetFriendPhotoURLArray(randomFriend);
+                if (m_FacebookApp.ShickOShookFeature.friendPhotoURLCollection != null)
                 {
-                    pictureBoxFriendPhotoShickOShook.LoadAsync(m_ShickOShook.CurrentPhotoURL);
-                    labelTellYourFriends.Text = string.Format(k_ShickOShookLabelText, m_ShickOShook.CurrentFriendFirstName);
+                    pictureBoxFriendPhotoShickOShook.LoadAsync(m_FacebookApp.ShickOShookFeature.CurrentPhotoURL);
+                    labelTellYourFriends.Text = string.Format(k_ShickOShookLabelText, m_FacebookApp.ShickOShookFeature.CurrentFriendFirstName);
                     labelTellYourFriends.Visible = true;
                 }
                 else
@@ -521,18 +525,18 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void pictureBoxFriendPhotoShickOShook_Click(object sender, EventArgs e)
         {
-            m_ShickOShook.ChangeCurrentPhotoURL();
-            pictureBoxFriendPhotoShickOShook.LoadAsync(m_ShickOShook.CurrentPhotoURL);
+            m_FacebookApp.ShickOShookFeature.ChangeCurrentPhotoURL();
+            pictureBoxFriendPhotoShickOShook.LoadAsync(m_FacebookApp.ShickOShookFeature.CurrentPhotoURL);
         }
 
         private void buttonShik_Click(object sender, EventArgs e)
         {
             try
             {
-            m_ShickOShook.PublishPost(buttonShik.Text, m_FacebookApp);
-            MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+                m_FacebookApp.ShickOShookFeature.PublishPost(buttonShik.Text, m_FacebookApp);
+                MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_FacebookApp.ShickOShookFeature.CurrentFriendFirstName));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -542,13 +546,86 @@ namespace Ex01.FacebookAppWinformsUI
         {
             try
             {
-            m_ShickOShook.PublishPost(buttonShook.Text, m_FacebookApp);
-            MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_ShickOShook.CurrentFriendFirstName));
+                m_FacebookApp.ShickOShookFeature.PublishPost(buttonShook.Text, m_FacebookApp);
+                MessageBox.Show(string.Format(k_ShickOShookSuccesfulPostMessage, m_FacebookApp.ShickOShookFeature.CurrentFriendFirstName));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
     }
+
+    //public interface ICreateUIControl
+    //{
+    //    void Start();
+    //    Control createUIControl();
+    //}
+
+    //public class timedComponentUIController : ICreateUIControl
+    //{
+    //    private TimedComponent m_TimedComponent;
+    //    public timedComponentUIController(TimedComponent i_component)
+    //    {
+    //        m_TimedComponent = i_component;
+    //    }
+
+
+    //    public void Start()
+    //    {
+    //        m_TimedComponent.Timer.Start();
+    //    }
+
+    //    Control ICreateUIControl.createUIControl()
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+
+    //    Control createUIControl()
+    //    {
+    //        Label res = new Label();
+    //        res.Text = m_TimedComponent.ToString();
+    //        return res;
+    //    }
+    //}
+
+    //public abstract class decoratorTimedComponentUIControl : ICreateUIControl
+    //{
+    //    private ICreateUIControl m_Component;
+    //    public decoratorTimedComponentUIControl(ICreateUIControl i_Component)
+    //    {
+    //        m_Component = i_Component;
+    //    }
+    //    public virtual void Start()
+    //    {
+    //        m_Component.Start();
+    //    }
+    //    public virtual Control createUIControl()
+    //    {
+    //         return m_Component.createUIControl();
+    //    }
+    //}
+
+    //public class CheckBoxedTimedComponentUIControl : decoratorTimedComponentUIControl
+    //{
+    //    public CheckBoxedTimedComponentUIControl(ICreateUIControl i_baseComponent) : base(i_baseComponent)
+    //    {
+           
+    //    }
+
+    //    public override Control createUIControl()
+    //    {
+    //        Control orgin = base.createUIControl();
+    //        CheckBox wrapperFunctunality = new CheckBox();
+    //        Panel container = new Panel();
+    //        container.AutoSize = true;
+    //        container.MaximumSize = new Size(1000, 200);
+    //        container.Size = new Size(400,100);
+    //        container.Controls.Add(orgin);
+    //        container.Controls.Add(wrapperFunctunality);
+    //        return container;
+    //    }
+
+    //}
+
 }

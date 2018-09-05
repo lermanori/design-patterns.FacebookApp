@@ -6,9 +6,10 @@ using Ex01.FacebookAppLogic;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    interface IfbAutomatable
+    public interface IfbAutomatable
     {
-        FbEventArgs collectData();
-        TasksType getTaskType();
+        FbEventArgs CollectData();
+
+        eTasksType GetTaskType();
     }
 }

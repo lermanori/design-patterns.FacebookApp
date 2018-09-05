@@ -7,8 +7,9 @@ namespace Ex01.FacebookAppLogic
 {
     public class FbActionPost : FbAction
     {
-
-        private FbActionPost() { }
+        private FbActionPost()
+        {
+        }
 
         public static FbActionPost Create(FacebookAppEngine i_Engine)
         {
@@ -27,8 +28,7 @@ namespace Ex01.FacebookAppLogic
 
         public override string GetName()
         {
-            return "post status";
+            return "Post Status";
         }
-
     }
 }

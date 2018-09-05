@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Ex01.FacebookAppLogic
 {
-    public class FacebookAppSettings 
+    public class FacebookAppSettings
     {
         private static readonly string r_SettingsFilePath = @"FacebookSettings.json";
 
@@ -17,6 +17,10 @@ namespace Ex01.FacebookAppLogic
         public string LastAccessToken { get; set; }
 
         public List<string> ComboBoxWebBrowserItems { get; set; }
+
+        private static FacebookAppSettings s_Instance = null;
+
+        private static object s_Lock = new object();
 
         private FacebookAppSettings()
         {
@@ -27,36 +31,36 @@ namespace Ex01.FacebookAppLogic
 
         public static FacebookAppSettings LoadFromFile()
         {
-            FacebookAppSettings settings = null;
-            StreamReader fileToLoad = null;
-            try
+            if (s_Instance == null)
             {
-                fileToLoad = File.OpenText(r_SettingsFilePath);
-                JsonSerializer serializer = new JsonSerializer();
-                settings = (FacebookAppSettings)serializer.Deserialize(fileToLoad, typeof(FacebookAppSettings));
-            }
-            catch
-            {
-                settings = new FacebookAppSettings();
+                lock (s_Lock)
+                {
+                    if (s_Instance == null)
+                    {
+                        try
+                        {
+                            s_Instance = FileUtils.LoadFromFile<FacebookAppSettings>(r_SettingsFilePath);
+                        }
+                        catch
+                        {
+                            s_Instance = new FacebookAppSettings();
+                        }
+                    }
+                }
             }
 
-            return settings; 
-        }
-
-        public static void DeleteFile()
-        {
-            File.Delete(r_SettingsFilePath);
+            return s_Instance;
         }
 
         public void SaveToFile()
         {
-            using (FileStream fileToSave = File.Open(r_SettingsFilePath, FileMode.Create, FileAccess.Write))
-            using (StreamWriter writer = new StreamWriter(fileToSave))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Formatting = Formatting.Indented;
-                serializer.Serialize(writer, this);
-            }
+            FileUtils.SaveToFile<FacebookAppSettings>(this, r_SettingsFilePath);
+        }
+
+        public void DeleteFile()
+        {
+            FileUtils.DeleteFile(r_SettingsFilePath);
+            s_Instance = null;
         }
     }
 }
