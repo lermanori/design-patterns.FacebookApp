@@ -445,11 +445,11 @@ namespace Ex01.FacebookAppWinformsUI
                     TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
                     timedComponent.ActionObject.DoWhenFinishedError += (i_object, i_e) => MessageBox.Show(string.Format("there was a probloem during invoking the {0} action", timedComponent.ActionObject.GetName()));
 
-                    ICreateUIControl s = new CheckBoxedTimedComponentUIControl( new timedComponentUIController(timedComponent) );
+                    ICreateUIControl s = new CheckBoxedTimedComponentUIControl(new TimedComponentUIController(timedComponent));
                     
-                    flowLayoutPanel1.Controls.Add(s.createUIControl());
+                    flowLayoutPanel1.Controls.Add(s.CreateUIControl());
 
-                    timedComponent.Timer.Elapsed += (i_object, i_e) => s.update();
+                    timedComponent.Timer.Elapsed += (i_object, i_e) => s.Update();
 
                     timedComponent.Timer.Start();
                 }

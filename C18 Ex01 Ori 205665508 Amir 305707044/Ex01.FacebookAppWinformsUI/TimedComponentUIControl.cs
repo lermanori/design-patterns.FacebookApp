@@ -12,20 +12,20 @@ namespace Ex01.FacebookAppWinformsUI
 
     public interface ICreateUIControl
     {
-        bool invoked { get;}
+        bool Invoked { get;}
         void Start();
-        Control createUIControl();
-        Control update();
+        Control CreateUIControl();
+        Control Update();
     }
 
 
     /////the real-subject the ui control (concreteComponent)
-    public class timedComponentUIController : ICreateUIControl
+    public class TimedComponentUIController : ICreateUIControl
     {
-        private Label res = new Label();
+        private Label m_resultControl = new Label();
         private TimedComponent m_TimedComponent;
 
-        public timedComponentUIController(TimedComponent i_component)
+        public TimedComponentUIController(TimedComponent i_component)
         {
             m_TimedComponent = i_component;
         }
@@ -36,26 +36,26 @@ namespace Ex01.FacebookAppWinformsUI
             m_TimedComponent.Timer.Start();
         }
 
-        public Control createUIControl()
+        public Control CreateUIControl()
         { 
-            res.AutoSize = true;
-            res.Text = m_TimedComponent.ToString();
-            return res;
+            m_resultControl.AutoSize = true;
+            m_resultControl.Text = m_TimedComponent.ToString();
+            return m_resultControl;
         }
-        public bool invoked
+        public bool Invoked
         {
             get
             {
                 return m_TimedComponent.Invoked;
             }
         }
-        public Control update()
+        public Control Update()
         {
-            if(invoked)
+            if(Invoked)
             {
-                res.Invoke(new Action(() => { res.Text = m_TimedComponent.ToString(); }));
+                m_resultControl.Invoke(new Action(() => { m_resultControl.Text = m_TimedComponent.ToString(); }));
             }
-            return res;
+            return m_resultControl;
         }
     }
 
@@ -72,20 +72,20 @@ namespace Ex01.FacebookAppWinformsUI
         {
             m_Component.Start();
         }
-        public virtual Control createUIControl()
+        public virtual Control CreateUIControl()
         {
-            return m_Component.createUIControl();
+            return m_Component.CreateUIControl();
         }
-        public virtual bool invoked
+        public virtual bool Invoked
         {
             get
             {
-                return m_Component.invoked;
+                return m_Component.Invoked;
             }
         }
-        public virtual Control update()
+        public virtual Control Update()
         {
-           return m_Component.update();
+           return m_Component.Update();
         }
     }
 
@@ -106,9 +106,9 @@ namespace Ex01.FacebookAppWinformsUI
 
         }
 
-        public override Control createUIControl()
+        public override Control CreateUIControl()
         {
-            Control orgin = base.createUIControl();
+            Control orgin = base.CreateUIControl();
             orgin.Left = 20;
             m_wrapperFunctunality.Top = orgin.Top;
             m_wrapperFunctunality.Enabled = false;
@@ -124,13 +124,13 @@ namespace Ex01.FacebookAppWinformsUI
 
             return m_container;
         }
-        public override Control update()
+        public override Control Update()
         {
-            if(invoked)
+            if(Invoked)
             {
                 m_wrapperFunctunality.Invoke(new Action(() => { m_wrapperFunctunality.Checked = true; }));
             }
-            return base.update();
+            return base.Update();
         }
 
     }
