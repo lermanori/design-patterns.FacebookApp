@@ -26,7 +26,10 @@ namespace Ex01.FacebookAppLogic
 
         public User CurrentUser { get; private set; }
 
-        public FriendsStatistics FriendStatisticsFeature { get; } = new FriendsStatistics();
+
+        //public FriendsStatisticsData FriendStatisticsFeature { get; } = new FriendsStatisticsData();
+
+        public FriendsStatistics FriendStatisticsFeature { get; private set; }
 
         public ShickOShook ShickOShookFeature { get; } = new ShickOShook();
 
@@ -194,5 +197,37 @@ namespace Ex01.FacebookAppLogic
         {
             return TimedComponent.Create(args, this, taskType);
         }
+
+
+
+        public void CreateFriendStats(eFilterOptions i_Option)
+        {
+            switch(i_Option)
+            {
+                case eFilterOptions.NoFilter:
+                    FriendStatisticsFeature = new StatsCalculationsAllFriends();
+                    break;
+                case eFilterOptions.OnlyMen:
+                    FriendStatisticsFeature = new StatsCalculationsOnlyMen();
+                    break;
+                case eFilterOptions.OnlyWomen:
+                    FriendStatisticsFeature = new StatsCalculationsOnlyWomen();
+                    break;
+                case eFilterOptions.OnlyEnteredBirthday:
+                    FriendStatisticsFeature = new StatsCalculationsOnlyEnteredBirthday();
+                    break;
+                default:
+                    FriendStatisticsFeature = new StatsCalculationsAllFriends();
+                    break;
+            }
+        }
+    }
+
+    public enum eFilterOptions
+    {
+        NoFilter = 0,
+        OnlyMen,
+        OnlyWomen,
+        OnlyEnteredBirthday
     }
 }

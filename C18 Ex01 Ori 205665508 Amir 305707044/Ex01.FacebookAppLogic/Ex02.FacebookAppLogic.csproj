@@ -51,7 +51,12 @@
     <Compile Include="FriendsStatistics.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="FriendsStatisticsData.cs" />
     <Compile Include="ShickOShook.cs" />
+    <Compile Include="StatsCalculationsAllFriends.cs" />
+    <Compile Include="StatsCalculationsOnlyEnteredBirthday.cs" />
+    <Compile Include="StatsCalculationsOnlyMen.cs" />
+    <Compile Include="StatsCalculationsOnlyWomen.cs" />
     <Compile Include="TimedComponent.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
