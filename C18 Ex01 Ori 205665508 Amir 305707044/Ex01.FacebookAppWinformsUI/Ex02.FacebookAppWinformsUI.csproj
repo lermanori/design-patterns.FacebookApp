@@ -95,6 +95,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimedComponentUIControl.cs" />
     <Compile Include="DecoratorTimedComponentUIControl.cs" />
+    <Compile Include="TimedComponentUIControlCollection.cs" />
+    <Compile Include="TimedComponentUIControlITerator.cs" />
     <EmbeddedResource Include="FormPostLink.resx">
       <DependentUpon>FormPostLink.cs</DependentUpon>
     </EmbeddedResource>

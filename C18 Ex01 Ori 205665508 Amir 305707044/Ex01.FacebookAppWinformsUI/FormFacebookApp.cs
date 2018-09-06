@@ -48,6 +48,8 @@ namespace Ex01.FacebookAppWinformsUI
         public static readonly object sr_URLComboBoxLock = new object();
 
         private List<Control> m_ControlsToEnableOrDisable = new List<Control>();
+        private TimedComponentUIControlNotInvokedCollection m_NotInvokedCollection = new TimedComponentUIControlNotInvokedCollection();
+
         private string m_PhotoPath = string.Empty;
 
         public FormFacebookApp()
@@ -450,18 +452,19 @@ namespace Ex01.FacebookAppWinformsUI
                     TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
                     timedComponent.ActionObject.DoWhenFinishedError += (i_object, i_e) => MessageBox.Show(string.Format("there was a probloem during invoking the {0} action", timedComponent.ActionObject.GetName()));
 
-                    ICreateUIControl s = new CheckBoxedTimedComponentUIControl(new TimedComponentUIController(timedComponent));
-                    
+                    ICreateTimedComponentUIControl s = new CheckBoxedTimedComponentUIControl(new TimedComponentUIController(timedComponent));
+
+                    m_NotInvokedCollection.Add(s);
                     flowLayoutPanel1.Controls.Add(s.CreateUIControl());
 
                     timedComponent.Timer.Elapsed += (i_object, i_e) => s.Update();
-
+                    
                     timedComponent.Timer.Start();
                 }
             }
         }
 
-        
+
 
         private void buttonCalcStats_Click(object sender, EventArgs e)
         {
@@ -499,7 +502,7 @@ namespace Ex01.FacebookAppWinformsUI
             labelMostActiveUser.Text = m_FacebookApp.FriendStatisticsFeature.GetFriendName(eUserSocializeState.MostActive);
             labelNumStatuses.Text = m_FacebookApp.FriendStatisticsFeature.GetMostActiveUserStatusCount();
             pictureBoxMostActiveUser.LoadAsync(m_FacebookApp.FriendStatisticsFeature.GetUserPicURL(eUserSocializeState.MostActive));
-            
+
         }
 
         private void buttonActivateShikOShook_Click(object sender, EventArgs e)
@@ -583,78 +586,24 @@ namespace Ex01.FacebookAppWinformsUI
         {
             m_UserFilterChoice = eFilterOptions.OnlyEnteredBirthday;
         }
+
+        private void labelShickOShookFeatureDescription_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void buttonInvokeAll_Click(object sender, EventArgs e)
+        {
+            if (m_NotInvokedCollection.Count == 0)
+            {
+                MessageBox.Show("there are no unInvoked Messages,try adding one");
+            }
+            else
+            {
+                foreach (object timedComponentUIControl in m_NotInvokedCollection)
+                {
+                    (timedComponentUIControl as ICreateTimedComponentUIControl).InvokeNow();
+                }
+            }
+        }
     }
-
-    //public interface ICreateUIControl
-    //{
-    //    void Start();
-    //    Control createUIControl();
-    //}
-
-    //public class timedComponentUIController : ICreateUIControl
-    //{
-    //    private TimedComponent m_TimedComponent;
-    //    public timedComponentUIController(TimedComponent i_component)
-    //    {
-    //        m_TimedComponent = i_component;
-    //    }
-
-
-    //    public void Start()
-    //    {
-    //        m_TimedComponent.Timer.Start();
-    //    }
-
-    //    Control ICreateUIControl.createUIControl()
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //    Control createUIControl()
-    //    {
-    //        Label res = new Label();
-    //        res.Text = m_TimedComponent.ToString();
-    //        return res;
-    //    }
-    //}
-
-    //public abstract class decoratorTimedComponentUIControl : ICreateUIControl
-    //{
-    //    private ICreateUIControl m_Component;
-    //    public decoratorTimedComponentUIControl(ICreateUIControl i_Component)
-    //    {
-    //        m_Component = i_Component;
-    //    }
-    //    public virtual void Start()
-    //    {
-    //        m_Component.Start();
-    //    }
-    //    public virtual Control createUIControl()
-    //    {
-    //         return m_Component.createUIControl();
-    //    }
-    //}
-
-    //public class CheckBoxedTimedComponentUIControl : decoratorTimedComponentUIControl
-    //{
-    //    public CheckBoxedTimedComponentUIControl(ICreateUIControl i_baseComponent) : base(i_baseComponent)
-    //    {
-           
-    //    }
-
-    //    public override Control createUIControl()
-    //    {
-    //        Control orgin = base.createUIControl();
-    //        CheckBox wrapperFunctunality = new CheckBox();
-    //        Panel container = new Panel();
-    //        container.AutoSize = true;
-    //        container.MaximumSize = new Size(1000, 200);
-    //        container.Size = new Size(400,100);
-    //        container.Controls.Add(orgin);
-    //        container.Controls.Add(wrapperFunctunality);
-    //        return container;
-    //    }
-
-    //}
-
 }

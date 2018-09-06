@@ -6,11 +6,12 @@ using System.Windows.Forms;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public interface ICreateUIControl
+    public interface ICreateTimedComponentUIControl
     {
         bool Invoked { get; }
         void Start();
         Control CreateUIControl();
         Control Update();
+        void InvokeNow();
     }
 }

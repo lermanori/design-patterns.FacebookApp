@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Ex01.FacebookAppLogic;
+using System.Collections;
 
 namespace Ex01.FacebookAppWinformsUI
 {
 
-    public class TimedComponentUIController : ICreateUIControl
+    public class TimedComponentUIController : ICreateTimedComponentUIControl
     {
+        private bool m_updateOnce = false;
 
         private Label m_ResultControl = new Label();
 
@@ -26,7 +28,7 @@ namespace Ex01.FacebookAppWinformsUI
         }
 
         public Control CreateUIControl()
-        { 
+        {
             m_ResultControl.AutoSize = true;
             m_ResultControl.Text = m_TimedComponent.ToString();
             return m_ResultControl;
@@ -42,11 +44,20 @@ namespace Ex01.FacebookAppWinformsUI
 
         public Control Update()
         {
-            if(Invoked)
+            if (!m_updateOnce)
             {
-                m_ResultControl.Invoke(new Action(() => { m_ResultControl.Text = m_TimedComponent.ToString(); }));
+                m_updateOnce = true;
+                if (Invoked)
+                {
+                    m_ResultControl.Invoke(new Action(() => { m_ResultControl.Text = m_TimedComponent.ToString(); }));
+                }
             }
             return m_ResultControl;
+        }
+
+        public void InvokeNow()
+        {
+            m_TimedComponent.InvokeNow();
         }
     }
 }
