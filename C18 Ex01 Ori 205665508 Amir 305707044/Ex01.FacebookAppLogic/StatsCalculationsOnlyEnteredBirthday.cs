@@ -22,5 +22,4 @@ namespace Ex01.FacebookAppLogic
             return returnedList;
         }
     }
-
 }

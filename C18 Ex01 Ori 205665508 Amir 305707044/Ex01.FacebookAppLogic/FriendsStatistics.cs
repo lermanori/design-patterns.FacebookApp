@@ -27,7 +27,6 @@ namespace Ex01.FacebookAppLogic
                         m_StatisticData.m_MenAndWomenStats.UpdateGenderCountersAccordingToGivenFriend(friend);
                         m_StatisticData.m_AgesStats.UpdateAgeRangesCountersAccordingToGivenUser(friend);
                         m_StatisticData.m_SocializingStats.UpdateFriendSocializedRanksAccordingToGivenUser(friend);
-
                     }
                     catch (Exception ex)
                     {
@@ -116,6 +115,7 @@ namespace Ex01.FacebookAppLogic
                     res = m_StatisticData.m_SocializingStats.MostActiveUser.Name;
                     break;
             }
+
             return res;
         }
 
@@ -124,7 +124,6 @@ namespace Ex01.FacebookAppLogic
             string res = "Friends with {0} people!";
             switch (i_WhichUser)
             {
-
                 case eUserSocializeState.MostFriends:
                     res = string.Format(res, m_StatisticData.m_SocializingStats.MostFriendsUser.Friends.Count);
                     break;
@@ -161,8 +160,8 @@ namespace Ex01.FacebookAppLogic
                     res = m_StatisticData.m_SocializingStats.MostActiveUser.PictureNormalURL;
                     break;
             }
+
             return res;
         }
-
     }
 }

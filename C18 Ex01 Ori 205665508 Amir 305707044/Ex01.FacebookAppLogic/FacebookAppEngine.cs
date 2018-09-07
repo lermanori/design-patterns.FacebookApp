@@ -26,9 +26,6 @@ namespace Ex01.FacebookAppLogic
 
         public User CurrentUser { get; private set; }
 
-
-        //public FriendsStatisticsData FriendStatisticsFeature { get; } = new FriendsStatisticsData();
-
         public FriendsStatistics FriendStatisticsFeature { get; private set; }
 
         public ShickOShook ShickOShookFeature { get; } = new ShickOShook();
@@ -197,8 +194,6 @@ namespace Ex01.FacebookAppLogic
         {
             return TimedComponent.Create(args, this, taskType);
         }
-
-
 
         public void CreateFriendStats(eFilterOptions i_Option)
         {

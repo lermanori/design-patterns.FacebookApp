@@ -88,7 +88,7 @@
       <DependentUpon>FormPostStatus.cs</DependentUpon>
     </Compile>
     <Compile Include="FormPostStatusProxy.cs" />
-    <Compile Include="ICreateUIControl.cs" />
+    <Compile Include="IControl.cs" />
     <Compile Include="IfbAutomatable.cs" />
     <Compile Include="IProxy.cs" />
     <Compile Include="Program.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="TimedComponentUIControl.cs" />
     <Compile Include="DecoratorTimedComponentUIControl.cs" />
     <Compile Include="TimedComponentUIControlCollection.cs" />
-    <Compile Include="TimedComponentUIControlITerator.cs" />
+    <Compile Include="TimedComponentUIControlIterator.cs" />
     <EmbeddedResource Include="FormPostLink.resx">
       <DependentUpon>FormPostLink.cs</DependentUpon>
     </EmbeddedResource>

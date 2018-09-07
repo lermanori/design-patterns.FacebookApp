@@ -7,38 +7,39 @@ using System.Windows.Forms;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    class TimedComponentUIControlNotInvokedITerator : IEnumerator
+    public class TimedComponentUIControlIterator : IEnumerator
     {
-        private TimedComponentUIControlNotInvokedCollection m_Collection;
-        private int m_CurrentIdx = -1;
+        private TimedComponentUIControlCollection m_UIControlsCollection;
+        private int m_CurrentIndex = -1;
        
-        public TimedComponentUIControlNotInvokedITerator(TimedComponentUIControlNotInvokedCollection i_collection)
+        public TimedComponentUIControlIterator(TimedComponentUIControlCollection i_Collection)
         {
-            m_Collection = i_collection;
+            m_UIControlsCollection = i_Collection;
         }
 
         public object Current
         {
             get
             {
-                return m_Collection.m_Components[m_CurrentIdx];
+                return m_UIControlsCollection.m_Components[m_CurrentIndex];
             }
         }
 
         public bool MoveNext()
         {
-            ++m_CurrentIdx;
-            bool valid = m_CurrentIdx < m_Collection.Count;
-            if (valid && (m_Collection.m_Components[m_CurrentIdx] as ICreateTimedComponentUIControl).Invoked)
+            ++m_CurrentIndex;
+            bool valid = m_CurrentIndex < m_UIControlsCollection.Count;
+            if (valid && (m_UIControlsCollection.m_Components[m_CurrentIndex] as IControl).Invoked)
             {
-                ++m_CurrentIdx;
+                ++m_CurrentIndex;
             }
-            return m_CurrentIdx < m_Collection.Count;
+
+            return m_CurrentIndex < m_UIControlsCollection.Count;
         }
 
         public void Reset()
         {
-            m_CurrentIdx = 0;
+            m_CurrentIndex = 0;
         }
     }
 }

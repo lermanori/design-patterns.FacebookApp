@@ -18,8 +18,8 @@ namespace Ex01.FacebookAppLogic
                     returnedList.Add(friend);
                 }
             }
+
             return returnedList;
         }
     }
-
 }

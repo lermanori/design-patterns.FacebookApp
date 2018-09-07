@@ -40,6 +40,7 @@ namespace Ex01.FacebookAppWinformsUI
         public const string k_ShickOShookLabelText = "Tell {0} What you think!";
         public const string k_NoPhotosForUser = "{0} has no pictures!";
         public const string k_ShickOShookSuccesfulPostMessage = "You Told the world what you think about {0}'s apperance!";
+        public const string k_NoActionsToInvokeMessage = "There are no Statuses, Links or Photos to Upload. Try adding one :)";
 
         private FacebookAppEngine m_FacebookApp = new FacebookAppEngine();
         private FacebookAppSettings m_LastSettings = null;
@@ -48,7 +49,7 @@ namespace Ex01.FacebookAppWinformsUI
         public static readonly object sr_URLComboBoxLock = new object();
 
         private List<Control> m_ControlsToEnableOrDisable = new List<Control>();
-        private TimedComponentUIControlNotInvokedCollection m_NotInvokedCollection = new TimedComponentUIControlNotInvokedCollection();
+        private TimedComponentUIControlCollection m_TimedComponentsNotYetInvoked = new TimedComponentUIControlCollection();
 
         private string m_PhotoPath = string.Empty;
 
@@ -143,10 +144,10 @@ namespace Ex01.FacebookAppWinformsUI
             m_ControlsToEnableOrDisable.Add(buttonCalcStats);
             m_ControlsToEnableOrDisable.Add(buttonAddNewAction);
             m_ControlsToEnableOrDisable.Add(pictureBoxFriendPhotoShickOShook);
-            m_ControlsToEnableOrDisable.Add(radioButton1);
-            m_ControlsToEnableOrDisable.Add(radioButton2);
-            m_ControlsToEnableOrDisable.Add(radioButton3);
-            m_ControlsToEnableOrDisable.Add(radioButton4);
+            m_ControlsToEnableOrDisable.Add(radioButtonNoFilter);
+            m_ControlsToEnableOrDisable.Add(radioButtonOnlyMen);
+            m_ControlsToEnableOrDisable.Add(radioButtonOnlyWomen);
+            m_ControlsToEnableOrDisable.Add(radioButtonOnlyEnteredBirthday);
             disableLoggedInFeatures();
         }
 
@@ -438,6 +439,7 @@ namespace Ex01.FacebookAppWinformsUI
         {
             addATimedCommandToCommit();
         }
+
         private void addATimedCommandToCommit()
         {
             if (listBoxActions.SelectedItem != null)
@@ -452,19 +454,17 @@ namespace Ex01.FacebookAppWinformsUI
                     TimedComponent timedComponent = m_FacebookApp.CreateTimedComponent(args, taskType);
                     timedComponent.ActionObject.DoWhenFinishedError += (i_object, i_e) => MessageBox.Show(string.Format("there was a probloem during invoking the {0} action", timedComponent.ActionObject.GetName()));
 
-                    ICreateTimedComponentUIControl s = new CheckBoxedTimedComponentUIControl(new TimedComponentUIController(timedComponent));
+                    IControl s = new CheckBoxedTimedComponentUIControl(new TimedComponentUIControl(timedComponent));
 
-                    m_NotInvokedCollection.Add(s);
+                    m_TimedComponentsNotYetInvoked.Add(s);
                     flowLayoutPanel1.Controls.Add(s.CreateUIControl());
 
                     timedComponent.Timer.Elapsed += (i_object, i_e) => s.Update();
-                    
+
                     timedComponent.Timer.Start();
                 }
             }
         }
-
-
 
         private void buttonCalcStats_Click(object sender, EventArgs e)
         {
@@ -483,7 +483,7 @@ namespace Ex01.FacebookAppWinformsUI
         {
             labelMen.Text = m_FacebookApp.FriendStatisticsFeature.GetGenderDataStrings(eGenders.Men);
             labelWomen.Text = m_FacebookApp.FriendStatisticsFeature.GetGenderDataStrings(eGenders.Women);
-            labelGenderLess.Text = m_FacebookApp.FriendStatisticsFeature.GetGenderDataStrings(eGenders.None); ;
+            labelGenderLess.Text = m_FacebookApp.FriendStatisticsFeature.GetGenderDataStrings(eGenders.None);
 
             labelLowestAgeRange.Text = m_FacebookApp.FriendStatisticsFeature.GetAgeDataStrings(eAgeRange.UntilTwenty);
             labelMediumAgeRange.Text = m_FacebookApp.FriendStatisticsFeature.GetAgeDataStrings(eAgeRange.TwentyOneToFourty);
@@ -502,7 +502,6 @@ namespace Ex01.FacebookAppWinformsUI
             labelMostActiveUser.Text = m_FacebookApp.FriendStatisticsFeature.GetFriendName(eUserSocializeState.MostActive);
             labelNumStatuses.Text = m_FacebookApp.FriendStatisticsFeature.GetMostActiveUserStatusCount();
             pictureBoxMostActiveUser.LoadAsync(m_FacebookApp.FriendStatisticsFeature.GetUserPicURL(eUserSocializeState.MostActive));
-
         }
 
         private void buttonActivateShikOShook_Click(object sender, EventArgs e)
@@ -566,23 +565,22 @@ namespace Ex01.FacebookAppWinformsUI
             }
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonNoFilter_CheckedChanged(object sender, EventArgs e)
         {
             m_UserFilterChoice = eFilterOptions.NoFilter;
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonOnlyMen_CheckedChanged(object sender, EventArgs e)
         {
             m_UserFilterChoice = eFilterOptions.OnlyMen;
-
         }
 
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonOnlyWomen_CheckedChanged(object sender, EventArgs e)
         {
             m_UserFilterChoice = eFilterOptions.OnlyWomen;
         }
 
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonOnlyEnteredBirthday_CheckedChanged(object sender, EventArgs e)
         {
             m_UserFilterChoice = eFilterOptions.OnlyEnteredBirthday;
         }
@@ -593,15 +591,15 @@ namespace Ex01.FacebookAppWinformsUI
 
         private void buttonInvokeAll_Click(object sender, EventArgs e)
         {
-            if (m_NotInvokedCollection.Count == 0)
+            if (m_TimedComponentsNotYetInvoked.Count == 0)
             {
-                MessageBox.Show("there are no unInvoked Messages,try adding one");
+                MessageBox.Show(k_NoActionsToInvokeMessage);
             }
             else
             {
-                foreach (object timedComponentUIControl in m_NotInvokedCollection)
+                foreach (object timedComponentUIControl in m_TimedComponentsNotYetInvoked)
                 {
-                    (timedComponentUIControl as ICreateTimedComponentUIControl).InvokeNow();
+                    (timedComponentUIControl as IControl).InvokeNow();
                 }
             }
         }

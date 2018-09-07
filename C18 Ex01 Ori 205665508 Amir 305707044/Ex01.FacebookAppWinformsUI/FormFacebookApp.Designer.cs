@@ -47,12 +47,14 @@
             this.listBoxActions = new System.Windows.Forms.ListBox();
             this.buttonAddNewAction = new System.Windows.Forms.Button();
             this.tabPageStatsAndShook = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.panel6 = new System.Windows.Forms.Panel();
             this.labelGetStatistics = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.buttonCalcStats = new System.Windows.Forms.Button();
+            this.radioButtonOnlyEnteredBirthday = new System.Windows.Forms.RadioButton();
+            this.radioButtonNoFilter = new System.Windows.Forms.RadioButton();
+            this.radioButtonOnlyWomen = new System.Windows.Forms.RadioButton();
+            this.radioButtonOnlyMen = new System.Windows.Forms.RadioButton();
             this.panelShickOShook = new System.Windows.Forms.Panel();
             this.quotesLabel1 = new System.Windows.Forms.Label();
             this.birthdayLabel1 = new System.Windows.Forms.Label();
@@ -89,7 +91,6 @@
             this.labelLowestAgeRange = new System.Windows.Forms.Label();
             this.labelMediumAgeRange = new System.Windows.Forms.Label();
             this.labelAgeRange = new System.Windows.Forms.Label();
-            this.buttonCalcStats = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.labelGenderLess = new System.Windows.Forms.Label();
             this.labelWomen = new System.Windows.Forms.Label();
@@ -122,7 +123,6 @@
             this.buttonPostPhoto = new System.Windows.Forms.Button();
             this.buttonFetchGroups = new System.Windows.Forms.Button();
             this.tabControl = new System.Windows.Forms.TabControl();
-            this.panel6 = new System.Windows.Forms.Panel();
             religionLabel = new System.Windows.Forms.Label();
             nameLabel2 = new System.Windows.Forms.Label();
             emailLabel = new System.Windows.Forms.Label();
@@ -136,6 +136,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
             this.tabPageAutomate.SuspendLayout();
             this.tabPageStatsAndShook.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.panelShickOShook.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendPhotoShickOShook)).BeginInit();
             this.panel5.SuspendLayout();
@@ -151,7 +152,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).BeginInit();
             this.tabControl.SuspendLayout();
-            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // religionLabel
@@ -329,70 +329,19 @@
             this.tabPageStatsAndShook.TabIndex = 1;
             this.tabPageStatsAndShook.Text = "Get Stats And Rate Your Friends!";
             // 
-            // label1
+            // panel6
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(1, 79);
-            this.label1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(198, 18);
-            this.label1.TabIndex = 30;
-            this.label1.Text = "Choose Filtering Method:";
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(0, 168);
-            this.radioButton4.Margin = new System.Windows.Forms.Padding(1);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(135, 38);
-            this.radioButton4.TabIndex = 29;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "Users Who\r\nEntered Birthday";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.CheckedChanged += new System.EventHandler(this.radioButton4_CheckedChanged);
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(0, 150);
-            this.radioButton3.Margin = new System.Windows.Forms.Padding(1);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(77, 21);
-            this.radioButton3.TabIndex = 28;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Women";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(0, 129);
-            this.radioButton2.Margin = new System.Windows.Forms.Padding(1);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(56, 21);
-            this.radioButton2.TabIndex = 27;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Men";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(0, 108);
-            this.radioButton1.Margin = new System.Windows.Forms.Padding(1);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(82, 21);
-            this.radioButton1.TabIndex = 26;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "No Filter";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.panel6.Controls.Add(this.labelGetStatistics);
+            this.panel6.Controls.Add(this.label1);
+            this.panel6.Controls.Add(this.buttonCalcStats);
+            this.panel6.Controls.Add(this.radioButtonOnlyEnteredBirthday);
+            this.panel6.Controls.Add(this.radioButtonNoFilter);
+            this.panel6.Controls.Add(this.radioButtonOnlyWomen);
+            this.panel6.Controls.Add(this.radioButtonOnlyMen);
+            this.panel6.Location = new System.Drawing.Point(638, 26);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(204, 260);
+            this.panel6.TabIndex = 31;
             // 
             // labelGetStatistics
             // 
@@ -405,6 +354,82 @@
             this.labelGetStatistics.Size = new System.Drawing.Size(144, 36);
             this.labelGetStatistics.TabIndex = 25;
             this.labelGetStatistics.Text = "Get Statistics\r\nabout your friends";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(1, 79);
+            this.label1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(198, 18);
+            this.label1.TabIndex = 30;
+            this.label1.Text = "Choose Filtering Method:";
+            // 
+            // buttonCalcStats
+            // 
+            this.buttonCalcStats.Location = new System.Drawing.Point(0, 208);
+            this.buttonCalcStats.Margin = new System.Windows.Forms.Padding(1);
+            this.buttonCalcStats.Name = "buttonCalcStats";
+            this.buttonCalcStats.Size = new System.Drawing.Size(195, 40);
+            this.buttonCalcStats.TabIndex = 20;
+            this.buttonCalcStats.Text = "Get Stats!";
+            this.buttonCalcStats.UseVisualStyleBackColor = true;
+            this.buttonCalcStats.Click += new System.EventHandler(this.buttonCalcStats_Click);
+            // 
+            // radioButtonOnlyEnteredBirthday
+            // 
+            this.radioButtonOnlyEnteredBirthday.AutoSize = true;
+            this.radioButtonOnlyEnteredBirthday.Location = new System.Drawing.Point(0, 168);
+            this.radioButtonOnlyEnteredBirthday.Margin = new System.Windows.Forms.Padding(1);
+            this.radioButtonOnlyEnteredBirthday.Name = "radioButtonOnlyEnteredBirthday";
+            this.radioButtonOnlyEnteredBirthday.Size = new System.Drawing.Size(135, 38);
+            this.radioButtonOnlyEnteredBirthday.TabIndex = 29;
+            this.radioButtonOnlyEnteredBirthday.TabStop = true;
+            this.radioButtonOnlyEnteredBirthday.Text = "Users Who\r\nEntered Birthday";
+            this.radioButtonOnlyEnteredBirthday.UseVisualStyleBackColor = true;
+            this.radioButtonOnlyEnteredBirthday.CheckedChanged += new System.EventHandler(this.radioButtonOnlyEnteredBirthday_CheckedChanged);
+            // 
+            // radioButtonNoFilter
+            // 
+            this.radioButtonNoFilter.AutoSize = true;
+            this.radioButtonNoFilter.Checked = true;
+            this.radioButtonNoFilter.Location = new System.Drawing.Point(0, 108);
+            this.radioButtonNoFilter.Margin = new System.Windows.Forms.Padding(1);
+            this.radioButtonNoFilter.Name = "radioButtonNoFilter";
+            this.radioButtonNoFilter.Size = new System.Drawing.Size(82, 21);
+            this.radioButtonNoFilter.TabIndex = 26;
+            this.radioButtonNoFilter.TabStop = true;
+            this.radioButtonNoFilter.Text = "No Filter";
+            this.radioButtonNoFilter.UseVisualStyleBackColor = true;
+            this.radioButtonNoFilter.CheckedChanged += new System.EventHandler(this.radioButtonNoFilter_CheckedChanged);
+            // 
+            // radioButtonOnlyWomen
+            // 
+            this.radioButtonOnlyWomen.AutoSize = true;
+            this.radioButtonOnlyWomen.Location = new System.Drawing.Point(0, 150);
+            this.radioButtonOnlyWomen.Margin = new System.Windows.Forms.Padding(1);
+            this.radioButtonOnlyWomen.Name = "radioButtonOnlyWomen";
+            this.radioButtonOnlyWomen.Size = new System.Drawing.Size(77, 21);
+            this.radioButtonOnlyWomen.TabIndex = 28;
+            this.radioButtonOnlyWomen.TabStop = true;
+            this.radioButtonOnlyWomen.Text = "Women";
+            this.radioButtonOnlyWomen.UseVisualStyleBackColor = true;
+            this.radioButtonOnlyWomen.CheckedChanged += new System.EventHandler(this.radioButtonOnlyWomen_CheckedChanged);
+            // 
+            // radioButtonOnlyMen
+            // 
+            this.radioButtonOnlyMen.AutoSize = true;
+            this.radioButtonOnlyMen.Location = new System.Drawing.Point(0, 129);
+            this.radioButtonOnlyMen.Margin = new System.Windows.Forms.Padding(1);
+            this.radioButtonOnlyMen.Name = "radioButtonOnlyMen";
+            this.radioButtonOnlyMen.Size = new System.Drawing.Size(56, 21);
+            this.radioButtonOnlyMen.TabIndex = 27;
+            this.radioButtonOnlyMen.TabStop = true;
+            this.radioButtonOnlyMen.Text = "Men";
+            this.radioButtonOnlyMen.UseVisualStyleBackColor = true;
+            this.radioButtonOnlyMen.CheckedChanged += new System.EventHandler(this.radioButtonOnlyMen_CheckedChanged);
             // 
             // panelShickOShook
             // 
@@ -832,17 +857,6 @@
             this.labelAgeRange.TabIndex = 0;
             this.labelAgeRange.Text = "How Old Are They?";
             // 
-            // buttonCalcStats
-            // 
-            this.buttonCalcStats.Location = new System.Drawing.Point(0, 208);
-            this.buttonCalcStats.Margin = new System.Windows.Forms.Padding(1);
-            this.buttonCalcStats.Name = "buttonCalcStats";
-            this.buttonCalcStats.Size = new System.Drawing.Size(195, 40);
-            this.buttonCalcStats.TabIndex = 20;
-            this.buttonCalcStats.Text = "Get Stats!";
-            this.buttonCalcStats.UseVisualStyleBackColor = true;
-            this.buttonCalcStats.Click += new System.EventHandler(this.buttonCalcStats_Click);
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.labelGenderLess);
@@ -1235,20 +1249,6 @@
             this.tabControl.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl.TabIndex = 21;
             // 
-            // panel6
-            // 
-            this.panel6.Controls.Add(this.labelGetStatistics);
-            this.panel6.Controls.Add(this.label1);
-            this.panel6.Controls.Add(this.buttonCalcStats);
-            this.panel6.Controls.Add(this.radioButton4);
-            this.panel6.Controls.Add(this.radioButton1);
-            this.panel6.Controls.Add(this.radioButton3);
-            this.panel6.Controls.Add(this.radioButton2);
-            this.panel6.Location = new System.Drawing.Point(638, 26);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(204, 260);
-            this.panel6.TabIndex = 31;
-            // 
             // FormFacebookApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1266,6 +1266,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
             this.tabPageAutomate.ResumeLayout(false);
             this.tabPageStatsAndShook.ResumeLayout(false);
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.panelShickOShook.ResumeLayout(false);
             this.panelShickOShook.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxFriendPhotoShickOShook)).EndInit();
@@ -1288,8 +1290,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfilePicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPostPhotoPreviewImage)).EndInit();
             this.tabControl.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1374,10 +1374,10 @@
         private System.Windows.Forms.TabControl tabControl;
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButtonOnlyEnteredBirthday;
+        private System.Windows.Forms.RadioButton radioButtonOnlyWomen;
+        private System.Windows.Forms.RadioButton radioButtonOnlyMen;
+        private System.Windows.Forms.RadioButton radioButtonNoFilter;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button buttonInvokeAll;
         private System.Windows.Forms.Panel panel6;

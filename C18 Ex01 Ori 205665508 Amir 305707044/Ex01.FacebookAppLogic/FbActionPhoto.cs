@@ -24,13 +24,12 @@ namespace Ex01.FacebookAppLogic
 
         private void postPhotoAction(object sender, FbEventArgs e)
         {
-            m_Engine.PostChosenPhoto(e.PathToImage,e.StatusBody);
+            m_Engine.PostChosenPhoto(e.PathToImage, e.StatusBody);
         }
 
         public override string GetName()
         {
             return "Post Photo";
         }
-
     }
 }

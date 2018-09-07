@@ -31,7 +31,6 @@ namespace Ex01.FacebookAppLogic
 
     public class FriendsStatisticsData
     {
-
         public const string k_EmptyListMessage = "There are no friends to show!";
         public const string k_NullListMessage = "The friend list is null!";
         public const string k_MissingFriendInfo = "Missing information about friends!!";
@@ -77,13 +76,12 @@ namespace Ex01.FacebookAppLogic
 
             public void CalculateGenederRatios(int i_TotalGroupParticipants)
             {
-                MenRatio = FriendsStatisticsData.CalculateRatio(Men, i_TotalGroupParticipants);
-                WomenRatio = FriendsStatisticsData.CalculateRatio(Women, i_TotalGroupParticipants);
-                GenderLessRatio = FriendsStatisticsData.CalculateRatio(GenderLess, i_TotalGroupParticipants);
+                MenRatio = CalculateRatio(Men, i_TotalGroupParticipants);
+                WomenRatio = CalculateRatio(Women, i_TotalGroupParticipants);
+                GenderLessRatio = CalculateRatio(GenderLess, i_TotalGroupParticipants);
             }
-
-
         }
+
         public class AgesSplit
         {
             public int UntilTwentyYearsOld { get; private set; } = 0;
@@ -138,13 +136,14 @@ namespace Ex01.FacebookAppLogic
 
             public void CalculateAgeRangesRatio(int i_TotalGroupParticipants)
             {
-                UntilTwentyYearsOldRatio = FriendsStatisticsData.CalculateRatio(UntilTwentyYearsOld, i_TotalGroupParticipants);
-                TwentyOneToFourtyRatio = FriendsStatisticsData.CalculateRatio(TwentyOneToFourty, i_TotalGroupParticipants);
-                FourtyOneToSixtyRatio = FriendsStatisticsData.CalculateRatio(FourtyOneToSixty, i_TotalGroupParticipants);
-                AboveSixtyRatio = FriendsStatisticsData.CalculateRatio(AboveSixty, i_TotalGroupParticipants);
-                DidntEnterBirthdayRatio = FriendsStatisticsData.CalculateRatio(DidntEnterBirthday, i_TotalGroupParticipants);
+                UntilTwentyYearsOldRatio = CalculateRatio(UntilTwentyYearsOld, i_TotalGroupParticipants);
+                TwentyOneToFourtyRatio = CalculateRatio(TwentyOneToFourty, i_TotalGroupParticipants);
+                FourtyOneToSixtyRatio = CalculateRatio(FourtyOneToSixty, i_TotalGroupParticipants);
+                AboveSixtyRatio = CalculateRatio(AboveSixty, i_TotalGroupParticipants);
+                DidntEnterBirthdayRatio = CalculateRatio(DidntEnterBirthday, i_TotalGroupParticipants);
             }
         }
+
         public class UserSocializingRankSplit
         {
             public User MostFriendsUser { get; private set; } = null;
