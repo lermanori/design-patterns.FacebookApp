@@ -23,7 +23,6 @@ namespace Ex01.FacebookAppLogic
             TimedComponent timedComponent = new TimedComponent { FbEventArgs = i_Args, ActionObject = FbActionFactory.Create(i_Engine, i_ChosenTask), Timer = new System.Timers.Timer(), Invoked = false };
 
             timedComponent.ActionObject.LoadAction();
-
             timedComponent.Timer.Enabled = false;
             timedComponent.Timer.Elapsed += new System.Timers.ElapsedEventHandler(timedComponent.OnElapsed);
 
@@ -38,6 +37,11 @@ namespace Ex01.FacebookAppLogic
             }
 
             return timedComponent;
+        }
+
+        public void InvokeNow()
+        {
+            Timer.Interval = 0.1;
         }
 
         private void OnElapsed(object source, System.Timers.ElapsedEventArgs e)

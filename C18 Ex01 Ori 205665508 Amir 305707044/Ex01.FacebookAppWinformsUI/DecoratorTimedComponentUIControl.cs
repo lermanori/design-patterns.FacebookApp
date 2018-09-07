@@ -6,10 +6,10 @@ using System.Windows.Forms;
 
 namespace Ex01.FacebookAppWinformsUI
 {
-    public abstract class DecoratorTimedComponentUIControl : ICreateUIControl
+    public abstract class DecoratorTimedComponentUIControl : ICreateTimedComponentUIControl
     {
-        private ICreateUIControl m_Component;
-        public DecoratorTimedComponentUIControl(ICreateUIControl i_Component)
+        private ICreateTimedComponentUIControl m_Component;
+        public DecoratorTimedComponentUIControl(ICreateTimedComponentUIControl i_Component)
         {
             m_Component = i_Component;
         }
@@ -31,6 +31,11 @@ namespace Ex01.FacebookAppWinformsUI
         public virtual Control Update()
         {
             return m_Component.Update();
+        }
+
+        public void InvokeNow()
+        {
+            m_Component.InvokeNow();
         }
     }
 }

@@ -9,10 +9,10 @@ namespace Ex01.FacebookAppWinformsUI
     public class CheckBoxedTimedComponentUIControl : DecoratorTimedComponentUIControl
     {
         private CheckBox m_wrapperFunctunality = new CheckBox();
-
+        private bool m_updateOnce = false;
         private Panel m_container = new Panel();
 
-        public CheckBoxedTimedComponentUIControl(ICreateUIControl i_baseComponent) : base(i_baseComponent)
+        public CheckBoxedTimedComponentUIControl(ICreateTimedComponentUIControl i_baseComponent) : base(i_baseComponent)
         {
 
         }
@@ -36,11 +36,19 @@ namespace Ex01.FacebookAppWinformsUI
 
         public override Control Update()
         {
-            if (Invoked)
+            if (!m_updateOnce)
             {
-                m_wrapperFunctunality.Invoke(new Action(() => { m_wrapperFunctunality.Checked = true; }));
+                m_updateOnce = true;
+                if (Invoked)
+                {
+                    m_wrapperFunctunality.Invoke(new Action(() => { m_wrapperFunctunality.Checked = true; }));
+                }
+                return base.Update();
             }
-            return base.Update();
+            else
+            {
+                return m_container;
+            }
         }
     }
 }
